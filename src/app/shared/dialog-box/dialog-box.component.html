@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Row Action :: <strong>{{action}}</strong></h1>
+<div mat-dialog-content>
+  <mat-form-field *ngIf="action === 'AddAll'">
+    <input placeholder="name" matInput [(ngModel)]="localdata.name">
+  </mat-form-field>
+  <mat-form-field *ngIf="action != 'Delete' && 'AddAll'; else elseTemplate">
+    <input placeholder="name" matInput [(ngModel)]="localdata.name">
+    <input placeholder="category" matInput [(ngModel)]="localdata.category">
+    <input placeholder="IsActive" matInput [(ngModel)]="localdata.IsActive">
+    <input placeholder="UniqueKey" matInput [(ngModel)]="localdata.UniqueKey">
+  </mat-form-field>
+  <ng-template #elseTemplate>
+    Sure to delete <b>{{local_data.name}}</b>?
+  </ng-template>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="doAction()">{{action}}</button>
+  <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+</div>
