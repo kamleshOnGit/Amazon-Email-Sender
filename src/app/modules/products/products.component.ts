@@ -29,16 +29,16 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {id: 1, Action: 'Edit', name: 'MacAfee', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details' },
-  {id: 2,  Action: 'Edit', name: 'AvG', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details' },
-  {id: 3,  Action: 'Edit', name: 'Norton', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details' },
-  {id: 4,  Action: 'Edit', name: 'MacAfee', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details' },
-  {id: 5,  Action: 'Edit', name: 'AvG', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details' },
-  {id: 6,  Action: 'Edit', name: 'Norton', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details' },
-  {id: 7,  Action: 'Edit', name: 'MacAfee', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details' },
-  {id: 8,  Action: 'Edit', name: 'AvG', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details' },
-  {id: 9,  Action: 'Edit', name: 'Norton', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details' },
-  {id: 10,  Action: 'Edit', name: 'MacAfee', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details' },
+  {id: 1, Action: 'Edit', name: 'MacAfee', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(120)' },
+  {id: 2,  Action: 'Edit', name: 'AvG', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(200)' },
+  {id: 3,  Action: 'Edit', name: 'Norton', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(137)' },
+  {id: 4,  Action: 'Edit', name: 'MacAfee', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(153)' },
+  {id: 5,  Action: 'Edit', name: 'AvG', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(175)' },
+  {id: 6,  Action: 'Edit', name: 'Norton', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(176)' },
+  {id: 7,  Action: 'Edit', name: 'MacAfee', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(20)' },
+  {id: 8,  Action: 'Edit', name: 'AvG', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(39)' },
+  {id: 9,  Action: 'Edit', name: 'Norton', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(23)' },
+  {id: 10,  Action: 'Edit', name: 'MacAfee', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(35)' },
 ];
 
 @Component({
@@ -85,7 +85,7 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
  public openDialog(action, obj) {
     obj.action = action;
     const dialogRef = this.dialog.open( DialogBoxComponent, {
-      width: '250px',
+      width: '320px',
       data: obj
     });
 
@@ -98,8 +98,7 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
         this.deleteRowData(result.data);
       } else if (result.event === 'AddAll') {
         this.updateAll(result.data);
-      }
-    });
+        } });
   }
 
  public addRowData( rowobj: any ) {
@@ -112,7 +111,7 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
       IsActive: rowobj.IsActive,
       UniqueKey: rowobj.UniqueKey,
     });
-    this.dataSource = new MatTableDataSource(this. dataSourceNew);
+    this.dataSource = new MatTableDataSource(this.dataSourceNew);
     this.table.renderRows();
   }
   public updateRowData(rowobj) {
@@ -123,7 +122,7 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
         value.IsActive = rowobj.IsActive ;
         value.UniqueKey = rowobj.UniqueKey;
       }
-      this.dataSource = new MatTableDataSource(this. dataSourceNew);
+      this.dataSource = new MatTableDataSource(this.dataSourceNew);
       return true;
     });
   }
@@ -135,7 +134,7 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
         value.IsActive = rowobj.IsActive ;
         value.UniqueKey = rowobj.UniqueKey;
       }
-      this.dataSource = new MatTableDataSource(this. dataSourceNew);
+      this.dataSource = new MatTableDataSource(this.dataSourceNew);
       return true;
     });
   }
@@ -143,10 +142,10 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
     this.dataSourceNew  = this.dataSourceNew.filter(( value, key) => {
       return value.id !== rowobj.id;
     });
-    this.dataSource = new MatTableDataSource(this. dataSourceNew);
+    this.dataSource = new MatTableDataSource(this.dataSourceNew);
   }
 
-
+ 
 
 
 }

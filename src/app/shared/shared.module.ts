@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatDividerModule, MatToolbarModule, MatIconModule, MatButtonModule, MatMenuModule, MatListModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
-
+import {MatCardModule} from '@angular/material/card';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -45,7 +46,9 @@ import { MatInputModule } from '@angular/material/input';
     MatDialogModule,
     MatInputModule,
     MatFormFieldModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule
   ],
   exports: [
     HeaderComponent,
@@ -60,7 +63,9 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
-    DialogBoxComponent
+    DialogBoxComponent,
+    MatCardModule,
+    MatCheckboxModule
   ]
 })
 export class SharedModule { }

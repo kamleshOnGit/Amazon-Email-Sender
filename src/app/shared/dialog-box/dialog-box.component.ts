@@ -20,6 +20,7 @@ export class DialogBoxComponent {
 
   action: string;
   localdata: any;
+  selectcheck = false;
 
   constructor(
     public dialogRef: MatDialogRef<DialogBoxComponent>,
@@ -28,6 +29,7 @@ export class DialogBoxComponent {
     console.log(data);
     this.localdata = {...data};
     this.action = this.localdata.action;
+    this.selectcheck = this.localdata.IsActive;
   }
 
   doAction() {
@@ -37,5 +39,11 @@ export class DialogBoxComponent {
   closeDialog() {
     this.dialogRef.close({event: 'Cancel'});
   }
-
+  updateIsActive() {
+    if (this.selectcheck === true) {
+      this.localdata.IsActive = 'Yes';
+    } else {
+      this.localdata.IsActive = 'No';
+    }
+  }
 }
