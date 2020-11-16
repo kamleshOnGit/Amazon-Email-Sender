@@ -1,12 +1,17 @@
-<div class="d-flex justify-content-start align-items-center" >
-  <mat-form-field fxFlex="40%">
-    <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Product Name/SKU search">
-  </mat-form-field>
-</div>
+ 
   <div  class="d-flex justify-content-between align-items-center"  > 
-  <button class="d-flex" (click)="openDialog('Upload File',{})"  mat-raised-button>Upload Multiple Products</button>
-  <button  class="d-flex" (click)="openDialog('Add',{})" mat-raised-button>Upload Single Products</button> 
 
+    <div fxFlex="100%" class="form-group border w-25 border-2 p-2  d-flex justify-content-between rounded-lg border-dark">
+      <button mat-icon-button>
+        <mat-icon>search</mat-icon>
+    </button> 
+    <input matInput type="text"  class="form-control" (keyup)="doFilter($event.target.value)" placeholder="Product Name/SKU search">
+      
+    </div> 
+    <div class="d-flex" > 
+  <button class="d-flex" (click)="openDialog('Upload File',{})"  mat-raised-button>Upload Multiple Products</button>
+  <button  class="d-flex  ml-5" (click)="openDialog('Add',{})" mat-raised-button>Upload Single Products</button> 
+</div>
 </div>
   <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
     <div fxFlex="100">

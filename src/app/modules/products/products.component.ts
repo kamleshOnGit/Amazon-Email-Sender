@@ -49,8 +49,9 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class ProductsComponent implements  AfterViewInit , OnInit {
 
   displayedColumns: string[] = ['Action', 'Product Name', 'Category', 'IsActive', 'UniqueKey'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA) ;
+
   dataSourceNew = ELEMENT_DATA;
+  dataSource = new MatTableDataSource(this.dataSourceNew) ;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator , {static: true}) paginator: MatPaginator;
@@ -68,6 +69,7 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
 
   ngOnInit() {
     // this.getAllOwners();
+    this.dataSource = new MatTableDataSource(this.dataSourceNew);
   }
   public getAllOwners = () => {
     this.repoService.getData('api/owner')
@@ -89,7 +91,7 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
       data: obj
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe( (result) => {
       if (result.event === 'Add') {
         this.addRowData(result.data);
       } else if (result.event === 'Update') {
@@ -112,7 +114,8 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
       UniqueKey: rowobj.UniqueKey,
     });
     this.dataSource = new MatTableDataSource(this.dataSourceNew);
-    this.table.renderRows();
+    // this.table.renderRows();
+    this.paginator._changePageSize(this.paginator.pageSize);
   }
   public updateRowData(rowobj) {
     this.dataSourceNew  = this.dataSourceNew.filter((value, key) => {
@@ -123,6 +126,7 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
         value.UniqueKey = rowobj.UniqueKey;
       }
       this.dataSource = new MatTableDataSource(this.dataSourceNew);
+      this.paginator._changePageSize(this.paginator.pageSize);
       return true;
     });
   }
@@ -135,6 +139,7 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
         value.UniqueKey = rowobj.UniqueKey;
       }
       this.dataSource = new MatTableDataSource(this.dataSourceNew);
+      this.paginator._changePageSize(this.paginator.pageSize);
       return true;
     });
   }
@@ -143,9 +148,9 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
       return value.id !== rowobj.id;
     });
     this.dataSource = new MatTableDataSource(this.dataSourceNew);
+    this.paginator._changePageSize(this.paginator.pageSize);
   }
 
- 
 
 
 }
