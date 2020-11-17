@@ -15,6 +15,18 @@
     <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox>
   </mat-form-field>
   
+  <mat-form-field *ngIf="action == 'Updatekey' || action ==  'AddSinglekey';">
+    <label> SKU</label>
+    <input placeholder="SKU" class="form-control mb-3" matInput [(ngModel)]="localdata.SKU">
+    <label> Batch Code </label>
+    <input placeholder="Batch Code" class="form-control mb-3" matInput [(ngModel)]="localdata.BatchCode">
+    <label> Unique Keys</label>
+    <input placeholder="Code Available" class="form-control mb-3" matInput [(ngModel)]="localdata.CodeAvailable">
+    <label>Code Used</label>
+    <input placeholder="Code Used" class="form-control mb-3" matInput [(ngModel)]="localdata.CodeUsed">
+    <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox>
+  </mat-form-field>
+
   <mat-card *ngIf="action === 'Delete'">
     <p>Sure to delete <b>{{local_data.name}}</b>?</p>
   </mat-card>

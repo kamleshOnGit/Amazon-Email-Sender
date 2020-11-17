@@ -131,6 +131,8 @@ MIT
 @angular/router
 MIT
 
+angular-email-editor
+
 bootstrap
 MIT
 The MIT License (MIT)

@@ -18,7 +18,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
+import { EmailTemplateDialogBoxComponent } from './email-template-dialog-box/email-template-dialog-box.component';
+import { EmailEditorModule } from 'angular-email-editor';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MatInputModule } from '@angular/material/input';
     AreaComponent,
     CardComponent,
     PieComponent,
-    DialogBoxComponent
+    DialogBoxComponent,
+    EmailTemplateDialogBoxComponent
   ],
   imports: [
     CommonModule,
@@ -48,7 +50,8 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatButtonModule,
     MatCardModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    EmailEditorModule
   ],
   exports: [
     HeaderComponent,
@@ -65,7 +68,8 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     DialogBoxComponent,
     MatCardModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    EmailEditorModule
   ]
 })
 export class SharedModule { }

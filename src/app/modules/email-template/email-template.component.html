@@ -1,1 +1,53 @@
-<p>email-template works!</p>
+ 
+  <div  class="d-flex justify-content-between align-items-center"  > 
+
+    <div fxFlex="100%" class="form-group border w-25 border-2 p-2  d-flex justify-content-between rounded-lg border-dark">
+        <button mat-icon-button>
+            <mat-icon>search</mat-icon>
+        </button> <input matInput type="text"  class="form-control" (keyup)="doFilter($event.target.value)" placeholder="Email template..">
+      
+    </div> 
+    <div class="d-flex" > 
+  <button class="d-flex"  (click)="openDialog('edittemplate',{})" mat-raised-button>Add Email Template</button>
+  
+</div>
+</div>
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+    <div fxFlex="100">
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="Action">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+      <td mat-cell *matCellDef="let element"   (click)="openDialog('edittemplate',{})" > {{element.Action}} </td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="tamplateName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Template Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.tamplateName}} </td>
+    </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+      <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+    </ng-container>
+  
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="IsActive">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Is Active </th>
+      <td mat-cell *matCellDef="let element"> {{element.IsActive}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="DateModified">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Modified</th>
+        <td mat-cell *matCellDef="let element" (click)="openDialog('Updatekey',element)"> {{element.DateModified}} </td>
+      </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  </div>
+  </div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

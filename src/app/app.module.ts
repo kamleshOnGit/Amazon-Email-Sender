@@ -18,6 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { DialogBoxComponent } from './shared/dialog-box/dialog-box.component';
+import { EmailTemplateDialogBoxComponent  } from './shared/email-template-dialog-box/email-template-dialog-box.component';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
     MatFormFieldModule,
     MatButtonModule,
   ],
-  entryComponents: [DialogBoxComponent, AppComponent],
+  entryComponents: [DialogBoxComponent, EmailTemplateDialogBoxComponent, AppComponent],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } } ],
   bootstrap: [AppComponent]
 })
