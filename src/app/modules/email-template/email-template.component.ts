@@ -17,7 +17,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { RepositoryService } from '../../shared/servercomunication.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
-import { EmailTemplateDialogBoxComponent  } from '../../shared/email-template-dialog-box/email-template-dialog-box.component';
+// import { EmailTemplateDialogBoxComponent  } from '../../shared/email-template-dialog-box/email-template-dialog-box.component';
 
 
 
@@ -43,13 +43,27 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {id: 10,  Action: 'Edit/Delete', tamplateName: 'MacAfee', category: 'Anti Virus', IsActive: 'Yes' , DateModified: '15 Feb 20' },
 ];
 
+
+ 
+
 @Component({
   selector: 'app-email-template',
   templateUrl: './email-template.component.html',
   styleUrls: ['./email-template.component.scss']
 })
 export class EmailTemplateComponent implements OnInit , AfterViewInit {
-
+  
+  content = '<p>Some html</p>';
+  config: any = {
+    allowedContent: true,
+    toolbar: [['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', 'Link', '-', 'CreatePlaceholder']],
+    removePlugins: 'elementspath',
+    resize_enabled: false,
+    extraPlugins: 'font,divarea,placeholder',
+    contentsCss: ['body {font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}'],
+    autoParagraph: false,
+    enterMode: 2
+  };
 
   displayedColumns: string[] = ['Action', 'tamplateName', 'category', 'IsActive', 'DateModified'];
 
@@ -61,6 +75,8 @@ export class EmailTemplateComponent implements OnInit , AfterViewInit {
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 
   constructor(private repoService: RepositoryService , public dialog: MatDialog) { }
+
+
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
@@ -86,74 +102,37 @@ export class EmailTemplateComponent implements OnInit , AfterViewInit {
   }
   public redirectToDelete = (id: string) => {
   }
+  onChange($event) {
 
- public openDialog(action, obj) {
-    obj.action = action;
-    const dialogRef = this.dialog.open( EmailTemplateDialogBoxComponent, {
-      width: '1120px',
-      data: obj
-    });
-
-    dialogRef.afterClosed().subscribe( (result) => {
-      if (result.event === 'Add') {
-        this.addRowData(result.data);
-      } else if (result.event === 'Update') {
-        this.updateRowData(result.data);
-      } else if (result.event === 'Delete') {
-        this.deleteRowData(result.data);
-      } else if (result.event === 'AddAll') {
-        this.updateAll(result.data);
-        } });
   }
 
- public addRowData( rowobj: any ) {
-    const d = new Date();
-    this.dataSourceNew .push( {
-      id: d.getTime(),
-      tamplateName: rowobj.tamplateName,
-      Action: 'Edit',
-      category: rowobj.category,
-      IsActive: rowobj.IsActive,
-      DateModified: rowobj.DateModified,
-    });
-    this.dataSource = new MatTableDataSource(this.dataSourceNew);
-    // this.table.renderRows();
-    this.paginator._changePageSize(this.paginator.pageSize);
+  onEditorChange($event) {
+
   }
-  public updateRowData(rowobj) {
-    this.dataSourceNew  = this.dataSourceNew.filter((value, key) => {
-      if (value.id === rowobj.id) {
-        value.tamplateName = rowobj.tamplateName;
-        value.category = rowobj.category;
-        value.IsActive = rowobj.IsActive ;
-        value.DateModified = rowobj.DateModified;
-      }
-      this.dataSource = new MatTableDataSource(this.dataSourceNew);
-      this.paginator._changePageSize(this.paginator.pageSize);
-      return true;
-    });
+  onReady($event) {
   }
-  public updateAll(rowobj) {
-    this.dataSourceNew  = this.dataSourceNew .filter((value, key) => {
-      if (value.id === rowobj.id) {
-        value.tamplateName = rowobj.tamplateName;
-        value.category = rowobj.category;
-        value.IsActive = rowobj.IsActive ;
-        value.DateModified = rowobj.DateModified;
-      }
-      this.dataSource = new MatTableDataSource(this.dataSourceNew);
-      this.paginator._changePageSize(this.paginator.pageSize);
-      return true;
-    });
+  onFocus($event) {
+
   }
-  public  deleteRowData(rowobj) {
-    this.dataSourceNew  = this.dataSourceNew.filter(( value, key) => {
-      return value.id !== rowobj.id;
-    });
-    this.dataSource = new MatTableDataSource(this.dataSourceNew);
-    this.paginator._changePageSize(this.paginator.pageSize);
+  onBlur($event) {
+
+  }
+  onContentDom($event) {
+
   }
 
+  onFileUploadRequest($event) {
 
+  }
+
+  onFileUploadResponse($event) {
+
+  }
+  onPaste($event) {
+
+  }
+  onDrop($event) {
+
+  }
 
 }

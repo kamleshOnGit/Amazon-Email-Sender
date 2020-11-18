@@ -46,7 +46,6 @@ import {OverlayModule} from '@angular/cdk/overlay';
 @NgModule({
   exports: [
     A11yModule,
-
     CdkStepperModule,
     CdkTableModule,
     CdkTreeModule,

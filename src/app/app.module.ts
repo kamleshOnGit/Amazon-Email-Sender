@@ -20,6 +20,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { DialogBoxComponent } from './shared/dialog-box/dialog-box.component';
 import { EmailTemplateDialogBoxComponent  } from './shared/email-template-dialog-box/email-template-dialog-box.component';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import { CKEditorModule } from 'ng2-ckeditor';
+import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +44,8 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
+    CKEditorModule,
+    MaterialTimePickerModule
   ],
   entryComponents: [DialogBoxComponent, EmailTemplateDialogBoxComponent, AppComponent],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } } ],
