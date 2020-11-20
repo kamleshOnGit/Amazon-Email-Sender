@@ -70,12 +70,14 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-   
+
+  
+  <div class="d-flex justify-content-between align-content-center pt-5 ">
+    <span class="d-flex" > Send Daily Sales Reports Email at:</span>  
+    <material-timepicker color="primary" class="w-50 d-inline-block" label="Hour" [userTime]="exportTime" (change)="onChangeHour($event)" revertLabel="Remove" submitLabel="Ok"></material-timepicker>
+    </div>
 
     </mat-tab>
   </mat-tab-group>
 
-  <div class="d-flex justify-content-between align-content-center pt-5 ">
-  <span class="d-flex" > Send Daily Sales Reports Email at:</span>  
-  <material-timepicker color="primary" class="w-50 d-inline-block" label="Hour" [userTime]="exportTime" (change)="onChangeHour($event)" revertLabel="Remove" submitLabel="Ok"></material-timepicker>
-  </div>
+  

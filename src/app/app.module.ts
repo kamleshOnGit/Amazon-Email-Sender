@@ -20,8 +20,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { DialogBoxComponent } from './shared/dialog-box/dialog-box.component';
 import { EmailTemplateDialogBoxComponent  } from './shared/email-template-dialog-box/email-template-dialog-box.component';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
-import { CKEditorModule } from 'ng2-ckeditor';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
+import { TextEditorComponent } from './modules/text-editor/text-editor.component';
+import { SendManualEmailComponent } from './modules/send-manual-email/send-manual-email.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +32,8 @@ import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
     UniqueKeysComponent,
     EmailTemplateComponent,
     SettingComponent,
+    TextEditorComponent,
+    SendManualEmailComponent
   ],
   imports: [
     BrowserModule,

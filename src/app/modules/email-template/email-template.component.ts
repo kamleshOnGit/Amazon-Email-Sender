@@ -18,7 +18,7 @@ import { RepositoryService } from '../../shared/servercomunication.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 // import { EmailTemplateDialogBoxComponent  } from '../../shared/email-template-dialog-box/email-template-dialog-box.component';
-
+import { TextEditorComponent } from '../text-editor/text-editor.component';
 
 
 export interface PeriodicElement {
@@ -44,7 +44,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 
- 
 
 @Component({
   selector: 'app-email-template',
@@ -52,18 +51,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./email-template.component.scss']
 })
 export class EmailTemplateComponent implements OnInit , AfterViewInit {
-  
-  content = '<p>Some html</p>';
-  config: any = {
-    allowedContent: true,
-    toolbar: [['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', 'Link', '-', 'CreatePlaceholder']],
-    removePlugins: 'elementspath',
-    resize_enabled: false,
-    extraPlugins: 'font,divarea,placeholder',
-    contentsCss: ['body {font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}'],
-    autoParagraph: false,
-    enterMode: 2
-  };
+
+
 
   displayedColumns: string[] = ['Action', 'tamplateName', 'category', 'IsActive', 'DateModified'];
 
@@ -101,38 +90,6 @@ export class EmailTemplateComponent implements OnInit , AfterViewInit {
   public redirectToUpdate = (id: string) => {
   }
   public redirectToDelete = (id: string) => {
-  }
-  onChange($event) {
-
-  }
-
-  onEditorChange($event) {
-
-  }
-  onReady($event) {
-  }
-  onFocus($event) {
-
-  }
-  onBlur($event) {
-
-  }
-  onContentDom($event) {
-
-  }
-
-  onFileUploadRequest($event) {
-
-  }
-
-  onFileUploadResponse($event) {
-
-  }
-  onPaste($event) {
-
-  }
-  onDrop($event) {
-
   }
 
 }

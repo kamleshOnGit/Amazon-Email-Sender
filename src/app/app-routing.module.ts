@@ -7,6 +7,7 @@ import { OrdersComponent } from './modules/orders/orders.component';
 import { UniqueKeysComponent } from './modules/unique-keys/unique-keys.component';
 import { EmailTemplateComponent } from './modules/email-template/email-template.component';
 import { SettingComponent} from './modules/setting/setting.component';
+import { SendManualEmailComponent} from './modules/send-manual-email/send-manual-email.component';
 
 const routes: Routes = [{
   path: '',
@@ -33,6 +34,10 @@ const routes: Routes = [{
   {
     path: 'settings',
     component: SettingComponent
+  },
+  {
+    path: 'manual-Email',
+    component: SendManualEmailComponent
   },
 ]
 }];
