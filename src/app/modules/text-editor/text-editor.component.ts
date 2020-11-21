@@ -13,7 +13,7 @@ export class TextEditorComponent implements OnInit {
 
   constructor() { }
 
- public model = { content : '' } ;
+ public model = { content : 'Type the content of email template here here!' } ;
  public config: any = {
     allowedContent: true,
     resize_enabled: false,
