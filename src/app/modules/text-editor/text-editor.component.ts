@@ -24,8 +24,8 @@ export class TextEditorComponent implements OnInit {
   }
 
 
-  onChange({ editor }: ChangeEvent ) {
-    const data = editor.getData();
+  onChange($event) {
+    const data = $event;
 
     console.log( data );
   }
