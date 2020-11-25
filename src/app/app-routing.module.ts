@@ -9,6 +9,11 @@ import { EmailTemplateComponent } from './modules/email-template/email-template.
 import { SettingComponent} from './modules/setting/setting.component';
 import { SendManualEmailComponent} from './modules/send-manual-email/send-manual-email.component';
 
+import { VendorsComponent } from './superAdmin/vendors/vendors.component';
+import { UsersComponent } from './superAdmin/users/users.component';
+import { EmailSettingsComponent } from './superAdmin/email-settings/email-settings.component';
+import { ManualOrderProcessingComponent } from './superAdmin/manual-order-processing/manual-order-processing.component';
+import { SystemSettingComponent } from './superAdmin/system-setting/system-setting.component';
 const routes: Routes = [{
   path: '',
   component: DefaultComponent,
@@ -38,6 +43,26 @@ const routes: Routes = [{
   {
     path: 'manual-Email',
     component: SendManualEmailComponent
+  },
+  {
+    path: 'manual-Order-Processing',
+    component: ManualOrderProcessingComponent
+  },
+  {
+    path: 'email-settings',
+    component: EmailSettingsComponent
+  },
+  {
+    path: 'users',
+    component: UsersComponent
+  },
+  {
+    path: 'vendors',
+    component: VendorsComponent
+  },
+  {
+    path: 'system-setting',
+    component: SystemSettingComponent
   },
 ]
 }];

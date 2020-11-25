@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            Scheduler Time
+        </div>
+        <div class="col-6 text-left">
+            <mat-form-field appearance="none">
+                <mat-label>Select time</mat-label>
+                <mat-select>
+                  <mat-option *ngFor="let time of times" [value]="time">
+                    {{time}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            SMS Gateway Keys
+        </div>
+        <div class="col-6 text-left">
+            <mat-form-field class="example-full-width">
+                <mat-label>Select gateways</mat-label>
+                <input  matInput placeholder="gateways" class="form-control" value="gateways">
+              </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 ">
+            <button class="btn btn-primary mt-3"> Save</button>
+        </div>
+        <div class="col-12 text-left">
+            <button class="btn btn-danger mt-3"> Run the Schduler now</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+ 
+  <div  class="d-flex justify-content-between align-items-center"  > 
+
+    <div fxFlex="100%" class="form-group border w-25 border-2 p-2  d-flex justify-content-between rounded-lg border-dark">
+      <button mat-icon-button>
+        <mat-icon>search</mat-icon>
+    </button> 
+    <input matInput type="text"  class="form-control" (keyup)="doFilter($event.target.value)" placeholder="search vendors">
+      
+    </div> 
+    
+</div>
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+    <div fxFlex="100">
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="Vendorname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Vendor Name </th>
+      <td mat-cell *matCellDef="let element" > {{element.Vendorname}} </td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="Pendingorder">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Pending Order</th>
+      <td mat-cell *matCellDef="let element"> {{element.Pendingorder}} </td>
+    </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="Uplodorder">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Uplod Order </th>
+      <td mat-cell *matCellDef="let element"> {{element.Uplodorder}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="Procesorder">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Process Order </th>
+        <td mat-cell *matCellDef="let element" > {{element.Procesorder}} </td>
+      </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  </div>
+  </div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+   

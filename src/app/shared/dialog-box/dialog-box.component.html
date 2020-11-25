@@ -5,13 +5,13 @@
   </div>
   <mat-form-field *ngIf="action == 'Update' || action ==  'Add';">
     <label> Name</label>
-    <input placeholder="name" class="form-control mb-3" matInput [(ngModel)]="localdata.name">
+    <input placeholder="name" class="form-control  border border-dark mb-3" matInput [(ngModel)]="localdata.name">
     <label> Category </label>
-    <input placeholder="category" class="form-control mb-3" matInput [(ngModel)]="localdata.category">
+    <input placeholder="category" class="form-control  border border-dark mb-3" matInput [(ngModel)]="localdata.category">
     <label> Is Active</label>
-    <input placeholder="IsActive" class="form-control mb-3" matInput [(ngModel)]="localdata.IsActive">
+    <input placeholder="IsActive" class="form-control  border border-dark mb-3" matInput [(ngModel)]="localdata.IsActive">
     <label> SKU ID</label>
-    <input placeholder="UniqueKey" class="form-control mb-3" matInput [(ngModel)]="localdata.UniqueKey">
+    <input placeholder="UniqueKey" class="form-control  border border-dark mb-3" matInput [(ngModel)]="localdata.UniqueKey">
     <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox>
   </mat-form-field>
   
@@ -26,6 +26,76 @@
     <input placeholder="Code Used" class="form-control mb-3" matInput [(ngModel)]="localdata.CodeUsed">
     <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox>
   </mat-form-field>
+
+  <div *ngIf="action == 'AddNewVendor';">
+   <p> <label> Vendor Name</label>
+    <input placeholder="Vendor name" class="form-control border border-dark mb-3" matInput [(ngModel)]="localdata.Vendorname">
+  </p> 
+  <p> 
+    <label class="mr-3">Is Active</label>
+    <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox>
+  </p>
+  <p> 
+    <label> Email Address </label>
+    <input placeholder="Email Address" class="form-control  border border-dark mb-3" matInput [(ngModel)]="localdata.Emailaddress">
+  </p>
+  <p> 
+    <label> Password</label>
+    <input placeholder="Password" class="form-control  border border-dark mb-3" matInput [(ngModel)]="localdata.password">
+  </p>
+  <p> 
+    <label class="mr-3">Manual Email Allowed</label>
+    <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox>
+  </p>
+  <p> 
+    <label>Number of Manual emails per hour</label>
+    <input placeholder="" class="form-control  border border-dark mb-3" matInput [(ngModel)]="localdata.nofmailperhour">
+  </p>
+  <p> 
+    <label> Sync Products to MWS (Each days in hours) </label>
+    <mat-label>Choose a date</mat-label>
+    <mat-form-field> 
+    <input matInput [matDatepicker]="picker">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </p>
+  </div>
+
+  <div *ngIf="action == 'AddNewUser';">
+    <p> <label> User Name</label>
+     <input placeholder="User name" class="form-control border border-dark mb-3" matInput [(ngModel)]="localdata.Username">
+   </p> 
+   <p> 
+     <label class="mr-3">Is Active</label>
+     <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox>
+   </p>
+   <p> 
+     <label> Email Address </label>
+     <input placeholder="Email Address" class="form-control  border border-dark mb-3" matInput [(ngModel)]="localdata.Emailaddress">
+   </p>
+   <p> 
+     <label> Password</label>
+     <input placeholder="Password" class="form-control  border border-dark mb-3" matInput [(ngModel)]="localdata.password">
+   </p>
+   <p> 
+     <label class="mr-3">Manual Email Allowed</label>
+     <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox>
+   </p>
+   <p> 
+     <label>Number of Manual emails per hour</label>
+     <input placeholder="" class="form-control  border border-dark mb-3" matInput [(ngModel)]="localdata.nofmailperhour">
+   </p>
+   <p> 
+     <label> Sync Products to MWS (Each days in hours) </label>
+     <mat-label>Choose a date</mat-label>
+     <mat-form-field> 
+     <input matInput [matDatepicker]="picker">
+     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+     <mat-datepicker #picker></mat-datepicker>
+     </mat-form-field>
+   </p>
+   </div>
 
   <mat-card *ngIf="action === 'Delete'">
     <p>Sure to delete <b>{{local_data.name}}</b>?</p>
