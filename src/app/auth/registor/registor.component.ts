@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./registor.component.scss']
 })
 export class RegistorComponent implements OnInit {
+  username: string;
+  password: string;
 
   constructor() { }
 
   ngOnInit() {
   }
+ onSubmit($event) {
 
+ }
 }

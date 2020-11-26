@@ -30,7 +30,9 @@
 <br>
 
 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+    
     <div fxFlex="60">
+        <h2> Pending orders for shipment</h2>
         <div class="mat-elevation-z8">
             <table mat-table [dataSource]="dataSource">
 
@@ -68,6 +70,7 @@
     </div>
     <div fxFlex="40">
         <app-widget-pie [data]="pieChart"></app-widget-pie>
+        <button class="btn btn-primary m-auto w-50"> Download Report</button>
     </div>
 </div>
 

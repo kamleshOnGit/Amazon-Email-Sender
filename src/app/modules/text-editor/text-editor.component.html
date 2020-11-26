@@ -10,8 +10,9 @@
       <label class="w-25"> Category</label>
       <input placeholder="Template category" class="form-control mb-3 border border-dark" matInput >
      </div> 
-     <mat-checkbox  class="d-block mb-4" ></mat-checkbox>
-      
+     <div class="form-group">
+     <mat-checkbox  class="d-inline mb-4" ></mat-checkbox> Active
+    </div>
   <ckeditor
     [(ngModel)]="model.content"
     [config]="config"

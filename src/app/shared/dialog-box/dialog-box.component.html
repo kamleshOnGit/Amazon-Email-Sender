@@ -14,7 +14,7 @@
     <input placeholder="UniqueKey" class="form-control  border border-dark mb-3" matInput [(ngModel)]="localdata.UniqueKey">
     <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox>
   </mat-form-field>
-  
+
   <mat-form-field *ngIf="action == 'Updatekey' || action ==  'AddSinglekey';">
     <label> SKU</label>
     <input placeholder="SKU" class="form-control mb-3" matInput [(ngModel)]="localdata.SKU">
@@ -26,7 +26,16 @@
     <input placeholder="Code Used" class="form-control mb-3" matInput [(ngModel)]="localdata.CodeUsed">
     <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox>
   </mat-form-field>
-
+  <mat-form-field *ngIf="action == 'filteruniquekey';">
+    <label> Brand </label>
+    <input placeholder="Brand" class="form-control mb-3" matInput [(ngModel)]="localdata.SKU">
+    <label> SKU</label>
+    <input placeholder="SKU" class="form-control mb-3" matInput [(ngModel)]="localdata.SKU">
+    <label> Status</label>
+    <input placeholder="SKU" class="form-control mb-3" matInput [(ngModel)]="localdata.SKU">
+    <label> Batch Code </label>
+    <input placeholder="Batch Code" class="form-control mb-3" matInput [(ngModel)]="localdata.BatchCode">
+  </mat-form-field>
   <div *ngIf="action == 'AddNewVendor';">
    <p> <label> Vendor Name</label>
     <input placeholder="Vendor name" class="form-control border border-dark mb-3" matInput [(ngModel)]="localdata.Vendorname">

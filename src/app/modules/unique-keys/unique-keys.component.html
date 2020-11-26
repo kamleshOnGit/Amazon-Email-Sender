@@ -7,7 +7,7 @@
         </button> <input matInput type="text"  class="form-control" (keyup)="doFilter($event.target.value)" placeholder="Brand/Status/SKU/Batch..">
         
     </div> 
-    <button mat-icon-button>
+    <button (click)="openDialog('filteruniquekey',{})" mat-icon-button>
         <mat-icon>filter_alt</mat-icon>
     </button>
     </div>
