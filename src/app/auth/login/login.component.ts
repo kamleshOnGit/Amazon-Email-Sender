@@ -10,7 +10,7 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
   userverify = 'Hrishi';
-  passverify = '';
+  passverify = '12345';
 
   constructor(private router: Router , private route: ActivatedRoute) { }
 
