@@ -2,4 +2,80 @@ table {
     width: 100%;
     margin:20px auto
   };
-  .mat-drawer-container , .mat-form-field-appearance-fill .mat-form-field-flex { background-color:#fff!Important;}
+
+.btn-custom {
+  background-image: linear-gradient(90deg,#598bff,#36f);
+    border: none;
+    box-shadow: 0 0 0 0 #274bdb,0 0 20px 0 #1a34b8,none;
+    color: #fff;
+    padding: 1.1rem 1.1875rem;
+    text-shadow: none;
+    text-transform: uppercase;
+    border-radius: .17rem;
+    font-size: .875rem;
+    line-height: 1rem;
+    transition-duration: 0.15s;
+    transition-property: background-color,border-color,box-shadow,color;
+    transition-timing-function: ease-in;
+    cursor: pointer;
+    font-family: Open Sans,sans-serif;
+    font-weight: 700;
+}
+.btn-custom:hover {
+  background-image: linear-gradient(90deg,#a6c1ff,#598bff);
+}
+
+.btn-custom2 {
+  background-image: linear-gradient(90deg,#2ce69b,#00d68f);
+    border: none;
+    box-shadow: 0 0 0 0 #274bdb,0 0 20px 0 #1a34b8,none;
+    color: #fff;
+    padding: 1.1rem 1.1875rem;
+    text-shadow: none;
+    text-transform: uppercase;
+    border-radius: .17rem;
+    font-size: .875rem;
+    line-height: 1rem;
+    transition-duration: 0.15s;
+    transition-property: background-color,border-color,box-shadow,color;
+    transition-timing-function: ease-in;
+    cursor: pointer;
+    font-family: Open Sans,sans-serif;
+    font-weight: 700;
+}
+.btn-custom2:hover { 
+  background-image: linear-gradient(90deg,#8cfac7,#2ce69b);
+}
+
+:host ::ng-deep .searchdiv .mat-form-field-wrapper {
+  padding-bottom: 0em!important;
+}
+
+:host ::ng-deep .buttonsgroup .mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin: 0;
+}
+
+:host ::ng-deep .searchdiv .form-group {
+  margin-bottom: 0rem;
+}
+
+.custom-table {
+  background-color: #fff;
+  border: 1px solid #e4e9f2;
+  border-radius: .17rem;
+  box-shadow: none;
+  color: #222b45;
+  font-family: Open Sans,sans-serif;
+  font-size: .9375rem;
+  font-weight: 400;
+  line-height: 1.25rem;}
+
+  td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+    border-left: 1px solid #e4e9f2;
+    padding-left:24px;
+  }
+  :host ::ng-deep .mat-paginator{ background:transparent}
+  th.mat-header-cell { font-size:15px;color:#000}
+  .mat-cell, .mat-footer-cell{font-size:14px;color:#313234}
+
+  :host ::ng-deep .mat-paginator-page-size-label {display:none!important}

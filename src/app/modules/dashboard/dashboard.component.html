@@ -33,7 +33,7 @@
     
     <div fxFlex="60">
         <h2> Pending orders for shipment</h2>
-        <div class="mat-elevation-z8">
+        <div class="custom-table">
             <table mat-table [dataSource]="dataSource">
 
                 <!-- Position Column -->
@@ -68,9 +68,9 @@
         </div>
 
     </div>
-    <div fxFlex="40">
-        <app-widget-pie [data]="pieChart"></app-widget-pie>
-        <button class="btn btn-primary m-auto w-50"> Download Report</button>
+    <div fxFlex="40"  fxLayout="column" fxLayoutAlign="end center">
+        <app-widget-pie class="w-100" [data]="pieChart"></app-widget-pie>
+        
     </div>
 </div>
 
