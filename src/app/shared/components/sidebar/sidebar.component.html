@@ -1,6 +1,7 @@
 <mat-nav-list>
     
-    <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin">  <mat-icon>dashboard</mat-icon>  Dashboard</a>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin" [routerLinkActiveOptions]="{exact:
+        true}">  <mat-icon>dashboard</mat-icon>  Dashboard</a>
     <mat-divider></mat-divider>
     <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/products"> <mat-icon>explore</mat-icon> Products</a>
     <mat-divider></mat-divider>
@@ -13,8 +14,6 @@
     <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/manual-Email"> <mat-icon>markunread</mat-icon> Send Manual Email</a>
     <mat-divider></mat-divider>
     <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/settings"> <mat-icon>settings</mat-icon> Settings</a>
-    <mat-divider></mat-divider>
-    <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/manual-Email"> <mat-icon>markunread</mat-icon> Manual Email</a>
     <mat-divider></mat-divider>
     <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/manual-Order-Processing"> <mat-icon>supervised_user_circle</mat-icon> Manual Order Processing</a>
     <mat-divider></mat-divider>
