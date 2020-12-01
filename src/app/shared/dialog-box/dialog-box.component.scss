@@ -1,2 +1,59 @@
-.mat-input-element { background-color: #fff; padding: 10px;}
+.mat-input-element { background-color: #fff; padding: 3px;}
 .mat-form-field {width:100%}
+.model-header{position: relative;}
+.close{position: absolute; right:4px;top:4px}
+.model-header { border-bottom: 1px solid rgb(211, 209, 209); background-color: #fff;display: block;height:50px}
+
+.model-footer { border-top: 1px solid rgb(211, 209, 209); padding: 20px 0; }
+
+:host ::ng-deep mat-dialog-content{padding-top: 20px; padding-bottom: 20px;}
+.model-body {padding-top: 20px; padding-bottom: 20px;}
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: .2em 0 .2em 0;
+    border-top: .375em solid transparent;
+}
+  :host ::ng-deep .mat-form-field { line-height:1.5 ;border-radius: 6px;
+    background-color: #fff;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,.2);}
+
+  :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+       margin: 0;padding-bottom:0px;
+  }
+  :host ::ng-deep .mat-form-field-wrapper {
+    margin: 0;padding-bottom:0px!important;
+}
+:host ::ng-deep  .mat-form-field-underline {display:none!important}
+
+:host ::ng-deep .mat-form-field-appearance-fill .mat-form-field-infix {
+  padding: .0em 0 .75em 0;
+}
+:host ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+border-radius: 4px 4px 0 0;
+padding: 0em .75em 0 .75em;
+}
+:host ::ng-deep .mat-form-field-underline { display:none!important}
+:host ::ng-deep .mat-form-field-wrapper { padding-bottom:0px}
+
+:host ::ng-deep  .mat-form-field-appearance-fill .mat-select-arrow-wrapper { transform: translateY(0%) }
+:host ::ng-deep .mat-icon-button{ width: 36px; height:36px}
+.btn-custom {
+    background-image: linear-gradient(90deg,#598bff,#36f);
+      border: none;
+      box-shadow: 0 0 0 0 #274bdb,0 0 20px 0 #1a34b8,none;
+      color: #fff;
+      padding: .6rem 1.1875rem;
+      text-shadow: none;
+      text-transform: uppercase;
+      border-radius: .17rem;
+      font-size: .875rem;
+      line-height: 1rem;
+      transition-duration: 0.15s;
+      transition-property: background-color,border-color,box-shadow,color;
+      transition-timing-function: ease-in;
+      cursor: pointer;
+      font-family: 'Source Sans Pro', sans-serif;;
+      font-weight: 700;
+  }
+  .btn-custom:hover {
+    background-image: linear-gradient(90deg,#a6c1ff,#598bff);
+  }

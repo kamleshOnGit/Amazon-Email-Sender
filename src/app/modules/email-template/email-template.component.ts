@@ -20,7 +20,6 @@ import { MatTable } from '@angular/material/table';
 // import { EmailTemplateDialogBoxComponent  } from '../../shared/email-template-dialog-box/email-template-dialog-box.component';
 import { TextEditorComponent } from '../text-editor/text-editor.component';
 
-
 export interface PeriodicElement {
   id: number;
   Action: string;
@@ -63,7 +62,7 @@ export class EmailTemplateComponent implements OnInit , AfterViewInit {
   @ViewChild(MatPaginator , {static: true}) paginator: MatPaginator;
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 
-  constructor(private repoService: RepositoryService , public dialog: MatDialog) { }
+  constructor(private repoService: RepositoryService , public dialog: MatDialog ) { }
 
 
 

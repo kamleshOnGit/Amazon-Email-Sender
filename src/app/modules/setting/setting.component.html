@@ -1,12 +1,12 @@
 <mat-tab-group>
     <mat-tab label="AWS Setting">
-        <div class="example-container pt-5">
-            <mat-form-field appearance="fill">
+        <div class="example-container p-5">
+            <mat-form-field class="mb-4" appearance="outline">
               <mat-label>MWS Key</mat-label>
               <input matInput>
             </mat-form-field>
             <br>
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="outline">
               <mat-label>MWS Token</mat-label>
               
               <input matInput>
@@ -16,8 +16,8 @@
           </div>
     </mat-tab>
     <mat-tab label="Product Categories"> 
-        <div class="example-container pt-5">
-            <mat-form-field appearance="fill">
+        <div class="example-container p-5">
+            <mat-form-field appearance="outline">
               <mat-label>Product Categories</mat-label>
               <textarea matInput></textarea>
             </mat-form-field>
@@ -25,8 +25,8 @@
 
     </mat-tab>
     <mat-tab label="Email Categories"> 
-        <div class="example-container pt-5">
-            <mat-form-field appearance="fill">
+        <div class="example-container p-5">
+            <mat-form-field appearance="outline">
               <mat-label>Email Categories</mat-label>
               <textarea matInput></textarea>
             </mat-form-field>
@@ -72,7 +72,7 @@
   </table>
 
   
-  <div class="d-flex justify-content-between align-content-center pt-5 ">
+  <div class="d-flex justify-content-between align-content-center pt-5 w-50">
     <span class="d-flex" > Send Daily Sales Reports Email at:</span>  
     <material-timepicker color="primary" class="w-50 d-inline-block" label="Hour" [userTime]="exportTime" (change)="onChangeHour($event)" revertLabel="Remove" submitLabel="Ok"></material-timepicker>
     </div>

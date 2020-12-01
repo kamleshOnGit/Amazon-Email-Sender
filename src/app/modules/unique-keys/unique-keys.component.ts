@@ -83,7 +83,8 @@ export class UniqueKeysComponent implements OnInit , AfterViewInit {
  public openDialog(action, obj) {
     obj.action = action;
     const dialogRef = this.dialog.open( DialogBoxComponent, {
-      width: '320px',
+      width: '1000px',
+
       data: obj
     });
 

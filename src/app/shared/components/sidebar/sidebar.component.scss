@@ -14,6 +14,6 @@
     }
   }
 }
-
-.list-item-active { color:red}
+:host ::deep mat-list-item{ color:#8f9bb3}
+.list-item-active { color:#FF2829}
 a{ font-family: 'Source Sans Pro', sans-serif;;}

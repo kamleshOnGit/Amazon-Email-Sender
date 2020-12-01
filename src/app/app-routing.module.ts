@@ -15,7 +15,7 @@ import { UsersComponent } from './superAdmin/users/users.component';
 import { EmailSettingsComponent } from './superAdmin/email-settings/email-settings.component';
 import { ManualOrderProcessingComponent } from './superAdmin/manual-order-processing/manual-order-processing.component';
 import { SystemSettingComponent } from './superAdmin/system-setting/system-setting.component';
-
+import { TextEditorComponent } from './modules/text-editor/text-editor.component';
 
 const routes: Routes = [{
       path: '',
@@ -76,6 +76,10 @@ const routes: Routes = [{
         path: 'system-setting',
         component: SystemSettingComponent
       },
+      {
+        path: 'edit-email-template',
+        component: TextEditorComponent
+      }
     ]
   },
 

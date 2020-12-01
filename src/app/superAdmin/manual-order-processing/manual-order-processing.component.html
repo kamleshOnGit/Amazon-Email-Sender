@@ -1,18 +1,18 @@
  
   <div  class="d-flex justify-content-between align-items-center"  > 
 
-    <div fxFlex="100%" class="form-group border w-25 border-2 p-2  d-flex justify-content-between rounded-lg border-dark">
-      <button mat-icon-button>
-        <mat-icon>search</mat-icon>
-    </button> 
-    <input matInput type="text"  class="form-control" (keyup)="doFilter($event.target.value)" placeholder="search vendors">
-      
-    </div> 
+    <div fxFlex="100%" class="  searchdiv  d-flex justify-content-between">
+      <mat-form-field appearance="outline">
+        <mat-label>Search Vendor</mat-label>
+        <input matInput (keyup)="doFilter($event.target.value)" placeholder="Vendor Name/SKU search">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+      </div> 
     
 </div>
   <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
     <div fxFlex="100">
-<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" matSort class="custom-table">
 
     <!-- Position Column -->
     <ng-container matColumnDef="Vendorname">

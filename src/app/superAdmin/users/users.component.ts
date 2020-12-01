@@ -130,7 +130,7 @@ export class UsersComponent implements AfterViewInit , OnInit {
  public openDialog(action, obj) {
     obj.action = action;
     const dialogRef = this.dialog.open( DialogBoxComponent, {
-      width: '320px',
+      width: '1000px',
       data: obj
     });
 
