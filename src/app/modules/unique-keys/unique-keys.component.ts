@@ -44,7 +44,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class UniqueKeysComponent implements OnInit , AfterViewInit {
 
-  displayedColumns: string[] = ['Action' , 'SKU', 'BatchCode', 'CodeAvailable', 'CodeUsed', ];
+  displayedColumns: string[] = ['SKU', 'BatchCode', 'CodeAvailable', 'CodeUsed','Action'  ];
 
   dataSourceNew = ELEMENT_DATA;
   dataSource = new MatTableDataSource(this.dataSourceNew) ;

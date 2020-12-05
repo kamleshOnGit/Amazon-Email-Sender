@@ -86,7 +86,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class OrdersComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['Actions' , 'OrderSKU', 'OrderID', 'orderBy', 'quantityOrdered', 'orderTime', 'status', 'Action' ];
+  displayedColumns: string[] = [ 'OrderSKU', 'OrderID', 'orderBy', 'quantityOrdered', 'orderTime', 'status', 'Actions' , 'Action' ];
 
   dataSourceNew = ELEMENT_DATA;
   dataSource = new MatTableDataSource(this.dataSourceNew) ;

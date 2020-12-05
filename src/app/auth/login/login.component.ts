@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import {RepositoryService} from '../..//shared/servercomunication.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,8 +11,10 @@ export class LoginComponent implements OnInit {
   password: string;
   userverify = 'Hrishi';
   passverify = '12345';
-
-  constructor(private router: Router , private route: ActivatedRoute) { }
+  superadmin = 'superadmin';
+  superpass = '12345';
+  wrongpass = false;
+  constructor(private router: Router , private route: ActivatedRoute , private services: RepositoryService) { }
 
   ngOnInit() {
   }
@@ -20,6 +22,14 @@ export class LoginComponent implements OnInit {
     $event.preventDefault();
     if (this.username === this.userverify && this.password === this.passverify) {
       this.router.navigate(['admin'] ,  {relativeTo: this.route});
+      this.wrongpass = false;
+      this.services.role = 'admin';
+    } else if (this.username === this.superadmin && this.password === this.superpass){ 
+      this.router.navigate(['admin'] ,  {relativeTo: this.route});
+      this.wrongpass = false;
+      this.services.role = 'superadmin';
+    } else {
+      this.wrongpass = true;
     }
   }
 

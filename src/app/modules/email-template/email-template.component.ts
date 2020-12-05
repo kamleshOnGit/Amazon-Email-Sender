@@ -53,7 +53,7 @@ export class EmailTemplateComponent implements OnInit , AfterViewInit {
 
 
 
-  displayedColumns: string[] = ['Action', 'tamplateName', 'category', 'IsActive', 'DateModified'];
+  displayedColumns: string[] = [ 'tamplateName', 'category', 'IsActive', 'DateModified' , 'Action' ];
 
   dataSourceNew = ELEMENT_DATA;
   dataSource = new MatTableDataSource(this.dataSourceNew) ;

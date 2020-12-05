@@ -1,11 +1,12 @@
 
 
 .btn-custom {
-  background-image: linear-gradient(90deg,#598bff,#36f);
+  // background-image: linear-gradient(90deg,#598bff,#36f);
+    background:#36f;
     border: none;
     box-shadow: 0 0 0 0 #274bdb,0 0 20px 0 #1a34b8,none;
     color: #fff;
-    padding: .8rem 1.1875rem;
+    padding: .69rem 1.1875rem;
     text-shadow: none;
     text-transform: uppercase;
     border-radius: .17rem;
@@ -15,19 +16,20 @@
     transition-property: background-color,border-color,box-shadow,color;
     transition-timing-function: ease-in;
     cursor: pointer;
-    font-family: 'Proxima Nova', sans-serif;;
+    font-family: ' Proxima Nova', sans-serif;;
     font-weight: 700;
 }
-.btn-custom:hover {
-  background-image: linear-gradient(90deg,#a6c1ff,#598bff);
-}
-
+// .btn-custom:hover {
+//   background-image: linear-gradient(90deg,#a6c1ff,#598bff);
+// }
+:host ::ng-deep .mat-icon-button{ width: 36px; height:36px}
 .btn-custom2 {
-  background-image: linear-gradient(90deg,#2ce69b,#00d68f);
+  // background-image: linear-gradient(90deg,#2ce69b,#00d68f);
+    background:#00d68f;
     border: none;
     box-shadow: 0 0 0 0 #274bdb,0 0 20px 0 #1a34b8,none;
     color: #fff;
-    padding: .8rem 1.1875rem;
+    padding: .69rem 1.1875rem;
     text-shadow: none;
     text-transform: uppercase;
     border-radius: .17rem;
@@ -37,18 +39,20 @@
     transition-property: all;
     transition-timing-function: ease-in;
     cursor: pointer;
-    font-family:'Proxima Nova', sans-serif;;
+    font-family:' Proxima Nova', sans-serif;;
     font-weight: 700;
 }
-.btn-custom2:hover { 
-  background-image: linear-gradient(90deg,#8cfac7,#2ce69b);
-}
+// .btn-custom2:hover { 
+//   background-image: linear-gradient(90deg,#8cfac7,#2ce69b);
+// }
+
+:host ::ng-deep mat-input:focus , :host ::ng-deep mat-select:focus { outline:none;border:none}
 
 :host ::ng-deep .searchdiv .mat-form-field-wrapper {
   padding-bottom: 0em!important;
 }
 
-:host ::ng-deep .buttonsgroup .mat-form-field-appearance-outline .mat-form-field-wrapper {
+:host ::ng-deep .buttonsgroup  .mat-form-field-wrapper {
   margin: 0;
   padding:0 ;
 }
@@ -76,14 +80,14 @@
   border-radius: .17rem;
   box-shadow: none;
   color: #222b45;
-  font-family: 'Proxima Nova', sans-serif;
+  font-family: ' Proxima Nova', sans-serif;
   font-size: .9375rem;
   font-weight: 400;
   line-height: 1.25rem;
   width:100%
  }
 
- :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-label { margin-top: -.5em}
+ :host ::ng-deep .mat-form-field-label { margin-top: -.0em}
 
 .custom-table  {
   box-shadow: 0 0 4px 0 rgba(0,0,0,.1);
@@ -96,29 +100,24 @@
   color: #212529;
   }
 
-  :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
-    padding: .6em 0 .6em 0;
-    border-top: .375em solid transparent;
-}
+ 
+  
   :host ::ng-deep .mat-form-field { line-height:1.5 ;border-radius: 6px;
     background-color: #fff;
     box-shadow: 0 0 4px 0 rgba(0,0,0,.2);}
 
-  :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+  :host ::ng-deep  .mat-form-field-wrapper {
        margin: 0;
   }
   
-:host ::ng-deep .mat-form-field-appearance-fill .mat-form-field-infix {
-    padding: .0em 0 .75em 0;
-}
-:host ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
-  border-radius: 4px 4px 0 0;
-  padding: 0em .75em 0 .75em;
-}
+:host ::ng-deep .mat-form-field-flex { align-items: center;padding:0 6px;}
 
-:host ::ng-deep  .mat-form-field-appearance-fill .mat-select-arrow-wrapper { transform: translateY(0%) }
+  
 
-  td.mat-cell, td.mat-footer-cell, th.mat-header-cell  {
+:host ::ng-deep  .mat-select-arrow-wrapper { transform: translateY(0%) }
+
+
+  td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
     border-left: 1px solid #e4e9f2;
     padding:6px!important;
     color:#333;
@@ -127,11 +126,15 @@
     line-height: 14px;
     text-align: center!important;
   }
-  td.mat-cell a {color:#333;text-decoration: none; }
   :host ::ng-deep .mat-paginator{ background:transparent}
   th.mat-header-cell { font-size:15px;color:#000;padding:6px!important;text-align: center!important;height: 14px;}
   .mat-cell, .mat-footer-cell{font-size:14px;color:#333 }
   :host ::ng-deep  .mat-sort-header-container { justify-content: center;}
   :host ::ng-deep .mat-paginator-page-size-label {display:none!important}
 
+  :host ::ng-deep .mat-form-field-infix  { border-top:0px!important}
   
+  td.mat-cell a {color:#333;text-decoration: none; } 
+
+  .mat-icon { color:#8f9bb3; cursor: pointer;}
+  input , select { font-family: 'Proxima Nova',sans-serif;}

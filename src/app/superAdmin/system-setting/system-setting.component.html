@@ -1,10 +1,10 @@
 <div class="container">
     <div class="row">
-        <div class="col-6 py-4">
+        <div class="col-3 py-4">
            <label> Scheduler Time</label> 
         </div>
-        <div class="col-6 text-left py-4">
-            <mat-form-field appearance="outline">
+        <div class="col-7 text-left py-4">
+            <mat-form-field appearance="none">
                 <mat-label>Select time</mat-label>
                 <mat-select>
                   <mat-option *ngFor="let time of times" [value]="time">
@@ -15,13 +15,12 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-6 py-4">
+        <div class="col-3 py-4">
            <label> SMS Gateway Keys </label> 
         </div>
-        <div class="col-6 text-left py-4">
-            <mat-form-field  appearance="outline" class="example-full-width">
-                <mat-label>Select gateways</mat-label>
-                <input  matInput placeholder="gateways" class="form-control" value="gateways">
+        <div class="col-7 text-left py-4">
+            <mat-form-field  appearance="none" class="example-full-width">
+                <input  matInput placeholder="gateways" value="gateways">
               </mat-form-field>
         </div>
     </div>

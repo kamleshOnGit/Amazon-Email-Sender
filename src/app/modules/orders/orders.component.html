@@ -2,15 +2,15 @@
   <div  class="d-flex justify-content-between align-items-center"  > 
 
     <div fxFlex="100%" class="w-25 searchdiv  d-flex justify-content-between">
-      <mat-form-field appearance="outline">
+      <mat-form-field class="w-100" appearance="none">
         <mat-label>Search Product</mat-label>
         <input matInput (keyup)="doFilter($event.target.value)" placeholder="Product Name/SKU search">
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
     </div> 
 
-    <div class="d-flex w-50 buttonsgroup">
-      <mat-form-field  appearance="outline">
+    <div class="d-flex w-25 buttonsgroup">
+      <mat-form-field  appearance="none">
         
         <mat-label>From</mat-label>
        
@@ -20,7 +20,7 @@
         
       </mat-form-field>
 
-      <mat-form-field class="ml-4" appearance="outline">
+      <mat-form-field class="ml-2" appearance="none">
          
         <mat-label>TO</mat-label>
         
@@ -30,7 +30,7 @@
        
       </mat-form-field>
     </div>
-    <div class="d-flex buttonsgroup" > 
+    <div class="d-flex ml-4 buttonsgroup" > 
   <button  class="d-flex btn btn-custom ml-5" (click)="openDialog('Upload File',{})"  mat-raised-button>Upload Orders</button> 
 </div>
 </div>
@@ -89,4 +89,4 @@
   </div>
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 
-  <button class="btn btn-custom2" mat-raised-button>Download</button>
+  <button class="btn btn-custom" mat-raised-button>Download</button>

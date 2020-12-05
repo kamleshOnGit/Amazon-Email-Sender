@@ -1,15 +1,15 @@
  
   <div  class="d-flex justify-content-between align-items-center"  > 
 
-    <div fxFlex="100%" class=" searchdiv  d-flex justify-content-between">
-      <mat-form-field appearance="outline">
+    <div fxFlex="100%" class=" searchdiv w-100 d-flex justify-content-between">
+      <mat-form-field class="w-100" appearance="none">
         <mat-label>Search Product</mat-label>
         <input matInput (keyup)="doFilter($event.target.value)" placeholder="Product Name/SKU search">
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
       </div>
 
- <div class="d-flex buttonsgroup" > 
+ <div class="d-flex buttonsgroup ml-5" > 
     <button class="d-flex btn btn-custom"  mat-raised-button>Add Email Template</button>
 </div>
 </div>
@@ -20,7 +20,7 @@
     <!-- Position Column -->
     <ng-container matColumnDef="Action">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
-      <td mat-cell *matCellDef="let element"  > <a routerLink="../edit-email-template"> {{element.Action}} </a> </td>
+      <td mat-cell *matCellDef="let element"  > <a routerLink="../edit-email-template">  <mat-icon>edit</mat-icon> </a> </td>
     </ng-container>
   
     <!-- Name Column -->

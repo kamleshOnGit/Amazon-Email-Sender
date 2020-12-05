@@ -12,9 +12,10 @@
                 <li>
                     <button mat-button [matMenuTriggerFor]="menu">
                         <mat-icon>person_outline</mat-icon>
+                        {{role| uppercase}}
                     </button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>
+                        <button routerLink="" class="btn border-0" mat-menu-item>
                             <mat-icon>exit_to_app</mat-icon>
                             Sign out
                         </button>

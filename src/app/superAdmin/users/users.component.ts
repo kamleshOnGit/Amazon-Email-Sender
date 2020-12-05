@@ -85,7 +85,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class UsersComponent implements AfterViewInit , OnInit {
 
-  displayedColumns: string[] = ['Action', 'Vendorname', 'Username', 'Emailaddress', 'IsActive', 'Phonenumber' , 'Role'];
+  displayedColumns: string[] = ['Vendorname', 'Username', 'Emailaddress', 'IsActive', 'Phonenumber' , 'Role' , 'Action'];
 
   vendors = [
     'Vendor1' , 'Vendor2' , 'Vendor3' , 'Vendor4'

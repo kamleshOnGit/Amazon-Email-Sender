@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-
+import {RepositoryService} from '../../servercomunication.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -8,10 +8,12 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   @Output() toggleSideBarForMe: EventEmitter<any> = new EventEmitter();
+  role = 'Admin';
+  constructor(private service: RepositoryService) { }
 
-  constructor() { }
-
-  ngOnInit() { }
+  ngOnInit() {
+    this.role = this.service.role;
+  }
 
   toggleSideBar() {
     this.toggleSideBarForMe.emit();

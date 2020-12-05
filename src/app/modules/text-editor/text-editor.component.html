@@ -4,14 +4,19 @@
     <hr>
     <div class="form-group d-flex">
     <label class="w-25">Template Name</label>
-      <input placeholder="Template name" class="form-control mb-3 p-1 border border-dark" matInput >
+    <mat-form-field class="w-50"  appearance="none">
+      <input placeholder="Template name"  matInput >
+    </mat-form-field>
     </div>
     <div class="form-group  d-flex">
       <label class="w-25"> Category</label>
-      <input placeholder="Template category" class="form-control p-1 mb-3 border border-dark" matInput >
+      <mat-form-field  class="w-50"  appearance="none">
+      <input placeholder="Template category"  matInput >
+      </mat-form-field>
      </div> 
      <div class="form-group">
      <mat-checkbox  class="d-inline mb-4" ></mat-checkbox> Active
+
     </div>
   <ckeditor
     [(ngModel)]="model.content"

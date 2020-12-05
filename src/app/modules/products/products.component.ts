@@ -48,7 +48,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class ProductsComponent implements  AfterViewInit , OnInit {
 
-  displayedColumns: string[] = ['Action', 'Product Name', 'Category', 'IsActive', 'UniqueKey'];
+  displayedColumns: string[] = [ 'Product Name', 'Category', 'IsActive', 'UniqueKey' , 'Action' ];
 
   dataSourceNew = ELEMENT_DATA;
   dataSource = new MatTableDataSource(this.dataSourceNew) ;

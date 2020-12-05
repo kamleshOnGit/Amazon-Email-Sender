@@ -12,100 +12,100 @@
 </div>
 <div mat-dialog-content  class="model-body ">
   <div *ngIf="action === 'Upload File'"  class="w-100 form-group">
-    <mat-form-field appearance="outline" class="w-25 px-2 py-0 text-center">
+    <mat-form-field appearance="none" class="w-25 px-2 py-0 text-center">
     <input placeholder="upload file" matInput  type="file">
   </mat-form-field>
   </div>
   <div *ngIf="action === 'Upload Multiple Keys'" class="w-100 form-group">
-  <mat-form-field appearance="outline" class="w-25 px-2 py-0 text-center">
+  <mat-form-field appearance="none" class="w-25 px-2 py-0 text-center">
     <input placeholder="Upload Multiple Keys" matInput  type="file">
   </mat-form-field>
   </div>
   <div *ngIf="action == 'Update' || action ==  'Add';">
-    <label> Name</label>
-  <mat-form-field appearance="outline">
+    <label class="mt-4"> Name</label>
+   <mat-form-field appearance="none">
     <input placeholder="name"  matInput [(ngModel)]="localdata.name">
   </mat-form-field>
-  <label> Category </label>
-  <mat-form-field appearance="outline">
+  <label class="mt-4"> Category </label>
+  <mat-form-field appearance="none">
     <input placeholder="category"  matInput [(ngModel)]="localdata.category">
   </mat-form-field>
-  <label> Is Active</label>
-  <mat-form-field appearance="outline">
+  <label class="mt-4">Is Active</label>
+  <mat-form-field appearance="none">
     <input placeholder="IsActive"  matInput [(ngModel)]="localdata.IsActive">
   </mat-form-field>
-  <label> SKU ID</label>
-  <mat-form-field appearance="outline">
+  <label class="mt-4"> SKU ID</label>
+  <mat-form-field appearance="none">
     <input placeholder="UniqueKey"  matInput [(ngModel)]="localdata.UniqueKey">
   </mat-form-field>
   <!-- <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox> -->
 </div>
 <div *ngIf="action == 'Updatekey' || action ==  'AddSinglekey';"> 
-  <label> SKU</label>
-  <mat-form-field appearance="outline">
+  <label class="mt-4"> SKU</label>
+  <mat-form-field appearance="none">
     <input placeholder="SKU"   matInput [(ngModel)]="localdata.SKU">
   </mat-form-field>
-  <label> Batch Code </label>
-  <mat-form-field appearance="outline">
+  <label class="mt-4"> Batch Code </label>
+  <mat-form-field appearance="none">
     <input placeholder="Batch Code"   matInput [(ngModel)]="localdata.BatchCode">
   </mat-form-field>
-  <label> Unique Keys</label>
-  <mat-form-field appearance="outline">
+  <label class="mt-4"> Unique Keys</label>
+  <mat-form-field appearance="none">
     <input placeholder="Code Available"   matInput [(ngModel)]="localdata.CodeAvailable">
   </mat-form-field >
-  <label>Code Used</label>
-  <mat-form-field appearance="outline">
+  <label class="mt-4">Code Used</label>
+  <mat-form-field appearance="none">
     <input placeholder="Code Used"   matInput [(ngModel)]="localdata.CodeUsed">
   </mat-form-field >
   <!-- <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox> -->
 </div>
 <div *ngIf="action == 'filteruniquekey';">
-  <label> Brand </label>
-  <mat-form-field appearance="outline">
+  <label class="mt-4"> Brand </label>
+  <mat-form-field appearance="none">
     <input placeholder="Brand"   matInput [(ngModel)]="localdata.SKU">
   </mat-form-field>
-  <label> SKU</label>
-  <mat-form-field appearance="outline">
+  <label class="mt-4"> SKU</label>
+  <mat-form-field appearance="none">
     <input placeholder="SKU"   matInput [(ngModel)]="localdata.SKU">
   </mat-form-field>
-  <label> Status</label>
-  <mat-form-field appearance="outline">
+  <label class="mt-4"> Status</label>
+  <mat-form-field appearance="none">
     <input placeholder="SKU"   matInput [(ngModel)]="localdata.SKU">
   </mat-form-field>
-  <label> Batch Code </label>
-  <mat-form-field appearance="outline">
+  <label class="mt-4"> Batch Code </label>
+  <mat-form-field appearance="none">
     <input placeholder="Batch Code"   matInput [(ngModel)]="localdata.BatchCode">
   </mat-form-field>
 </div>
   <div *ngIf="action == 'AddNewVendor';">
-    <label> Vendor Name</label>
-    <mat-form-field appearance="outline">
+    <label class="mt-4"> Vendor Name</label>
+    <mat-form-field appearance="none">
     <input placeholder="Vendor name"   matInput [(ngModel)]="localdata.Vendorname">
   </mat-form-field > 
-  <label class="mr-3">Is Active</label>
-  <mat-form-field appearance="outline">
+  <label class="mr-3 mt-4">Is Active</label>
+  <mat-form-field appearance="none">
     <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox>
   </mat-form-field >
-  <label> Email Address </label>
-  <mat-form-field appearance="outline">
+  <label class="mt-4"> Email Address </label>
+  <mat-form-field appearance="none">
     <input placeholder="Email Address"  matInput [(ngModel)]="localdata.Emailaddress">
   </mat-form-field >
-  <label> Password</label>
-  <mat-form-field appearance="outline">
+  <label class="mt-4"> Password</label>
+  <mat-form-field appearance="none">
     <input placeholder="Password"  matInput [(ngModel)]="localdata.password">
   </mat-form-field >
-  <mat-form-field appearance="outline"> 
-    <label class="mr-3">Manual Email Allowed</label>
+  <mat-form-field appearance="none"> 
+    <label class="mr-3 mt-4">Manual Email Allowed</label>
     <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox>
   </mat-form-field >
-  <label>Number of Manual emails per hour</label>
-  <mat-form-field appearance="outline">
+  <label class="mt-4">Number of Manual emails per hour</label>
+  <mat-form-field appearance="none">
     <input placeholder=""  matInput [(ngModel)]="localdata.nofmailperhour">
   </mat-form-field >
   <p> 
-    <label> Sync Products to MWS (Each days in hours) </label>
+    <label class="mt-4"> Sync Products to MWS (Each days in hours) </label>
     <mat-label>Choose a date</mat-label>
-    <mat-form-field appearance="outline"> 
+    <mat-form-field appearance="none"> 
     <input matInput [matDatepicker]="picker">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
@@ -114,32 +114,32 @@
   </div>
 
   <div *ngIf="action == 'AddNewUser';">
-    <label> User Name</label>
+    <label class="mt-4"> User Name</label>
     <mat-form-field appearance="outline"> 
      <input placeholder="User name"   matInput [(ngModel)]="localdata.Username">
     </mat-form-field > 
-    <label class="mr-3">Is Active</label>
+    <label class="mr-3 mt-4">Is Active</label>
     <mat-form-field appearance="outline">
      <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox>
     </mat-form-field >
-    <label> Email Address </label>
+    <label class="mt-4">  Email Address </label>
     <mat-form-field appearance="outline"> 
      <input placeholder="Email Address"  matInput [(ngModel)]="localdata.Emailaddress">
     </mat-form-field >
-    <label> Password</label>
+    <label class="mt-4"> Password</label>
     <mat-form-field appearance="outline"> 
      <input placeholder="Password"   matInput [(ngModel)]="localdata.password">
     </mat-form-field >
-    <label class="mr-3">Manual Email Allowed</label>
+    <label class="mr-3 mt-4">Manual Email Allowed</label>
     <mat-form-field appearance="outline">
      <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox>
     </mat-form-field >
-    <label>Number of Manual emails per hour</label>
+    <label class="mt-4">Number of Manual emails per hour</label>
     <mat-form-field appearance="outline"> 
      <input placeholder=""   matInput [(ngModel)]="localdata.nofmailperhour">
     </mat-form-field >
    <p> 
-     <label> Sync Products to MWS (Each days in hours) </label>
+     <label class="mt-4"> Sync Products to MWS (Each days in hours) </label>
      <mat-label>Choose a date</mat-label>
      <mat-form-field appearance="outline"> 
      <input matInput [matDatepicker]="picker">

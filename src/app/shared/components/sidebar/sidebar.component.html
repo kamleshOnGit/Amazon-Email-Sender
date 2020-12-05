@@ -1,5 +1,5 @@
 <mat-nav-list>
-    
+    <div *ngIf="role == 'admin'"> 
     <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin" [routerLinkActiveOptions]="{exact:
         true}">  <mat-icon>dashboard</mat-icon>  Dashboard</a>
     <mat-divider></mat-divider>
@@ -15,6 +15,8 @@
     <mat-divider></mat-divider>
     <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/settings"> <mat-icon>settings</mat-icon> Settings</a>
     <mat-divider></mat-divider>
+    </div>
+    <div *ngIf="role == 'superadmin'"> 
     <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/manual-Order-Processing"> <mat-icon>supervised_user_circle</mat-icon> Manual Order Processing</a>
     <mat-divider></mat-divider>
     <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/email-settings"> <mat-icon>mail</mat-icon> Email Settings</a>
@@ -24,5 +26,5 @@
     <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/vendors"> <mat-icon>people_alt</mat-icon> vendors</a>
     <mat-divider></mat-divider>
     <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/system-setting">  <mat-icon>settings_system_daydream</mat-icon> System Setting</a>
-
+</div>
 </mat-nav-list>
