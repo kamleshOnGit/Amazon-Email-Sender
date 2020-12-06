@@ -3,19 +3,16 @@
      <div class="col-12">
        <form class="contact-form">
          <div class="row">
-           <div class="col-3 p-4">
+           <div class="col-12 mb-4">
              <label> To Email Address</label>
+             <mat-form-field class="d-block w-50" appearance="none">
+              <input type="email" matInput placeholder="Ex. pat@example.com">
+            </mat-form-field>
            </div>
-           <div class="col-7 p-4">
-             <mat-form-field appearance="none">
-               <input type="email" matInput placeholder="Ex. pat@example.com">
-             </mat-form-field>
-           </div>
-           <div class="col-3 p-4">
+            
+           <div class="col-12 mb-4">
              <label> Choose Email Template </label>
-           </div>
-           <div class="col-7 p-4">
-             <mat-form-field appearance="none">
+             <mat-form-field class="d-block w-50" appearance="none">
               <mat-label>SKU</mat-label>
                <mat-select>
                  <mat-option selected value="option">Template Category</mat-option>
@@ -25,11 +22,10 @@
                </mat-select>
              </mat-form-field>
            </div>
-           <div class="col-3 p-4">
+            
+           <div class="col-12 mb-4">
              <label> Customer Order from</label>
-           </div>
-           <div class="col-7 p-4">
-             <mat-form-field appearance="none">
+             <mat-form-field class="d-block w-50" appearance="none">
               <mat-label>Market Place</mat-label>
                <mat-select>
                  <mat-option selected value="option">Market Place</mat-option>
@@ -39,28 +35,27 @@
                </mat-select>
              </mat-form-field>
            </div>
-           <div class="col-3 p-4">
+            
+           <div class="col-12 mb-4">
              <label> SKU</label>
+             <mat-form-field class="d-block w-50" appearance="none">
+              <mat-label>SKU</mat-label>
+               <mat-select>
+                 <mat-option selected value="option">SKU</mat-option>
+                 <mat-option value="option">SKU</mat-option>
+                 <mat-option value="option">SKU</mat-option>
+                 <mat-option value="option">SKU</mat-option>
+               </mat-select>
+             </mat-form-field>
            </div>
-             <div class="col-7 p-4">
-               <mat-form-field appearance="none">
-                <mat-label>SKU</mat-label>
-                 <mat-select>
-                   <mat-option selected value="option">SKU</mat-option>
-                   <mat-option value="option">SKU</mat-option>
-                   <mat-option value="option">SKU</mat-option>
-                   <mat-option value="option">SKU</mat-option>
-                 </mat-select>
-               </mat-form-field>
-             </div>
-             <div class="col-3 p-4">
+              
+             <div class="col-12 mb-4">
                <label> Quantity</label>
+               <mat-form-field class="d-block w-50" appearance="none">
+                <input matInput placeholder="2">
+              </mat-form-field>
              </div>
-             <div class="col-7 p-4">
-               <mat-form-field appearance="none">
-                 <input matInput placeholder="2">
-               </mat-form-field>
-             </div>
+              
            </div>
        </form>
      </div>

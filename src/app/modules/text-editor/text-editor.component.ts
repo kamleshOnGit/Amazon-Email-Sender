@@ -13,11 +13,11 @@ export class TextEditorComponent implements OnInit {
 
   constructor() { }
 
- public model = { content : 'Type the content of email template here here!' } ;
+ public model = { content : '...' } ;
  public config: any = {
     allowedContent: true,
     resize_enabled: false,
-    placeholder: 'Type the content of email template here here!',
+    placeholder: '',
     contentsCss: ['body {font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}'],
   };
   ngOnInit() {
