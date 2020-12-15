@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../../environments/environment';
-
+import { AuthService } from './auth.services';
 @Injectable({
   providedIn: 'root'
 })
 export class RepositoryService {
 
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient , private authService: AuthService ) { }
+  id: number;
   role: string;
+  authToken = this.authService.getToken();
 
   public getData = (route: string) => {
-    return this.http.get(this.createCompleteRoute(route, environment.urlAddress));
+    return this.http.get(this.createCompleteRoute(route, environment.urlAddress) , this.generateHeaders());
   }
 
   public create = (route: string, body) => {

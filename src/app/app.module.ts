@@ -10,8 +10,8 @@ import { OrdersComponent } from './modules/orders/orders.component';
 import { UniqueKeysComponent } from './modules/unique-keys/unique-keys.component';
 import { EmailTemplateComponent } from './modules/email-template/email-template.component';
 import { SettingComponent } from './modules/setting/setting.component';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule} from '@angular/forms';
+import { HttpClientModule , HTTP_INTERCEPTORS  } from '@angular/common/http';
+import { FormsModule , ReactiveFormsModule} from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,7 +24,6 @@ import { CKEditorModule } from 'ng2-ckeditor';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { TextEditorComponent } from './modules/text-editor/text-editor.component';
 import { SendManualEmailComponent } from './modules/send-manual-email/send-manual-email.component';
-
 import { VendorsComponent } from './superAdmin/vendors/vendors.component';
 import { UsersComponent } from './superAdmin/users/users.component';
 import { EmailSettingsComponent } from './superAdmin/email-settings/email-settings.component';
@@ -33,7 +32,7 @@ import { SystemSettingComponent } from './superAdmin/system-setting/system-setti
 import { LoginComponent } from './auth/login/login.component';
 import { RegistorComponent } from './auth/registor/registor.component';
 import { ForgetpasswordComponent } from './auth/forgetpassword/forgetpassword.component';
-
+import { AuthInterceptor } from './shared/auth.config.interceptor';
 
 @NgModule({
   declarations: [
@@ -62,6 +61,7 @@ import { ForgetpasswordComponent } from './auth/forgetpassword/forgetpassword.co
     DemoMaterialModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     MatTableModule,
     MatDialogModule,
     MatInputModule,
@@ -71,7 +71,12 @@ import { ForgetpasswordComponent } from './auth/forgetpassword/forgetpassword.co
     MaterialTimePickerModule
   ],
   entryComponents: [DialogBoxComponent, AppComponent],
-  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } } ],
+  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } } ,
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

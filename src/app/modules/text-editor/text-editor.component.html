@@ -5,9 +5,15 @@
     <div class="form-group d-flex">
     <label class="w-25">Template Name</label>
     <mat-form-field class="w-50"  appearance="none">
-      <input placeholder="Template name"  matInput >
+      <input placeholder="Template name" [(ngModel)]="name"  matInput >
     </mat-form-field>
     </div>
+    <div class="form-group  d-flex">
+      <label class="w-25"> Product Id</label>
+      <mat-form-field  class="w-50"  appearance="none">
+      <input placeholder="product Id"  [(ngModel)]="productid" matInput >
+      </mat-form-field>
+     </div> 
     <div class="form-group  d-flex">
       <label class="w-25"> Category</label>
       <mat-form-field  class="w-50"  appearance="none">
@@ -15,7 +21,7 @@
       </mat-form-field>
      </div> 
      <div class="form-group">
-     <mat-checkbox  class="d-inline mb-4" ></mat-checkbox> Active
+     <mat-checkbox  class="d-inline mb-4" [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()" ></mat-checkbox> {{selecttext}}
 
     </div>
   <ckeditor
@@ -35,6 +41,6 @@
   </ckeditor>
   <div class="d-flex justify-content-end mt-5" > 
     <button class="d-flex  btn btn-custom" mat-button mat-flat-button >Close</button>
-    <button class="d-flex  btn btn-custom ml-2" mat-button >Save Changes</button>
+    <button class="d-flex  btn btn-custom ml-2" (click)="updateEmailTemplate()" mat-button >Save Changes</button>
     </div>
 </div>

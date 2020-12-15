@@ -10,8 +10,8 @@ export class SidebarComponent implements OnInit {
   constructor(private service: RepositoryService) { }
 
   ngOnInit() {
-    this.role = this.service.role;
-    // this.role = 'superadmin';
+    // this.role = this.service.role;
+    this.role = 'admin';
   }
 
 }

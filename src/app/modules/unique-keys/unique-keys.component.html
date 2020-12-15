@@ -1,7 +1,7 @@
  
   <div  class="d-flex justify-content-between align-items-center"  > 
     <div class="d-flex w-100 buttonsgroup " > 
-      <div fxFlex="100%" class=" w-100 searchdiv  d-flex justify-content-between">
+      <div fxFlex="100%" class=" w-25 searchdiv  d-flex justify-content-between">
         <mat-form-field class="w-100" appearance="none">
           <mat-label>Search Product</mat-label>
           <input matInput (keyup)="doFilter($event.target.value)" placeholder="Product Name/SKU search">
@@ -47,7 +47,7 @@
 
     <ng-container matColumnDef="Action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Action</th>
-        <td mat-cell *matCellDef="let element" (click)="openDialog('Updatekey',element)"> <mat-icon>add_circle</mat-icon> </td>
+        <td mat-cell *matCellDef="let element" (click)="openDialog('Updatekey',element)"> <mat-icon>edit</mat-icon> </td>
       </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

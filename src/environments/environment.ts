@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  urlAddress: 'http://localhost:4000'
+  urlAddress: 'http://sp.vancotech.com/api'
 };
 
 /*

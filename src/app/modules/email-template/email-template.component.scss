@@ -138,3 +138,5 @@
 
   .mat-icon { color:#8f9bb3; cursor: pointer;}
   input , select { font-family: 'Proxima Nova',sans-serif;}
+  :host ::ng-deep  tr.mat-footer-row, tr.mat-row { height: 34px;}
+  :host ::ng-deep td.mat-cell { padding:3px!important}

@@ -6,20 +6,30 @@
   <h2 mat-dialog-title *ngIf="action === 'Upload Multiple Keys'">Upload Multiple Keys </h2>
   <h2 mat-dialog-title *ngIf="action == 'filteruniquekey';"> Filter Keys</h2>
   <h2 mat-dialog-title *ngIf="action == 'Updatekey' || action ==  'AddSinglekey';"> Add Single SKU Unique Key</h2>
+  <h2 mat-dialog-title *ngIf="action ==  'updateorder';"> Update Orders</h2>
   <!-- <h2> Add/Edit Email Template</h2>
   <h2> Add/Edit SMS Template</h2> -->
   <h2 mat-dialog-title *ngIf="action == 'AddNewUser';"> Add New User </h2>
 </div>
 <div mat-dialog-content  class="model-body ">
-  <div *ngIf="action === 'Upload File'"  class="w-100 form-group">
+  <div *ngIf="action === 'Upload Product File'"  class="w-100 form-group">
+    <div class="w-25 px-2 py-0 text-center">
+    <input placeholder="upload file" #csvReader id="txtFileUpload" (change)="uploadListener($event)" accept=".csv"  type="file">
+    <!-- <button class="btn btn-primary" (click)=csvJSON(products.value)> Upload </button> -->
+    </div>
+  <a href="../../assets/products.cvs"  class="btn btn-warning w-25 d-inline-block mb-2 text-white  ml-2"> Download Template</a>
+  </div>
+  <div *ngIf="action === 'Upload Order File'"  class="w-100 form-group">
     <mat-form-field appearance="none" class="w-25 px-2 py-0 text-center">
-    <input placeholder="upload file" matInput  type="file">
+    <input placeholder="upload file" [(ngModel)]="orders"    type="file">
   </mat-form-field>
+  <a href="../../assets/orders.csv" class="btn btn-warning w-25 d-inline-block mb-2 text-white  ml-2"> Download Template</a>
   </div>
   <div *ngIf="action === 'Upload Multiple Keys'" class="w-100 form-group">
   <mat-form-field appearance="none" class="w-25 px-2 py-0 text-center">
-    <input placeholder="Upload Multiple Keys" matInput  type="file">
+    <input placeholder="Upload Multiple Keys" [(ngModel)]="keys"  type="file">
   </mat-form-field>
+  <a href="../../assets/unqiuekeys.csv" class="btn btn-warning d-inline-block mb-2 text-white ml-2"> Download Template</a>
   </div>
   <div *ngIf="action == 'Update' || action ==  'Add';">
     <label class="mt-4"> Name</label>
@@ -27,13 +37,20 @@
     <input placeholder="name"  matInput [(ngModel)]="localdata.name">
   </mat-form-field>
   <label class="mt-4"> Category </label>
-  <mat-form-field appearance="none">
-    <input placeholder="category"  matInput [(ngModel)]="localdata.category">
+  <mat-form-field appearance="none" >
+    <mat-label>Select category</mat-label>
+    <mat-select>
+      <!-- <mat-option *ngFor="let category of localdata.category" [value]="category">
+        {{category}}
+      </mat-option> -->
+      <mat-option>Category 1</mat-option>
+    </mat-select>
   </mat-form-field>
+ 
   <div class="mt-4"> 
-  <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox> Is Active
+  <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox> Active
   </div>
-  <label class="mt-4"> SKU ID</label>
+  <label class="mt-4"> SKU</label>
   <mat-form-field appearance="none">
     <input placeholder="UniqueKey"  matInput [(ngModel)]="localdata.UniqueKey">
   </mat-form-field>
@@ -82,7 +99,7 @@
     <input placeholder="Vendor name"   matInput [(ngModel)]="localdata.Vendorname">
   </mat-form-field > 
   <div class="mt-4"> 
-    <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox> Is Active
+    <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox> Active
   <label class="mt-4"> Email Address </label>
   </div>
   <mat-form-field appearance="none">
@@ -116,7 +133,7 @@
      <input placeholder="User name"   matInput [(ngModel)]="localdata.Username">
     </mat-form-field > 
     <div class="mt-4"> 
-     <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox> Is Active 
+     <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox> Active 
     </div>
     <label class="mt-4">  Email Address </label>
     <mat-form-field appearance="none"> 
@@ -142,6 +159,30 @@
      <mat-datepicker #picker></mat-datepicker>
      </mat-form-field>
    </p>
+   </div>
+
+   <div *ngIf="action == 'UploadEmail';">
+    <label class="mt-4"> productId</label>
+    <mat-form-field appearance="none"> 
+     <input placeholder="productId"   matInput [(ngModel)]="localdata.productId">
+    </mat-form-field > 
+    
+    <label class="mt-4">  name </label>
+    <mat-form-field appearance="none"> 
+     <input placeholder="name"  matInput [(ngModel)]="localdata.name">
+    </mat-form-field >
+    <label class="mt-4">  emailHtml </label>
+    <div class="form-group"> 
+      <input placeholder="upload file" #csvReader id="txtFileUpload" (change)="uploadListenerHtml($event)" accept=".html,.txt"  type="file">
+    </div>
+    <div class="mt-5 d-block">
+      <mat-checkbox  class="d-inline mb-4" [(ngModel)]="selectcheckemail"  (ngModelChange)="updateIsActiveEmail()" ></mat-checkbox> {{selecttext}}
+    </div>
+    <label class="mt-4"> Comments</label>
+    <mat-form-field appearance="none"> 
+     <input placeholder=""  matInput [(ngModel)]="localdata.comments">
+    </mat-form-field >
+   
    </div>
 
   <mat-card *ngIf="action === 'Delete'">
@@ -171,5 +212,9 @@
   <div class="d-flex justify-content-end" *ngIf="action == 'AddNewVendor';">
     <button class="d-flex btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button >Close</button>
     <button class="d-flex btn btn-custom" mat-button (click)="doAction()"  mat-flat-button>Add</button>
+  </div>
+  <div class="d-flex justify-content-end" *ngIf="action == 'UploadEmail';">
+    <button class="d-flex btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button >Close</button>
+    <button class="d-flex btn btn-custom" mat-button (click)="doAction()"  mat-flat-button>Add Email Template</button>
   </div>
 </div>

@@ -133,6 +133,7 @@
   :host ::ng-deep .mat-paginator-page-size-label {display:none!important}
 
   :host ::ng-deep .mat-form-field-infix  { border-top:0px!important}
-  
+  :host ::ng-deep  tr.mat-footer-row, tr.mat-row { height: 34px;}
+  :host ::ng-deep td.mat-cell { padding:6px!important}
   .mat-icon { color:#8f9bb3; cursor: pointer;}
   input , select { font-family: 'Proxima Nova',sans-serif;}

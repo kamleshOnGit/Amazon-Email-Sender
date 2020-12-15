@@ -20,7 +20,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 // import { EmailTemplateDialogBoxComponent } from './email-template-dialog-box/email-template-dialog-box.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-
+import {MatSelectModule} from '@angular/material/select'
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -51,7 +51,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatSelectModule
   ],
   exports: [
     HeaderComponent,
@@ -69,7 +70,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     DialogBoxComponent,
     MatCardModule,
     MatCheckboxModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatSelectModule
   ]
 })
 export class SharedModule { }

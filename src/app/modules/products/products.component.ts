@@ -9,6 +9,7 @@ import {
   ContentChild,
   AfterContentInit,
 } from '@angular/core';
+import { AuthService } from '../../shared/auth.services';
 import {MatPaginator} from '@angular/material/paginator';
 import { DataSource } from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material/table';
@@ -20,26 +21,45 @@ import { MatTable } from '@angular/material/table';
 import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
 
 export interface PeriodicElement {
-  id: number;
-  Action: string;
-  name: string;
-  category: string;
-  IsActive: string;
-  UniqueKey: string;
+
+    id: number;
+    tenantId: number;
+    name: string;
+    sellerSku: string;
+    quantity: number;
+    category: string;
+    status: string;
+    marketPlaceProductId: string;
+    createdAt: string;
+    updatedAt: string;
+    productKeys: [
+        {
+            id: number,
+            productId: number,
+            productkey: string,
+            tenantId: number,
+            batch: string,
+            status: string,
+            priority: string,
+            createdAt: string,
+            updatedAt: string,
+        }
+    ];
+
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {id: 1, Action: 'Edit', name: 'MacAfee', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(120)' },
-  {id: 2,  Action: 'Edit', name: 'AvG', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(200)' },
-  {id: 3,  Action: 'Edit', name: 'Norton', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(137)' },
-  {id: 4,  Action: 'Edit', name: 'MacAfee', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(153)' },
-  {id: 5,  Action: 'Edit', name: 'AvG', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(175)' },
-  {id: 6,  Action: 'Edit', name: 'Norton', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(176)' },
-  {id: 7,  Action: 'Edit', name: 'MacAfee', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(20)' },
-  {id: 8,  Action: 'Edit', name: 'AvG', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(39)' },
-  {id: 9,  Action: 'Edit', name: 'Norton', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(23)' },
-  {id: 10,  Action: 'Edit', name: 'MacAfee', category: 'Anti Virus', IsActive: 'Yes' , UniqueKey: 'View Details(35)' },
-];
+// const ELEMENT_DATA: PeriodicElement[] = [
+//   {id: 1, Brand: 'ABC' , Action: 'Edit', name: 'MacAfee', category: 'Anti Virus',   Status: 'Active' , UniqueKey: 'View Details(120)' },
+//   {id: 2, Brand: 'ABC' , Action: 'Edit', name: 'AvG', category: 'Anti Virus', Status: 'Active' , UniqueKey: 'View Details(200)' },
+//   {id: 3, Brand: 'ABC' , Action: 'Edit', name: 'Norton', category: 'Anti Virus', Status: 'Active' , UniqueKey: 'View Details(137)' },
+//   {id: 4, Brand: 'ABC' , Action: 'Edit', name: 'MacAfee', category: 'Anti Virus', Status: 'Active' , UniqueKey: 'View Details(153)' },
+//   {id: 5, Brand: 'ABC' , Action: 'Edit', name: 'AvG', category: 'Anti Virus', Status: 'Active' , UniqueKey: 'View Details(175)' },
+//   {id: 6, Brand: 'ABC' , Action: 'Edit', name: 'Norton', category: 'Anti Virus', Status: 'Active' , UniqueKey: 'View Details(176)' },
+//   {id: 7, Brand: 'ABC' , Action: 'Edit', name: 'MacAfee', category: 'Anti Virus', Status: 'Active' , UniqueKey: 'View Details(20)' },
+//   {id: 8, Brand: 'ABC' , Action: 'Edit', name: 'AvG', category: 'Anti Virus', Status: 'Active', UniqueKey: 'View Details(39)' },
+//   {id: 9, Brand: 'ABC' , Action: 'Edit', name: 'Norton', category: 'Anti Virus', Status: 'Active', UniqueKey: 'View Details(23)' },
+//   {id: 10, Brand: 'ABC' , Action: 'Edit', name: 'MacAfee', category: 'Anti Virus', Status: 'Active' , UniqueKey: 'View Details(35)' },
+// ];
 
 @Component({
   selector: 'app-products',
@@ -48,33 +68,37 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class ProductsComponent implements  AfterViewInit , OnInit {
 
-  displayedColumns: string[] = [ 'Product Name', 'Category', 'IsActive', 'UniqueKey' , 'Action' ];
+  displayedColumns: string[] = [ 'Brand' , 'name', 'category', 'status', 'productkey' , 'Action' ];
 
-  dataSourceNew = ELEMENT_DATA;
-  dataSource = new MatTableDataSource(this.dataSourceNew) ;
+  public dataSource;
+
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator , {static: true}) paginator: MatPaginator;
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 
-  constructor(private repoService: RepositoryService , public dialog: MatDialog) { }
+  constructor(private repoService: RepositoryService , public dialog: MatDialog ,public authService: AuthService) { }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
+    // this.dataSource.paginator = this.paginator;
   }
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
   ngOnInit() {
-    // this.getAllOwners();
-    this.dataSource = new MatTableDataSource(this.dataSourceNew);
+    this.getAllOwners();
+
   }
   public getAllOwners = () => {
-    this.repoService.getData('api/owner')
-    .subscribe(res => {
-      this.dataSourceNew  = res as PeriodicElement[];
+    this.repoService.getData('products')
+    .subscribe( (res: any) => {
+      console.log(res.data.data);
+      this.dataSource = new MatTableDataSource(res.data.data);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+
     });
   }
   public redirectToDetails = (id: string) => {
@@ -105,49 +129,52 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
 
  public addRowData( rowobj: any ) {
     const d = new Date();
-    this.dataSourceNew .push( {
+    this.dataSource .push( {
       id: d.getTime(),
+      Brand: rowobj.Brand,
       name: rowobj.name,
       Action: 'Edit',
       category: rowobj.category,
-      IsActive: rowobj.IsActive,
+      Status: rowobj.Status,
       UniqueKey: rowobj.UniqueKey,
     });
-    this.dataSource = new MatTableDataSource(this.dataSourceNew);
+    this.dataSource = new MatTableDataSource(this.dataSource);
     // this.table.renderRows();
     this.paginator._changePageSize(this.paginator.pageSize);
   }
   public updateRowData(rowobj) {
-    this.dataSourceNew  = this.dataSourceNew.filter((value, key) => {
+    this.dataSource  = this.dataSource.filter((value, key) => {
       if (value.id === rowobj.id) {
         value.name = rowobj.name;
+        value.Brand = rowobj.Brand;
         value.category = rowobj.category;
-        value.IsActive = rowobj.IsActive ;
+        value.Status = rowobj.Status ;
         value.UniqueKey = rowobj.UniqueKey;
       }
-      this.dataSource = new MatTableDataSource(this.dataSourceNew);
+      this.dataSource = new MatTableDataSource(this.dataSource);
       this.paginator._changePageSize(this.paginator.pageSize);
       return true;
     });
   }
   public updateAll(rowobj) {
-    this.dataSourceNew  = this.dataSourceNew .filter((value, key) => {
+    this.dataSource  = this.dataSource.filter((value, key) => {
       if (value.id === rowobj.id) {
         value.name = rowobj.name;
+        value.Brand = rowobj.Brand;
         value.category = rowobj.category;
-        value.IsActive = rowobj.IsActive ;
+        value.Status = rowobj.Status ;
         value.UniqueKey = rowobj.UniqueKey;
       }
-      this.dataSource = new MatTableDataSource(this.dataSourceNew);
+      this.dataSource = new MatTableDataSource(this.dataSource);
       this.paginator._changePageSize(this.paginator.pageSize);
       return true;
     });
   }
   public  deleteRowData(rowobj) {
-    this.dataSourceNew  = this.dataSourceNew.filter(( value, key) => {
+    this.dataSource  = this.dataSource.filter(( value, key) => {
       return value.id !== rowobj.id;
     });
-    this.dataSource = new MatTableDataSource(this.dataSourceNew);
+    this.dataSource = new MatTableDataSource(this.dataSource);
     this.paginator._changePageSize(this.paginator.pageSize);
   }
 

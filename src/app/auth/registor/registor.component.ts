@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { AuthService } from '../../shared/auth.services';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-registor',
@@ -8,12 +11,26 @@ import { Component, OnInit } from '@angular/core';
 export class RegistorComponent implements OnInit {
   username: string;
   password: string;
+  signupForm: FormGroup;
+  constructor(private router: Router , private route: ActivatedRoute , public fb: FormBuilder,
+              public authService: AuthService) {
 
-  constructor() { }
+    this.signupForm = this.fb.group({
+      name: [''],
+      email: [''],
+      mobile: [''],
+      password: ['']
+    });
+   }
 
   ngOnInit() {
   }
- onSubmit($event) {
-
- }
+  registerUser() {
+    this.authService.signUp(this.signupForm.value).subscribe((res) => {
+      if (res.result) {
+        this.signupForm.reset();
+        this.router.navigate(['']);
+      }
+    })
+  }
 }

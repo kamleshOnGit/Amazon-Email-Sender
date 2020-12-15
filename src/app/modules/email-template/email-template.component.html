@@ -1,7 +1,7 @@
  
   <div  class="d-flex justify-content-between align-items-center"  > 
 
-    <div fxFlex="100%" class=" searchdiv w-100 d-flex justify-content-between">
+    <div fxFlex="100%" class=" searchdiv w-25 d-flex justify-content-between">
       <mat-form-field class="w-100" appearance="none">
         <mat-label>Search Product</mat-label>
         <input matInput (keyup)="doFilter($event.target.value)" placeholder="Product Name/SKU search">
@@ -10,7 +10,7 @@
       </div>
 
  <div class="d-flex buttonsgroup ml-5" > 
-    <button class="d-flex btn btn-custom"  mat-raised-button>Add Email Template</button>
+    <button class="d-flex btn btn-custom" (click)="openDialog('UploadEmail',{})"  mat-raised-button>Add Email Template</button>
 </div>
 </div>
   <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
@@ -20,13 +20,14 @@
     <!-- Position Column -->
     <ng-container matColumnDef="Action">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
-      <td mat-cell *matCellDef="let element"  > <a routerLink="../edit-email-template">  <mat-icon>edit</mat-icon> </a> </td>
+      <td mat-cell *matCellDef="let element"  > <a (click)="redirectTemplate(element.id)">  <mat-icon>edit</mat-icon> </a> 
+        <a (click)="deleteTemplate(element.id)">  <mat-icon>delete</mat-icon> </a> </td>
     </ng-container>
   
     <!-- Name Column -->
-    <ng-container matColumnDef="tamplateName">
+    <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Template Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.tamplateName}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
   
     <!-- Weight Column -->
@@ -37,13 +38,13 @@
   
     <!-- Symbol Column -->
     <ng-container matColumnDef="IsActive">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Is Active </th>
-      <td mat-cell *matCellDef="let element"> {{element.IsActive}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="DateModified">
+    <ng-container matColumnDef="createdAt">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Modified</th>
-        <td mat-cell *matCellDef="let element" > {{element.DateModified}} </td>
+        <td mat-cell *matCellDef="let element" > {{element.createdAt | date: 'dd/MM/yyyy'}} </td>
       </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
