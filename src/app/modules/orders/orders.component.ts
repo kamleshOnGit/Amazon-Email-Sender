@@ -219,6 +219,8 @@ get toDate() { return this.filterForm.get('toDate').value; }
         this.deleteRowData(result.data);
       } else if (result.event === 'AddAll') {
         this.updateAll(result.data);
+      } else if (result.event === 'Upload Order File') {
+        this.updateOrders(result.data);
       }
     });
   }
@@ -269,5 +271,8 @@ get toDate() { return this.filterForm.get('toDate').value; }
     this.dataSource = new MatTableDataSource(this.dataSource);
     this.paginator._changePageSize(this.paginator.pageSize);
   }
-
+ public updateOrders(data: any) {
+  console.log( data);
+  this.repoService.create('import/orders', {'orders' : data}).subscribe((res: any) => console.log(res));
+ }
 }

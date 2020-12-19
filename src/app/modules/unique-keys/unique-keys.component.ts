@@ -18,6 +18,7 @@ import { RepositoryService } from '../../shared/servercomunication.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
+import {ProductKeys} from '../../shared/uniqueKeys.model';
 
 export interface PeriodicElement {
   id: number;
@@ -44,11 +45,11 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class UniqueKeysComponent implements OnInit , AfterViewInit {
 
-  displayedColumns: string[] = ['SKU', 'BatchCode', 'CodeAvailable', 'CodeUsed','Action'  ];
+  displayedColumns: string[] = ['SKU', 'BatchCode', 'CodeAvailable', 'CodeUsed', 'Action'  ];
 
   dataSourceNew = ELEMENT_DATA;
   dataSource = new MatTableDataSource(this.dataSourceNew) ;
-
+  codeUsed = 0;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator , {static: true}) paginator: MatPaginator;
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
@@ -64,14 +65,23 @@ export class UniqueKeysComponent implements OnInit , AfterViewInit {
   }
 
   ngOnInit() {
-    // this.getAllOwners();
+    this.getAllOwners();
     this.dataSource = new MatTableDataSource(this.dataSourceNew);
   }
   public getAllOwners = () => {
-    this.repoService.getData('api/owner')
-    .subscribe(res => {
-      this.dataSourceNew  = res as PeriodicElement[];
+    this.repoService.getData('products')
+    .subscribe( (res: any) => {
+      console.log(res.data.data);
+      this.dataSource = new MatTableDataSource(res.data.data);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.getCodeUsed(res.data.data);
     });
+  }
+  public getCodeUsed(data: any) {
+     const arr = [];
+     console.log( data.map((val) => val.productKeys.filter((valu) => valu.status === 'used').flat('Infinty'))) ;
+
   }
   public redirectToDetails = (id: string) => {
   }
@@ -97,7 +107,9 @@ export class UniqueKeysComponent implements OnInit , AfterViewInit {
         this.deleteRowData(result.data);
       } else if (result.event === 'AddAll') {
         this.updateAll(result.data);
-        } });
+      } else if (result.event === 'Upload Multiple Keys') {
+          this.updateproductKeys(result.data);
+      } });
   }
 
  public addRowData( rowobj: any ) {
@@ -150,6 +162,12 @@ export class UniqueKeysComponent implements OnInit , AfterViewInit {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
 
+  public updateproductKeys(data: any) {
+    // const bodydata = JSON.parse(JSON.stringify(data));
+    console.log( data);
+    this.repoService.create('import/productskeys', {'productskey' : data}).subscribe((res: any) => console.log(res));
+    // this.getAllOwners();
+  }
 
 
 }

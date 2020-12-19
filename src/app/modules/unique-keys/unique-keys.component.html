@@ -24,13 +24,13 @@
     <!-- Position Column -->
     <ng-container matColumnDef="SKU">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> SKU </th>
-      <td mat-cell *matCellDef="let element" > {{element.SKU}} </td>
+      <td mat-cell *matCellDef="let element" > {{element.sellerSku}} </td>
     </ng-container>
   
     <!-- Name Column -->
     <ng-container matColumnDef="BatchCode">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Batch Code </th>
-      <td mat-cell *matCellDef="let element"> {{element.BatchCode}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.productKeys[0].batch != null ? element.productKeys[0].batch  : 'NA'}} </td>
     </ng-container>
   
     <!-- Weight Column -->
@@ -42,7 +42,7 @@
     <!-- Symbol Column -->
     <ng-container matColumnDef="CodeAvailable">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Code Available </th>
-      <td mat-cell *matCellDef="let element"> {{element.CodeAvailable}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Action">

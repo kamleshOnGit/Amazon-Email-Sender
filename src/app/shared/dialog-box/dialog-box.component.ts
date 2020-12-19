@@ -1,13 +1,15 @@
 import { Component, Inject, Optional, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Products } from '../products.model';
+import {ProductKeys} from '../uniqueKeys.model';
+import { Orders } from '../orders.model';
+import { RepositoryService } from '../../shared/servercomunication.service';
 export interface UsersData {
-  id: number;
-  Action: string;
-  name: string;
-  category: string;
-  IsActive: string;
-  UniqueKey: string;
+  itemName: string;
+  ProductId: string;
+  sellerSku: string;
+  status: string;
+  quantity: string;
 }
 
 
@@ -26,18 +28,20 @@ export class DialogBoxComponent {
   selectcheck = false;
   selectcheckemail = false;
   selecttext = 'InActive';
-
+  productsAll = [];
 
   @ViewChild('csvReader', {static: true}) csvReader: any;
 
-  constructor(
-    public dialogRef: MatDialogRef<DialogBoxComponent>,
-
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData) {
+  constructor(private repoService: RepositoryService ,
+              public dialogRef: MatDialogRef<DialogBoxComponent>,
+              @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData) {
     console.log(data);
     this.localdata = {...data};
     this.action = this.localdata.action;
     this.selectcheck = this.localdata.IsActive;
+    this.repoService.getData('products').subscribe((res: any) => {
+      this.productsAll = res.data.data;
+    });
   }
   doAction() {
     this.dialogRef.close({event: this.action, data: this.localdata});
@@ -69,6 +73,7 @@ export class DialogBoxComponent {
         const csvRecordsArray = (csvData as string).split(/\r\n|\n/);
         const headersRow = this.getHeaderArray(csvRecordsArray);
         this.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
+        this.localdata = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
         console.log(this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length));
       };
 
@@ -81,25 +86,132 @@ export class DialogBoxComponent {
       this.fileReset();
     }
   }
+
+
+  uploadListenerOrders($event: any): void {
+    const text = [];
+    const files = $event.srcElement.files;
+
+    if (this.isValidCSVFile(files[0])) {
+
+      const input = $event.target;
+      const reader = new FileReader();
+      reader.readAsText(input.files[0]);
+
+      reader.onload = () => {
+        const csvData = reader.result;
+        const csvRecordsArray = (csvData as string).split(/\r\n|\n/);
+        const headersRow = this.getHeaderArray(csvRecordsArray);
+        // this.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
+        this.localdata = this.getDataRecordsArrayOrdersFromCSVFile(csvRecordsArray, headersRow.length);
+        console.log(this.getDataRecordsArrayOrdersFromCSVFile(csvRecordsArray, headersRow.length));
+      };
+
+      reader.onerror = () => {
+        console.log('error is occured while reading file!');
+      };
+
+    } else {
+      alert('Please import valid .csv file.');
+      this.fileReset();
+    }
+  }
+
+
+  uploadListenerKeys($event: any): void {
+    const text = [];
+    const files = $event.srcElement.files;
+
+    if (this.isValidCSVFile(files[0])) {
+
+      const input = $event.target;
+      const reader = new FileReader();
+      reader.readAsText(input.files[0]);
+
+      reader.onload = () => {
+        const csvData = reader.result;
+        const csvRecordsArray = (csvData as string).split(/\r\n|\n/);
+        const headersRow = this.getHeaderArray(csvRecordsArray);
+        // this.records = this.getDataRecordsKeysArrayFromCSVFile(csvRecordsArray, headersRow.length);
+        this.localdata = this.getDataRecordsKeysArrayFromCSVFile(csvRecordsArray, headersRow.length);
+        console.log(this.getDataRecordsKeysArrayFromCSVFile(csvRecordsArray, headersRow.length));
+      };
+
+      reader.onerror = () => {
+        console.log('error is occured while reading file!');
+      };
+
+    } else {
+      alert('Please import valid .csv file.');
+      this.fileReset();
+    }
+  }
+
   getDataRecordsArrayFromCSVFile(csvRecordsArray: any, headerLength: any) {
     const csvArr = [];
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
       const curruntRecord = (csvRecordsArray[i] as string).split(',');
       if (curruntRecord.length === headerLength) {
-        const csvRecord: Products  = new Products();
-        csvRecord.id = curruntRecord[0];
-        csvRecord.Brand = curruntRecord[1];
-        csvRecord.Action = curruntRecord[2];
-        csvRecord.name = curruntRecord[3];
-        csvRecord.category = curruntRecord[4];
-        csvRecord.Status = curruntRecord[5];
-        csvRecord.UniqueKey = curruntRecord[5];
+        const csvRecord: UsersData  = new Products();
+        csvRecord.itemName = curruntRecord[0];
+        csvRecord.ProductId = curruntRecord[22];
+        csvRecord.sellerSku = curruntRecord[3];
+        csvRecord.status = curruntRecord[28];
+        csvRecord.quantity = +curruntRecord[5] > 0 ? curruntRecord[5] : '1';
         csvArr.push(csvRecord);
       }
     }
     return csvArr;
   }
+
+
+  getDataRecordsArrayOrdersFromCSVFile(csvRecordsArray: any, headerLength: any) {
+    const csvArr = [];
+
+    for (let i = 1; i < csvRecordsArray.length; i++) {
+      const curruntRecord = (csvRecordsArray[i] as string).split(',');
+      if (curruntRecord.length === headerLength) {
+        const csvRecord: Orders  = new Orders();
+        csvRecord.orderId = curruntRecord[0];
+        csvRecord.orderItemId = curruntRecord[1];
+        // csvRecord.paymentsDate = curruntRecord[3];
+        csvRecord.buyerEmail = curruntRecord[4];
+        csvRecord.buyerName = curruntRecord[5];
+        csvRecord.buyerPhoneNumber = curruntRecord[6];
+        csvRecord.sku = curruntRecord[7];
+        csvRecord.productName = curruntRecord[8];
+        csvRecord.quantityPurchased = curruntRecord[9];
+        csvRecord.shipPhoneNumber = +curruntRecord[24];
+        csvArr.push(csvRecord);
+      }
+    }
+    return csvArr;
+  }
+ 
+
+
+  getDataRecordsKeysArrayFromCSVFile(csvRecordsArray: any, headerLength: any) {
+    const csvArr = [];
+
+    for (let i = 1; i < csvRecordsArray.length; i++) {
+      const curruntRecord = (csvRecordsArray[i] as string).split(',');
+      if (curruntRecord.length === headerLength) {
+        const csvRecord: ProductKeys  = new ProductKeys();
+        for (let j =0 ; j < this.productsAll.length ; j++) {
+        console.log(this.productsAll[j].marketPlaceProductId);
+        if (curruntRecord[1] !== '') {
+        if (curruntRecord[0] === this.productsAll[j].marketPlaceProductId ) {
+        csvRecord.key = curruntRecord[1];
+        csvRecord.status = curruntRecord[2];
+        csvRecord.priority = 'High';
+        csvRecord.sku = curruntRecord[0];
+        csvArr.push(csvRecord); } } }
+      }
+    }
+    return csvArr;
+  }
+
   isValidCSVFile(file: any) {
     return file.name.endsWith('.csv');
   }

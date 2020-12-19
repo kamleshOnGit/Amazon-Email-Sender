@@ -124,7 +124,9 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
         this.deleteRowData(result.data);
       } else if (result.event === 'AddAll') {
         this.updateAll(result.data);
-        } });
+      } else if (result.event === 'Upload Product File') {
+        this.updateproduct(result.data);
+      } });
   }
 
  public addRowData( rowobj: any ) {
@@ -178,6 +180,11 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
 
-
+  public updateproduct(data: any) {
+    // const bodydata = JSON.parse(JSON.stringify(data));
+    console.log( data);
+    this.repoService.create('import/products', {'products' : data}).subscribe((res: any) => console.log(res));
+    this.getAllOwners();
+  }
 
 }
