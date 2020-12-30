@@ -17,6 +17,7 @@ import { ManualOrderProcessingComponent } from './superAdmin/manual-order-proces
 import { SystemSettingComponent } from './superAdmin/system-setting/system-setting.component';
 import { TextEditorComponent } from './modules/text-editor/text-editor.component';
 import { AuthGuard } from './shared/auth.guard';
+import {AllowUsersComponent} from './modules/allow-users/allow-users.component';
 
 const routes: Routes = [{
       path: '',
@@ -61,42 +62,59 @@ const routes: Routes = [{
         canActivateChild: [AuthGuard ]
       },
       {
+        path: 'allow-users',
+        component: AllowUsersComponent,
+        canActivateChild: [AuthGuard ]
+      },
+      {
         path: 'manual-Email',
         component: SendManualEmailComponent,
         canActivateChild: [AuthGuard ]
       },
-      {
-        path: 'manual-Order-Processing',
-        component: ManualOrderProcessingComponent,
-        canActivateChild: [AuthGuard ]
-      },
-      {
-        path: 'email-settings',
-        component: EmailSettingsComponent,
-        canActivateChild: [AuthGuard ]
-      },
-      {
-        path: 'users',
-        component: UsersComponent,
-        canActivateChild: [AuthGuard ]
-      },
-      {
-        path: 'vendors',
-        component: VendorsComponent,
-        canActivateChild: [AuthGuard ]
-      },
-      {
-        path: 'system-setting',
-        component: SystemSettingComponent,
-        canActivateChild: [AuthGuard ]
-      },
-      {
-        path: 'edit-email-template',
-        component: TextEditorComponent,
-        canActivateChild: [AuthGuard ]
-      }
     ]
   },
+  {
+    path: 'superadmin',
+    component: DefaultComponent,
+    canActivate: [AuthGuard ],
+    children : [
+      {
+        path: '',
+        component: DashboardComponent,
+        canActivateChild: [AuthGuard ]
+      },
+    {
+      path: 'manual-Order-Processing',
+      component: ManualOrderProcessingComponent,
+      canActivateChild: [AuthGuard ]
+    },
+    {
+      path: 'email-settings',
+      component: EmailSettingsComponent,
+      canActivateChild: [AuthGuard ]
+    },
+    {
+      path: 'users',
+      component: UsersComponent,
+      canActivateChild: [AuthGuard ]
+    },
+    {
+      path: 'vendors',
+      component: VendorsComponent,
+      canActivateChild: [AuthGuard ]
+    },
+    {
+      path: 'system-setting',
+      component: SystemSettingComponent,
+      canActivateChild: [AuthGuard ]
+    },
+    {
+      path: 'edit-email-template',
+      component: TextEditorComponent,
+      canActivateChild: [AuthGuard ]
+    }
+  ]
+}
 
 ];
 

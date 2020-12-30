@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import {RepositoryService} from '../../servercomunication.service';
+import {AuthService} from '../../auth.services';
+import { ActivatedRoute, Router } from '@angular/router';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -8,11 +10,11 @@ import {RepositoryService} from '../../servercomunication.service';
 export class HeaderComponent implements OnInit {
 
   @Output() toggleSideBarForMe: EventEmitter<any> = new EventEmitter();
-  role = 'Admin';
-  constructor(private service: RepositoryService) { }
+  role ;
+  constructor(private service: AuthService , private router: Router , private route: ActivatedRoute ) { }
 
   ngOnInit() {
-    this.role = this.service.role;
+    this.role = this.service.currentUser;
   }
 
   toggleSideBar() {
@@ -22,6 +24,14 @@ export class HeaderComponent implements OnInit {
         new Event('resize')
       );
     }, 300);
+  }
+
+  logout() {
+    this.service.doLogout();
+    this.router.navigate(['']);
+  }
+  changepass() {
+    this.router.navigate(['/forgetpassword']);
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {RepositoryService} from '../../servercomunication.service';
+import {AuthService} from '../../auth.services';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -7,11 +7,12 @@ import {RepositoryService} from '../../servercomunication.service';
 })
 export class SidebarComponent implements OnInit {
   role = 'admin';
-  constructor(private service: RepositoryService) { }
 
+  constructor(private service: AuthService) { }
   ngOnInit() {
-    // this.role = this.service.role;
-    this.role = 'admin';
+    this.role = this.service.getRole() ;
+
   }
 
 }
+

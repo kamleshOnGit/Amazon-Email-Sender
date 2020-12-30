@@ -22,6 +22,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
 import { DatePipe } from '@angular/common';
+import {DecriptionService} from '../../shared/decription.service';
 
 export interface PeriodicElement {
   buyerEmail: string;
@@ -161,7 +162,8 @@ get toDate() { return this.filterForm.get('toDate').value; }
 
   constructor(
     private repoService: RepositoryService,
-    public dialog: MatDialog, public authService: AuthService
+    public dialog: MatDialog, public authService: AuthService,
+    private Decription: DecriptionService
   ) {
     // this.dataSource.filterPredicate = (data, filter) => {
     //   if (this.fromDate && this.toDate) {
@@ -189,9 +191,19 @@ get toDate() { return this.filterForm.get('toDate').value; }
     // this.dataSource = new MatTableDataSource(res.data)
     //      );
     // this.dataSource = new MatTableDataSource(this.dataSourceNew);
+
   }
   public getAllOwners = () => {
     this.repoService.getData('orders').subscribe((res: any) => {
+      if (res && res.data  && res.data.length > 0) {
+        res.data.forEach(element => {
+            let Email = '';
+            if (element.buyerEmail.length > 0) {
+                Email = this.Decription.decript(element.buyerEmail);
+            }
+            element.email = Email;
+        });
+    }
       this.dataSource = new MatTableDataSource(res.data);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
@@ -274,5 +286,9 @@ get toDate() { return this.filterForm.get('toDate').value; }
  public updateOrders(data: any) {
   console.log( data);
   this.repoService.create('import/orders', {'orders' : data}).subscribe((res: any) => console.log(res));
+ }
+ public revokeOrder(id) {
+  console.log( id);
+  this.repoService.create('productkey/revoke', {'orderId' : '' + id}).subscribe((res: any) => console.log(res));
  }
 }

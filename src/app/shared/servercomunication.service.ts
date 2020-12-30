@@ -10,6 +10,7 @@ export class RepositoryService {
   constructor(private http: HttpClient , private authService: AuthService ) { }
   id: number;
   role: string;
+  vendorId: string ;
   authToken = this.authService.getToken();
 
   public getData = (route: string) => {

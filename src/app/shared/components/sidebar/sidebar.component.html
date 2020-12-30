@@ -11,20 +11,25 @@
     <mat-divider></mat-divider>
     <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/emailtemplate"> <mat-icon>wysiwyg</mat-icon> Email Template</a>
     <mat-divider></mat-divider>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/allow-users"> <mat-icon>people</mat-icon> Allow Users</a>
+    <mat-divider></mat-divider>
     <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/manual-Email"> <mat-icon>markunread</mat-icon> Send Manual Email</a>
     <mat-divider></mat-divider>
     <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/settings"> <mat-icon>settings</mat-icon> Settings</a>
     <mat-divider></mat-divider>
     </div>
-    <div *ngIf="role == 'superadmin'"> 
-    <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/manual-Order-Processing"> <mat-icon>supervised_user_circle</mat-icon> Manual Order Processing</a>
+    <div *ngIf="role == 'superAdmin'"> 
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/superadmin" [routerLinkActiveOptions]="{exact:
+            true}">  <mat-icon>dashboard</mat-icon>  Dashboard</a>
     <mat-divider></mat-divider>
-    <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/email-settings"> <mat-icon>mail</mat-icon> Email Settings</a>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/superadmin/manual-Order-Processing"> <mat-icon>supervised_user_circle</mat-icon> Manual Order Processing</a>
     <mat-divider></mat-divider>
-    <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/users"> <mat-icon>people</mat-icon> Users</a>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/superadmin/email-settings"> <mat-icon>mail</mat-icon> Email Settings</a>
     <mat-divider></mat-divider>
-    <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/vendors"> <mat-icon>people_alt</mat-icon> Vendors</a>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/superadmin/users"> <mat-icon>people</mat-icon> Users</a>
     <mat-divider></mat-divider>
-    <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin/system-setting">  <mat-icon>settings_system_daydream</mat-icon> System Setting</a>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/superadmin/vendors"> <mat-icon>people_alt</mat-icon> Vendors</a>
+    <mat-divider></mat-divider>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/superadmin/system-setting">  <mat-icon>settings_system_daydream</mat-icon> System Setting</a>
 </div>
 </mat-nav-list>

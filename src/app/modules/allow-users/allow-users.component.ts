@@ -20,10 +20,11 @@ import { MatTable } from '@angular/material/table';
 import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
 import { MatSelectChange } from '@angular/material/select';
 
+
+
 export interface PeriodicElement {
   id: number;
   Action: string;
-  Vendorname: string;
   Username: string;
   Emailaddress: string;
   IsActive: string;
@@ -35,7 +36,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {
     id: 1,
     Action: 'Edit',
-    Vendorname: 'Vendor1',
     Username: 'ABC',
     Emailaddress : 'abc@test.com',
     IsActive: 'Yes' ,
@@ -44,7 +44,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
     {
       id: 1,
       Action: 'Edit',
-      Vendorname: 'Vendor2',
       Username: 'Vendor2',
       Emailaddress : 'abc@test.com',
       IsActive: 'Yes' ,
@@ -53,7 +52,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
       {
         id: 1,
         Action: 'Edit',
-        Vendorname: 'Vendor3',
         Username: 'Vendor3',
         Emailaddress : 'abc@test.com',
         IsActive: 'Yes' ,
@@ -62,7 +60,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
         {
           id: 1,
           Action: 'Edit',
-          Vendorname: 'Vendor4',
           Username: 'Vendor4',
           Emailaddress : 'abc@test.com',
           IsActive: 'Yes' ,
@@ -71,7 +68,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
           {
             id: 1,
             Action: 'Edit',
-            Vendorname: 'Vendor5',
             Username: 'Vendor5',
             Emailaddress : 'abc@test.com',
             IsActive: 'Yes' ,
@@ -80,13 +76,14 @@ const ELEMENT_DATA: PeriodicElement[] = [
   ];
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  selector: 'app-allow-users',
+  templateUrl: './allow-users.component.html',
+  styleUrls: ['./allow-users.component.scss']
 })
-export class UsersComponent implements AfterViewInit , OnInit {
+export class AllowUsersComponent implements OnInit {
 
-  displayedColumns: string[] = ['Vendorname', 'Username', 'Emailaddress', 'IsActive', 'Phonenumber' , 'Role' , 'Action'];
+
+  displayedColumns: string[] = [ 'Username', 'Emailaddress', 'IsActive' , 'Role' , 'Action'];
   selectedSelectBox = 1;
   vendors = [
     'Vendor1' , 'Vendor2' , 'Vendor3' , 'Vendor4'
@@ -100,33 +97,22 @@ export class UsersComponent implements AfterViewInit , OnInit {
   constructor(private repoService: RepositoryService , public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.getAllvendors();
-    this.selectedSelectBox = this.repoService.vendorId === '' ? +this.repoService.vendorId : 1;
-    console.log(this.selectedSelectBox);
+
     this.getAllOwners();
   }
 
-  ngAfterViewInit() {
-
-  }
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
 
   public getAllOwners = () => {
-    this.repoService.create('superadmin/users', {tenantId : this.selectedSelectBox})
+    this.repoService.getData('admin/users')
     .subscribe( (res: any) => {
       this.dataSource = new MatTableDataSource(res.data);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       console.log(res.data);
-    });
-  }
-  public getAllvendors = () => {
-    this.repoService.getData('tenants')
-    .subscribe( (res: any) => {
-      this.vendors  = res.data.data;
     });
   }
 
@@ -157,7 +143,7 @@ export class UsersComponent implements AfterViewInit , OnInit {
         this.deleteRowData(result.data);
       } else if (result.event === 'AddAll') {
         this.updateAll(result.data);
-      } else if (result.event === 'AddNewUser') {
+      } else if (result.event === 'AddUser') {
           this.addNewUser(result.data);
       } });
   }
@@ -217,7 +203,6 @@ export class UsersComponent implements AfterViewInit , OnInit {
     console.log( data);
     this.getAllOwners();
     const bodydata = {
-      tenantId: data.tenentId,
       roleId: data.roleId,
       firstName: data.firstname,
       lastName: data.lastname,
@@ -225,7 +210,8 @@ export class UsersComponent implements AfterViewInit , OnInit {
       email: data.email,
       password: data.password
     };
-    this.repoService.create('adminUser', bodydata).subscribe((res: any) => console.log(res));
+    this.repoService.create('user', bodydata).subscribe((res: any) => console.log(res));
  }
+
 
 }

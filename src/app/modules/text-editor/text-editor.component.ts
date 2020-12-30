@@ -25,7 +25,7 @@ export class TextEditorComponent implements OnInit {
     allowedContent: true,
     resize_enabled: false,
     placeholder: '',
-    contentsCss: ['body {font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}'],
+    contentsCss: ['body {font-family: "Proxima Nova",sans-serif;}'],
   };
   ngOnInit() {
     // this.id = +this.route.snapshot.params[0].id;

@@ -5,8 +5,13 @@
   <h2 mat-dialog-title *ngIf="action == 'Update' || action ==  'Add';"> Add/Edit Product Details</h2>
   <h2 mat-dialog-title *ngIf="action === 'Upload Multiple Keys'">Upload Multiple Keys </h2>
   <h2 mat-dialog-title *ngIf="action == 'filteruniquekey';"> Filter Keys</h2>
-  <h2 mat-dialog-title *ngIf="action == 'Updatekey' || action ==  'AddSinglekey';"> Add Single SKU Unique Key</h2>
+  <h2 mat-dialog-title *ngIf="action ==  'AddSinglekey';"> Add Single SKU Unique Key</h2>
+  <h2 mat-dialog-title *ngIf="action == 'Updatekey';"> Update Single SKU Unique Key</h2>
   <h2 mat-dialog-title *ngIf="action ==  'updateorder';"> Update Orders</h2>
+  <h2 mat-dialog-title *ngIf="action == 'AddVendorSetting'"> Add Settings For Vendor</h2>
+  <h2 mat-dialog-title *ngIf="action == 'EditVendorSetting'"> Edit Settings For Vendor</h2>
+  <h2 mat-dialog-title *ngIf="action == 'AddUser'"> Add New User</h2>
+  <h2 mat-dialog-title *ngIf="action == 'product not found'"> Notification</h2>
   <!-- <h2> Add/Edit Email Template</h2>
   <h2> Add/Edit SMS Template</h2> -->
   <h2 mat-dialog-title *ngIf="action == 'AddNewUser';"> Add New User </h2>
@@ -34,46 +39,109 @@
   <div *ngIf="action == 'Update' || action ==  'Add';">
     <label class="mt-4"> Name</label>
    <mat-form-field appearance="none">
-    <input placeholder="name"  matInput [(ngModel)]="localdata.name">
+    <input placeholder="name"  matInput [(ngModel)]="localdata.itemName">
   </mat-form-field>
   <label class="mt-4"> Category </label>
-  <mat-form-field appearance="none" >
+  <!-- <mat-form-field appearance="none" >
     <mat-label>Select category</mat-label>
-    <mat-select>
+    <mat-select> -->
       <!-- <mat-option *ngFor="let category of localdata.category" [value]="category">
         {{category}}
       </mat-option> -->
-      <mat-option>Category 1</mat-option>
+      <!-- <mat-option>Category 1</mat-option>
     </mat-select>
+  </mat-form-field> -->
+  <mat-form-field appearance="none">
+    <input placeholder="category"  matInput [(ngModel)]="localdata.category">
   </mat-form-field>
- 
+  <label class="mt-4"> ProductId </label>
+  <mat-form-field appearance="none">
+    <input placeholder="Product Id"  matInput [(ngModel)]="localdata.marketPlaceProductId">
+  </mat-form-field>
+  <label class="mt-4"> Seller Sku </label>
+  <mat-form-field appearance="none">
+    <input placeholder="Seller Sku"  matInput [(ngModel)]="localdata.sellerSku">
+  </mat-form-field>
   <div class="mt-4"> 
-  <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox> Active
+    <mat-checkbox [(ngModel)]="selectcheckemail"  (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> {{selecttext}}
   </div>
-  <label class="mt-4"> SKU</label>
+  <label class="mt-4"> quantity</label>
   <mat-form-field appearance="none">
-    <input placeholder="UniqueKey"  matInput [(ngModel)]="localdata.UniqueKey">
+    <input type="tel" placeholder="quantity"  matInput [(ngModel)]="localdata.quantity">
   </mat-form-field>
-  <!-- <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox> -->
+  <label class="mt-4"> Price</label>
+  <mat-form-field appearance="none">
+    <input  placeholder="price"  matInput [(ngModel)]="localdata.price">
+  </mat-form-field>
 </div>
-<div *ngIf="action == 'Updatekey' || action ==  'AddSinglekey';"> 
+<div *ngIf="action ==  'AddSinglekey';"> 
   <label class="mt-4"> SKU</label>
   <mat-form-field appearance="none">
-    <input placeholder="SKU"   matInput [(ngModel)]="localdata.SKU">
+    <input placeholder="SKU"   matInput [(ngModel)]="localdata.sku">
   </mat-form-field>
   <label class="mt-4"> Batch Code </label>
   <mat-form-field appearance="none">
-    <input placeholder="Batch Code"   matInput [(ngModel)]="localdata.BatchCode">
+    <input placeholder="Batch Code"   matInput [(ngModel)]="localdata.batch">
   </mat-form-field>
-  <label class="mt-4"> Unique Keys</label>
+  <label class="mt-4"> Key</label>
   <mat-form-field appearance="none">
-    <input placeholder="Code Available"   matInput [(ngModel)]="localdata.CodeAvailable">
+    <input placeholder="key"   matInput [(ngModel)]="localdata.key">
   </mat-form-field >
-  <label class="mt-4">Code Used</label>
+  <label class="mt-4">priority</label>
   <mat-form-field appearance="none">
-    <input placeholder="Code Used"   matInput [(ngModel)]="localdata.CodeUsed">
+    <input placeholder="Priority"   matInput [(ngModel)]="localdata.priority">
   </mat-form-field >
-  <!-- <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox> -->
+  <div class="mt-4"> 
+    <mat-checkbox [(ngModel)]="selectcheckemail"  (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> {{selecttext}}
+  </div>
+</div>
+<div *ngIf="action == 'Updatekey' "> 
+  <label class="mt-4"> Select Key to update</label>
+  <mat-form-field appearance="none" >
+    <mat-label>Keys</mat-label>
+    <mat-select (selectionChange)="selectedValue($event)"> 
+        <mat-option *ngFor="let key of localdata.productKeys" [value]="key">
+        {{key.id}}
+      </mat-option> 
+    </mat-select>
+  </mat-form-field>
+  <label class="mt-4"> Batch Code </label>
+  <mat-form-field appearance="none">
+    <input placeholder="Batch Code"   matInput [(ngModel)]="localdata.batch">
+  </mat-form-field>
+  <label class="mt-4"> Key</label>
+  <mat-form-field appearance="none">
+    <input placeholder="key"   matInput [(ngModel)]="localdata.key">
+  </mat-form-field >
+  <label class="mt-4">Priority</label>
+  <mat-form-field appearance="none">
+    <input placeholder="Priority"   matInput [(ngModel)]="localdata.priority">
+  </mat-form-field >
+  <div class="mt-4"> 
+    <mat-checkbox [(ngModel)]="selectcheckemail"  (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> {{selecttext}}
+  </div>
+</div>
+<div *ngIf="action == 'AddVendorSetting' || action == 'EditVendorSetting'"> 
+  <label class="mt-4"> Tenant Id</label>
+  <mat-form-field appearance="none">
+    <input placeholder="tenant Id"   matInput [(ngModel)]="localdata.tenantId">
+  </mat-form-field>
+  <label class="mt-4"> Seller Id </label>
+  <mat-form-field appearance="none">
+    <input placeholder="seller Id"   matInput [(ngModel)]="localdata.sellerId">
+  </mat-form-field>
+  <label class="mt-4"> marketplace Id</label>
+  <mat-form-field appearance="none">
+    <input placeholder="marketplace Id"   matInput [(ngModel)]="localdata.marketplaceId">
+  </mat-form-field >
+  <label class="mt-4">refresh Token</label>
+  <mat-form-field appearance="none">
+    <input placeholder="refreshToken"   matInput [(ngModel)]="localdata.refreshToken">
+  </mat-form-field >
+  <label class="mt-4">default Values</label>
+  <mat-form-field appearance="none">
+    <textarea placeholder="defaultValues"   matInput [(ngModel)]="localdata.defaultValues"></textarea>
+  </mat-form-field >
 </div>
 <div *ngIf="action == 'filteruniquekey';">
   <label class="mt-4"> Brand </label>
@@ -93,30 +161,42 @@
     <input placeholder="Batch Code"   matInput [(ngModel)]="localdata.BatchCode">
   </mat-form-field>
 </div>
-  <div *ngIf="action == 'AddNewVendor';">
-    <label class="mt-4"> Vendor Name</label>
+  <div *ngIf="action == 'AddNewUser';">
+    <label class="mt-4"> Tenent Id</label>
     <mat-form-field appearance="none">
-    <input placeholder="Vendor name"   matInput [(ngModel)]="localdata.Vendorname">
+    <input placeholder="Tenent Id"  matInput [(ngModel)]="localdata.tenentId">
+  </mat-form-field >
+  <label class="mt-4"> Role Id</label>
+    <mat-form-field appearance="none">
+    <input placeholder="Role Id"  matInput [(ngModel)]="localdata.roleId">
+  </mat-form-field >
+    <label class="mt-4"> FirstName</label>
+    <mat-form-field appearance="none">
+    <input placeholder="Vendor name"   matInput [(ngModel)]="localdata.firstname">
+  </mat-form-field > 
+  <label class="mt-4"> last Name</label>
+    <mat-form-field appearance="none">
+    <input placeholder="Vendor name"   matInput [(ngModel)]="localdata.lastname">
   </mat-form-field > 
   <div class="mt-4"> 
-    <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox> Active
-  <label class="mt-4"> Email Address </label>
+    <mat-checkbox [(ngModel)]="selectcheckemail"  (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> {{selecttext}}
   </div>
+  <label class="mt-4"> Email Address </label>
   <mat-form-field appearance="none">
-    <input placeholder="Email Address"  matInput [(ngModel)]="localdata.Emailaddress">
+    <input placeholder="Email Address"  matInput [(ngModel)]="localdata.email">
   </mat-form-field >
   <label class="mt-4"> Password</label>
   <mat-form-field appearance="none">
     <input placeholder="Password"  matInput [(ngModel)]="localdata.password">
   </mat-form-field >
-  <div class="mt-4"> 
+  <!-- <div class="mt-4"> 
     <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox> Manual Email Allowed
-  </div>
-  <label class="mt-4">Number of Manual emails per hour</label>
+  </div> -->
+  <!-- <label class="mt-4">Number of Manual emails per hour</label>
   <mat-form-field appearance="none">
     <input placeholder=""  matInput [(ngModel)]="localdata.nofmailperhour">
-  </mat-form-field >
-  <p> 
+  </mat-form-field > -->
+  <!-- <p> 
     <label class="mt-4"> Sync Products to MWS (Each days in hours) </label>
     <mat-label>Choose a date</mat-label>
     <mat-form-field appearance="none"> 
@@ -124,18 +204,48 @@
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-  </p>
+  </p> -->
   </div>
-
-  <div *ngIf="action == 'AddNewUser';">
-    <label class="mt-4"> User Name</label>
+  <div *ngIf="action == 'AddUser';">
+    
+  
+    <label class="mt-4"> FirstName</label>
+    <mat-form-field appearance="none">
+    <input placeholder="Vendor name"   matInput [(ngModel)]="localdata.firstname">
+  </mat-form-field > 
+  <label class="mt-4"> last Name</label>
+    <mat-form-field appearance="none">
+    <input placeholder="Vendor name"   matInput [(ngModel)]="localdata.lastname">
+  </mat-form-field > 
+  <div class="mt-4"> 
+    <mat-checkbox [(ngModel)]="selectcheckemail"  (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> {{selecttext}}
+  </div>
+  <label class="mt-4"> Email Address </label>
+  <mat-form-field appearance="none">
+    <input placeholder="Email Address"  matInput [(ngModel)]="localdata.email">
+  </mat-form-field >
+  <label class="mt-4"> Password</label>
+  <mat-form-field appearance="none">
+    <input placeholder="Password"  matInput [(ngModel)]="localdata.password">
+  </mat-form-field >
+  <label class="mt-4"> Role Id</label>
+    <mat-form-field appearance="none">
+    <input placeholder="Role Id"  matInput [(ngModel)]="localdata.roleId">
+  </mat-form-field >
+  </div>
+  <div *ngIf="action == 'AddNewVendor';">
+    <label class="mt-4"> Name</label>
     <mat-form-field appearance="none"> 
-     <input placeholder="User name"   matInput [(ngModel)]="localdata.Username">
+     <input placeholder="User name"   matInput [(ngModel)]="localdata.name">
     </mat-form-field > 
+    <label class="mt-4"> Logo</label>
+    <mat-form-field appearance="none"> 
+     <input placeholder="Logo"   matInput [(ngModel)]="localdata.logo">
+    </mat-form-field >
     <div class="mt-4"> 
-     <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox> Active 
+     <mat-checkbox [(ngModel)]="selectcheckemail"  (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> Active 
     </div>
-    <label class="mt-4">  Email Address </label>
+    <!-- <label class="mt-4">  Email Address </label>
     <mat-form-field appearance="none"> 
      <input placeholder="Email Address"  matInput [(ngModel)]="localdata.Emailaddress">
     </mat-form-field >
@@ -158,7 +268,7 @@
      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
      <mat-datepicker #picker></mat-datepicker>
      </mat-form-field>
-   </p>
+   </p> -->
    </div>
 
    <div *ngIf="action == 'UploadEmail';">
@@ -195,9 +305,17 @@
     <p>  Is Active :{{localdata.IsActive}} </p>
     <p> Unique Key : {{localdata.UniqueKey}} </p>
   </mat-card>
+
+  <div  *ngIf="action === 'product not found'">
+    <p> Your Unique for the availabe product is updated!!</p>
+    <p class="font-weight-bold mt-4">No Product was found for these SKU</p>
+    <ul>
+      <li *ngFor="let productkey of localdata[0]" id="productkey"> {{productkey}} </li>
+    </ul>
+  </div>
 </div>
 <div mat-dialog-actions class="model-footer mt-4 " align="end">
-  <div class="d-flex justify-content-end" *ngIf="action === 'AddNewUser' || action === 'AddNewVendor' || action == 'Updatekey' || action ==  'AddSinglekey' || action == 'Update' || action ==  'Add'"> 
+  <div class="d-flex justify-content-end" *ngIf="action === 'AddNewUser' || action ==='AddUser' || action === 'EditVendorSetting' || action == 'Updatekey' || action ==  'AddSinglekey' || action == 'Update' || action ==  'Add'"> 
   <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button >Close</button>
   <button class="d-flex  btn btn-custom" mat-button (click)="doAction()">Save Changes</button>
   </div>
@@ -209,7 +327,7 @@
     <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
     <button class="d-flex  btn btn-custom" mat-button (click)="doAction()"  mat-flat-button>Filter</button>
   </div>
-  <div class="d-flex justify-content-end" *ngIf="action == 'AddNewVendor';">
+  <div class="d-flex justify-content-end" *ngIf="action == 'AddNewVendor' || action === 'AddVendorSetting';">
     <button class="d-flex btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button >Close</button>
     <button class="d-flex btn btn-custom" mat-button (click)="doAction()"  mat-flat-button>Add</button>
   </div>

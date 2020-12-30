@@ -33,7 +33,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegistorComponent } from './auth/registor/registor.component';
 import { ForgetpasswordComponent } from './auth/forgetpassword/forgetpassword.component';
 import { AuthInterceptor } from './shared/auth.config.interceptor';
-
+import { AllowUsersComponent } from './modules/allow-users/allow-users.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +52,7 @@ import { AuthInterceptor } from './shared/auth.config.interceptor';
     LoginComponent,
     RegistorComponent,
     ForgetpasswordComponent,
+    AllowUsersComponent
   ],
   imports: [
     BrowserModule,

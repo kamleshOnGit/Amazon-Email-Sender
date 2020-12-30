@@ -99,7 +99,7 @@
 
       <ng-container matColumnDef="Action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Action</th>
-        <td mat-cell *matCellDef="let element" (click)="openDialog('updateorder',element)"> <button class="badge py-1 border-0 badge-primary">Revoke Order</button> </td>
+        <td mat-cell *matCellDef="let element" (click)="revokeOrder(element.id)"> <button class="badge py-1 border-0 badge-primary">Revoke Order</button> </td>
       </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

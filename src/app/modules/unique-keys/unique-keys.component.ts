@@ -70,19 +70,35 @@ export class UniqueKeysComponent implements OnInit , AfterViewInit {
   }
   public getAllOwners = () => {
     this.repoService.getData('products')
-    .subscribe( (res: any) => {
-      console.log(res.data.data);
-      this.dataSource = new MatTableDataSource(res.data.data);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-      this.getCodeUsed(res.data.data);
-    });
+            .subscribe((res: any) => {
+                console.log(res.data.data);
+                if (res && res.data && res.data.data && res.data.data.length > 0) {
+                    res.data.data.forEach(element => {
+                        let activeCount = 0;
+                        let usedCount = 0;
+                        if (element.productKeys.length > 0) {
+                            activeCount = element.productKeys.filter(x => x.status === 'active').length;
+                            usedCount = element.productKeys.filter(x => x.status === 'used').length;
+                        }
+                        element.activeCount = activeCount;
+                        element.usedCount = usedCount;
+                    });
+                }
+                this.dataSource = new MatTableDataSource(res.data.data);
+                this.dataSource.sort = this.sort;
+                this.dataSource.paginator = this.paginator;
+            });
   }
   public getCodeUsed(data: any) {
-     const arr = [];
-     console.log( data.map((val) => val.productKeys.filter((valu) => valu.status === 'used').flat('Infinty'))) ;
-
+     const arr = data.map((val) => val.productKeys.filter((valu) => valu.status === 'used')).flat(2);
+     console.log( arr) ;
+     this.codeUsed = arr.length;
   }
+  public getCodeActive(data: any) {
+    const arr = data.map((val) => val.productKeys.filter((valu) => valu.status === 'Active')).flat(2);
+    console.log( arr) ;
+
+ }
   public redirectToDetails = (id: string) => {
   }
   public redirectToUpdate = (id: string) => {
@@ -99,9 +115,9 @@ export class UniqueKeysComponent implements OnInit , AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe( (result) => {
-      if (result.event === 'Add') {
+      if (result.event === 'AddSinglekey') {
         this.addRowData(result.data);
-      } else if (result.event === 'Update') {
+      } else if (result.event === 'Updatekey') {
         this.updateRowData(result.data);
       } else if (result.event === 'Delete') {
         this.deleteRowData(result.data);
@@ -112,33 +128,45 @@ export class UniqueKeysComponent implements OnInit , AfterViewInit {
       } });
   }
 
- public addRowData( rowobj: any ) {
-    const d = new Date();
-    this.dataSourceNew .push( {
-      id: d.getTime(),
-      SKU: rowobj.SKU,
-      Action: 'Add New',
-      BatchCode: rowobj.BatchCode,
-      CodeAvailable: rowobj.CodeAvailable,
-      CodeUsed: rowobj.CodeUsed,
+  public openDialogSmall(action, obj) {
+    obj.action = action;
+    const dialogRef = this.dialog.open( DialogBoxComponent, {
+      width: '500px',
+      data: obj
     });
-    this.dataSource = new MatTableDataSource(this.dataSourceNew);
-    // this.table.renderRows();
-    this.paginator._changePageSize(this.paginator.pageSize);
+
+    dialogRef.afterClosed().subscribe( (result) => {
+      if (result.event === 'product not found') {
+        this.addRowData(result.data);
+      } else if (result.event === 'Updatekey') {
+        this.updateRowData(result.data);
+      }  });
   }
-  public updateRowData(rowobj) {
-    this.dataSourceNew  = this.dataSourceNew.filter((value, key) => {
-      if (value.id === rowobj.id) {
-        value.SKU = rowobj.name;
-        value.Action = rowobj.category;
-        value.BatchCode = rowobj.IsActive ;
-        value.CodeAvailable = rowobj.UniqueKey;
-        value.CodeUsed = rowobj.CodeUsed;
-      }
-      this.dataSource = new MatTableDataSource(this.dataSourceNew);
-      this.paginator._changePageSize(this.paginator.pageSize);
-      return true;
-    });
+
+ public addRowData( data) {
+  console.log(data);
+  const bodydata = {
+    key : data.key,
+    status : data.status,
+    batch : data.batch,
+    priority : data.priority,
+    sku : data.sku,
+  };
+  this.repoService.create('product/productkey', bodydata ).subscribe((res: any) => console.log(res));
+ // this.table.renderRows();
+  this.paginator._changePageSize(this.paginator.pageSize);
+  }
+  public updateRowData(data) {
+    console.log(data);
+    const bodydata = {
+    key : data.key,
+    status : data.status,
+    batch : data.batch,
+    priority : data.priority,
+    // sku : data.marketPlaceProductId,
+    };
+    this.repoService.update('product/productKey/' + data.id , bodydata ).subscribe((res: any) => console.log(res));
+    this.paginator._changePageSize(this.paginator.pageSize);
   }
   public updateAll(rowobj) {
     this.dataSourceNew  = this.dataSourceNew .filter((value, key) => {
@@ -165,8 +193,10 @@ export class UniqueKeysComponent implements OnInit , AfterViewInit {
   public updateproductKeys(data: any) {
     // const bodydata = JSON.parse(JSON.stringify(data));
     console.log( data);
+    this.openDialogSmall('product not found', data.productnotfound);
     this.repoService.create('import/productskeys', {'productskey' : data}).subscribe((res: any) => console.log(res));
     // this.getAllOwners();
+
   }
 
 

@@ -15,9 +15,13 @@
                         {{role| uppercase}}
                     </button>
                     <mat-menu #menu="matMenu">
-                        <button routerLink="" class="btn border-0" mat-menu-item>
+                        <button (click)="logout()" class="btn border-0" mat-menu-item>
                             <mat-icon>exit_to_app</mat-icon>
                             Sign out
+                        </button>
+                        <button (click)="changepass()" class="btn border-0" mat-menu-item>
+                            <mat-icon>lock-reset </mat-icon>
+                            Change Password
                         </button>
                     </mat-menu>
 

@@ -4,6 +4,7 @@ import { Products } from '../products.model';
 import {ProductKeys} from '../uniqueKeys.model';
 import { Orders } from '../orders.model';
 import { RepositoryService } from '../../shared/servercomunication.service';
+import { MatSelectChange } from '@angular/material/select';
 export interface UsersData {
   itemName: string;
   ProductId: string;
@@ -29,23 +30,30 @@ export class DialogBoxComponent {
   selectcheckemail = false;
   selecttext = 'InActive';
   productsAll = [];
+  productnotfound = [];
 
   @ViewChild('csvReader', {static: true}) csvReader: any;
 
   constructor(private repoService: RepositoryService ,
               public dialogRef: MatDialogRef<DialogBoxComponent>,
               @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData) {
-    console.log(data);
+
     this.localdata = {...data};
+    console.log(this.localdata);
     this.action = this.localdata.action;
     this.selectcheck = this.localdata.IsActive;
     this.repoService.getData('products').subscribe((res: any) => {
       this.productsAll = res.data.data;
+      console.log(res.data.data);
     });
   }
   doAction() {
     this.dialogRef.close({event: this.action, data: this.localdata});
   }
+
+  // public getadminsettings(id: string) {
+  //   this.repoService.getData('getSetting')
+  // }
 
   closeDialog() {
     this.dialogRef.close({event: 'Cancel'});
@@ -134,6 +142,7 @@ export class DialogBoxComponent {
         const headersRow = this.getHeaderArray(csvRecordsArray);
         // this.records = this.getDataRecordsKeysArrayFromCSVFile(csvRecordsArray, headersRow.length);
         this.localdata = this.getDataRecordsKeysArrayFromCSVFile(csvRecordsArray, headersRow.length);
+        this.localdata.productnotfound = [this.productnotfound];
         console.log(this.getDataRecordsKeysArrayFromCSVFile(csvRecordsArray, headersRow.length));
       };
 
@@ -188,7 +197,7 @@ export class DialogBoxComponent {
     }
     return csvArr;
   }
- 
+
 
 
   getDataRecordsKeysArrayFromCSVFile(csvRecordsArray: any, headerLength: any) {
@@ -199,16 +208,19 @@ export class DialogBoxComponent {
       if (curruntRecord.length === headerLength) {
         const csvRecord: ProductKeys  = new ProductKeys();
         for (let j =0 ; j < this.productsAll.length ; j++) {
-        console.log(this.productsAll[j].marketPlaceProductId);
         if (curruntRecord[1] !== '') {
         if (curruntRecord[0] === this.productsAll[j].marketPlaceProductId ) {
         csvRecord.key = curruntRecord[1];
         csvRecord.status = curruntRecord[2];
         csvRecord.priority = 'High';
         csvRecord.sku = curruntRecord[0];
-        csvArr.push(csvRecord); } } }
+        csvArr.push(csvRecord);
+       } else {
+          this.productnotfound.push(curruntRecord[0]);
+        } } }
       }
     }
+    
     return csvArr;
   }
 
@@ -266,4 +278,14 @@ export class DialogBoxComponent {
       this.localdata.status = this.selecttext;
     }
   }
+
+  public selectedValue(event: MatSelectChange) {
+    this.localdata.batch = event.value.batch;
+    this.selectcheckemail = true;
+    this.updateIsActiveEmail();
+    this.localdata.id = event.value.id;
+    this.localdata.priority = event.value.priority;
+    console.log( event.value);
+  }
+
 }

@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   endpoint = 'http://sp.vancotech.com/api/';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
-  currentUser = {};
+  currentUser = '';
 
   constructor(
     private http: HttpClient,
@@ -34,9 +34,15 @@ export class AuthService {
     return this.http.post<any>(`${this.endpoint}login`, user)
       .subscribe((res: any) => {
         localStorage.setItem('access_token', res.data.token);
-        console.log(res.data.token);
-        this.currentUser = res;
-        this.router.navigate(['admin/']);
+        localStorage.setItem('rolename', res.data.roleName);
+        console.log(res.data);
+        this.currentUser = res.data.roleName;
+        if (res.data.roleName === 'admin') {
+          this.router.navigate(['admin/']);
+        } else if (res.data.roleName === 'superAdmin') {
+          this.router.navigate(['superadmin/']);
+        }
+
 
         // this.getUserProfile(res.id).subscribe((res: any) => {
         //   this.currentUser = res;
@@ -47,6 +53,10 @@ export class AuthService {
 
   getToken() {
     return localStorage.getItem('access_token');
+  }
+
+  getRole() {
+    return localStorage.getItem('rolename');
   }
 
   get isLoggedIn(): boolean {

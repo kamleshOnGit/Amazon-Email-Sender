@@ -129,35 +129,36 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
       } });
   }
 
- public addRowData( rowobj: any ) {
-    const d = new Date();
-    this.dataSource .push( {
-      id: d.getTime(),
-      Brand: rowobj.Brand,
-      name: rowobj.name,
-      Action: 'Edit',
-      category: rowobj.category,
-      Status: rowobj.Status,
-      UniqueKey: rowobj.UniqueKey,
-    });
-    this.dataSource = new MatTableDataSource(this.dataSource);
+ public addRowData( data: any ) {
+     console.log(data);
+     const bodydata = {
+      itemName : data.itemName,
+      sellerSku : data.sellerSku,
+      quantity : data.quantity,
+      category : data.category,
+      status : data.status,
+      ProductId : data.marketPlaceProductId,
+      price : data.price
+     };
+     this.repoService.create('product/product', bodydata ).subscribe((res: any) => console.log(res));
     // this.table.renderRows();
-    this.paginator._changePageSize(this.paginator.pageSize);
+     this.paginator._changePageSize(this.paginator.pageSize);
   }
-  public updateRowData(rowobj) {
-    this.dataSource  = this.dataSource.filter((value, key) => {
-      if (value.id === rowobj.id) {
-        value.name = rowobj.name;
-        value.Brand = rowobj.Brand;
-        value.category = rowobj.category;
-        value.Status = rowobj.Status ;
-        value.UniqueKey = rowobj.UniqueKey;
-      }
-      this.dataSource = new MatTableDataSource(this.dataSource);
-      this.paginator._changePageSize(this.paginator.pageSize);
-      return true;
-    });
+  public updateRowData(data) {
+     console.log(data);
+     const bodydata = {
+     itemName : data.itemName,
+     sellerSku : data.sellerSku,
+     quantity : data.quantity,
+     category : data.category,
+     status : data.status,
+     ProductId : data.marketPlaceProductId,
+     price : data.price
+     };
+     this.repoService.update('product/product/' + data.id , bodydata ).subscribe((res: any) => console.log(res));
+     this.paginator._changePageSize(this.paginator.pageSize);
   }
+
   public updateAll(rowobj) {
     this.dataSource  = this.dataSource.filter((value, key) => {
       if (value.id === rowobj.id) {

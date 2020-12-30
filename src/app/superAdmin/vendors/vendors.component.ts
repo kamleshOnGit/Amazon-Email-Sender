@@ -18,7 +18,7 @@ import { RepositoryService } from '../../shared/servercomunication.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
-
+import { ActivatedRoute, Router } from '@angular/router';
 export interface PeriodicElement {
   id: number;
   Vendorname: string;
@@ -43,7 +43,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class VendorsComponent implements OnInit , AfterViewInit {
 
-  displayedColumns: string[] = ['Vendorname', 'Emailaddress', 'IsActive', 'Phonenumber'];
+  displayedColumns: string[] = ['Vendorname', 'Emailaddress', 'IsActive', 'Phonenumber' , 'Action'];
 
   dataSourceNew = ELEMENT_DATA;
   dataSource = new MatTableDataSource(this.dataSourceNew) ;
@@ -60,18 +60,20 @@ export class VendorsComponent implements OnInit , AfterViewInit {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
-  constructor(private repoService: RepositoryService , public dialog: MatDialog) { }
+  constructor(private repoService: RepositoryService ,
+              public dialog: MatDialog , private router: Router , private route: ActivatedRoute , ) { }
 
   ngOnInit() {
-    // this.getAllOwners();
-    this.dataSource = new MatTableDataSource(this.dataSourceNew);
+    this.getAllOwners();
+
   }
 
 
   public getAllOwners = () => {
-    this.repoService.getData('api/owner')
-    .subscribe(res => {
-      this.dataSourceNew  = res as PeriodicElement[];
+    this.repoService.getData('tenants')
+    .subscribe( (res: any) => {
+      this.dataSource  = new MatTableDataSource(res.data.data);
+      console.log(res.data.data);
     });
   }
   public redirectToDetails = (id: string) => {
@@ -90,14 +92,19 @@ export class VendorsComponent implements OnInit , AfterViewInit {
 
     dialogRef.afterClosed().subscribe( (result) => {
       if (result.event === 'AddNewVendor') {
-        this.addRowData(result.data);
+        this.addNewVendor(result.data);
       } else if (result.event === 'Update') {
         this.updateRowData(result.data);
       } else if (result.event === 'Delete') {
         this.deleteRowData(result.data);
       } else if (result.event === 'AddAll') {
         this.updateAll(result.data);
-        } });
+      } else if (result.event === 'AddVendorSetting') {
+        this.settingVender(result.data);
+      } else if (result.event === 'EditVendorSetting') {
+        this.settingVenderUpdate(result.data);
+      }
+     });
   }
 
  public addRowData( rowobj: any ) {
@@ -148,6 +155,40 @@ export class VendorsComponent implements OnInit , AfterViewInit {
     this.dataSource = new MatTableDataSource(this.dataSourceNew);
     this.paginator._changePageSize(this.paginator.pageSize);
   }
-
-
+  giveVenderId(id: string) {
+    this.repoService.vendorId = id;
+    this.router.navigate(['/superadmin/users']);
+  }
+  public addNewVendor(data) {
+    console.log( data);
+    this.getAllOwners();
+    const bodydata = {
+      name: data.name,
+      logo: data.logo,
+      status: data.status,
+    };
+    this.repoService.create('addTenant', bodydata).subscribe((res: any) => console.log(res));
+  }
+  public settingVender(data) {
+    console.log( data);
+    const bodydata = {
+      tenantId: data.tenantId,
+      sellerId: data.sellerId,
+      marketplaceId: data.marketplaceId,
+      refreshToken: data.refreshToken,
+      defaultValues: data.defaultValues
+    };
+    this.repoService.create('setting', bodydata).subscribe((res: any) => console.log(res));
+  }
+  public settingVenderUpdate(data) {
+    console.log( data);
+    const bodydata = {
+      tenantId: data.tenantId,
+      sellerId: data.sellerId,
+      marketplaceId: data.marketplaceId,
+      refreshToken: data.refreshToken,
+      defaultValues: data.defaultValues
+    };
+    this.repoService.create('updateSetting', bodydata).subscribe((res: any) => console.log(res));
+  }
 }
