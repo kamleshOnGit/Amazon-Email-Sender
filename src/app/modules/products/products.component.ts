@@ -129,6 +129,21 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
       } });
   }
 
+  public openDialogSmall(action, obj) {
+    obj.action = action;
+    const dialogRef = this.dialog.open( DialogBoxComponent, {
+      width: '500px',
+      data: obj
+    });
+
+    dialogRef.afterClosed().subscribe( (result) => {
+      if (result.event === 'product not found') {
+        this.addRowData(result.data);
+      } else if (result.event === 'Updatekey') {
+        this.updateRowData(result.data);
+      }  });
+  }
+
  public addRowData( data: any ) {
      console.log(data);
      const bodydata = {
@@ -186,6 +201,14 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
     console.log( data);
     this.repoService.create('import/products', {'products' : data}).subscribe((res: any) => console.log(res));
     this.getAllOwners();
+  }
+
+  public delepredouct(element: any) {
+    console.log(element.id);
+    this.repoService.delete2('product/delete' , { id : element.id}  ).subscribe((res: any) => {
+      this.openDialogSmall('productdeleted', element.name);
+      console.log(res.data);
+    });
   }
 
 }

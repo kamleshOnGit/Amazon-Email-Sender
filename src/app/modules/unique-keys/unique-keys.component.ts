@@ -25,18 +25,18 @@ export interface PeriodicElement {
   Action: string;
   SKU: string;
   BatchCode: string;
-  CodeAvailable: number;
-  CodeUsed: number;
+  priority: string;
+  Status: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {id: 1, Action: 'Add New', SKU: 'MacAfee', BatchCode: 'Nov11Batch', CodeAvailable: 5 , CodeUsed: 12 },
-  {id: 2, Action: 'Add New', SKU: 'Nortan', BatchCode: 'Nov11Batch', CodeAvailable: 5 , CodeUsed: 12 },
-  {id: 3, Action: 'Add New', SKU: 'AVG', BatchCode: 'Nov11Batch', CodeAvailable: 5 , CodeUsed: 12 },
-  {id: 4, Action: 'Add New', SKU: 'MacAfee', BatchCode: 'Nov11Batch', CodeAvailable: 5 , CodeUsed: 12 },
-  {id: 5, Action: 'Add New', SKU: 'Nortan', BatchCode: 'Nov11Batch', CodeAvailable: 5 , CodeUsed: 12 },
-  {id: 6, Action: 'Add New', SKU: 'AVG', BatchCode: 'Nov11Batch', CodeAvailable: 5 , CodeUsed: 12 },
-];
+// const ELEMENT_DATA: PeriodicElement[] = [
+//   {id: 1, Action: 'Add New', SKU: 'MacAfee', BatchCode: 'Nov11Batch', CodeAvailable: 5 , CodeUsed: 12 },
+//   {id: 2, Action: 'Add New', SKU: 'Nortan', BatchCode: 'Nov11Batch', CodeAvailable: 5 , CodeUsed: 12 },
+//   {id: 3, Action: 'Add New', SKU: 'AVG', BatchCode: 'Nov11Batch', CodeAvailable: 5 , CodeUsed: 12 },
+//   {id: 4, Action: 'Add New', SKU: 'MacAfee', BatchCode: 'Nov11Batch', CodeAvailable: 5 , CodeUsed: 12 },
+//   {id: 5, Action: 'Add New', SKU: 'Nortan', BatchCode: 'Nov11Batch', CodeAvailable: 5 , CodeUsed: 12 },
+//   {id: 6, Action: 'Add New', SKU: 'AVG', BatchCode: 'Nov11Batch', CodeAvailable: 5 , CodeUsed: 12 },
+// ];
 
 @Component({
   selector: 'app-unique-keys',
@@ -45,10 +45,10 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class UniqueKeysComponent implements OnInit , AfterViewInit {
 
-  displayedColumns: string[] = ['SKU', 'BatchCode', 'CodeAvailable', 'CodeUsed', 'Action'  ];
+  displayedColumns: string[] = [ 'BatchCode', 'Status', 'Priority', 'Action'  ];
 
-  dataSourceNew = ELEMENT_DATA;
-  dataSource = new MatTableDataSource(this.dataSourceNew) ;
+  // dataSourceNew = ELEMENT_DATA;
+  dataSource ;
   codeUsed = 0;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator , {static: true}) paginator: MatPaginator;
@@ -66,39 +66,30 @@ export class UniqueKeysComponent implements OnInit , AfterViewInit {
 
   ngOnInit() {
     this.getAllOwners();
-    this.dataSource = new MatTableDataSource(this.dataSourceNew);
+    this.dataSource = new MatTableDataSource(this.dataSource);
   }
   public getAllOwners = () => {
-    this.repoService.getData('products')
+    this.repoService.create('productkeys/sku', {sku : 'K7_EM_IS_1U_1Y1' , pageNumber: 1, pageSize: 50})
             .subscribe((res: any) => {
-                console.log(res.data.data);
-                if (res && res.data && res.data.data && res.data.data.length > 0) {
-                    res.data.data.forEach(element => {
-                        let activeCount = 0;
-                        let usedCount = 0;
-                        if (element.productKeys.length > 0) {
-                            activeCount = element.productKeys.filter(x => x.status === 'active').length;
-                            usedCount = element.productKeys.filter(x => x.status === 'used').length;
-                        }
-                        element.activeCount = activeCount;
-                        element.usedCount = usedCount;
-                    });
-                }
-                this.dataSource = new MatTableDataSource(res.data.data);
+                console.log(res.data);
+                // if (res && res.data && res.data.data && res.data.data.length > 0) {
+                //     res.data.data.forEach(element => {
+                //         let activeCount = 0;
+                //         let usedCount = 0;
+                //         if (element.productKeys.length > 0) {
+                //             activeCount = element.productKeys.filter(x => x.status === 'active').length;
+                //             usedCount = element.productKeys.filter(x => x.status === 'used').length;
+                //         }
+                //         element.activeCount = activeCount;
+                //         element.usedCount = usedCount;
+                //     });
+                // }
+                this.dataSource = new MatTableDataSource(res.data.data.rows);
                 this.dataSource.sort = this.sort;
                 this.dataSource.paginator = this.paginator;
             });
   }
-  public getCodeUsed(data: any) {
-     const arr = data.map((val) => val.productKeys.filter((valu) => valu.status === 'used')).flat(2);
-     console.log( arr) ;
-     this.codeUsed = arr.length;
-  }
-  public getCodeActive(data: any) {
-    const arr = data.map((val) => val.productKeys.filter((valu) => valu.status === 'Active')).flat(2);
-    console.log( arr) ;
 
- }
   public redirectToDetails = (id: string) => {
   }
   public redirectToUpdate = (id: string) => {
@@ -169,24 +160,22 @@ export class UniqueKeysComponent implements OnInit , AfterViewInit {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
   public updateAll(rowobj) {
-    this.dataSourceNew  = this.dataSourceNew .filter((value, key) => {
+    this.dataSource = this.dataSource.filter((value, key) => {
       if (value.id === rowobj.id) {
         value.SKU = rowobj.name;
         value.Action = rowobj.category;
         value.BatchCode = rowobj.IsActive ;
-        value.CodeAvailable = rowobj.UniqueKey;
-        value.CodeUsed = rowobj.CodeUsed;
       }
-      this.dataSource = new MatTableDataSource(this.dataSourceNew);
+      // this.dataSource = new MatTableDataSource(this.dataSourceNew);
       this.paginator._changePageSize(this.paginator.pageSize);
       return true;
     });
   }
   public  deleteRowData(rowobj) {
-    this.dataSourceNew  = this.dataSourceNew.filter(( value, key) => {
+    this.dataSource  = this.dataSource.filter(( value, key) => {
       return value.id !== rowobj.id;
     });
-    this.dataSource = new MatTableDataSource(this.dataSourceNew);
+    this.dataSource = new MatTableDataSource(this.dataSource);
     this.paginator._changePageSize(this.paginator.pageSize);
   }
 
@@ -198,6 +187,12 @@ export class UniqueKeysComponent implements OnInit , AfterViewInit {
     // this.getAllOwners();
 
   }
-
+  public delepredouct(element: any) {
+    console.log(element.id);
+    this.repoService.delete2('productkey/delete' , { id : element.id}  ).subscribe((res: any) => {
+      this.openDialogSmall('productdeleted', element.name);
+      console.log(res.data);
+    });
+  }
 
 }

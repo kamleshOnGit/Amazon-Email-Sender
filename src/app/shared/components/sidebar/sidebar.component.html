@@ -32,4 +32,22 @@
     <mat-divider></mat-divider>
     <a mat-list-item routerLinkActive="list-item-active" routerLink="/superadmin/system-setting">  <mat-icon>settings_system_daydream</mat-icon> System Setting</a>
 </div>
+<div *ngIf="role == 'employee'"> 
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/employee" [routerLinkActiveOptions]="{exact:
+        true}">  <mat-icon>dashboard</mat-icon>  Dashboard</a>
+    <mat-divider></mat-divider>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/employee/products"> <mat-icon>explore</mat-icon> Products</a>
+    <mat-divider></mat-divider>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/employee/orders"> <mat-icon>view_module</mat-icon> Orders</a>
+    <mat-divider></mat-divider>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/employee/uniqueKey"> <mat-icon>view_list</mat-icon> Unique Keys</a>
+    
+    </div>
+    <div *ngIf="role == 'support'"> 
+        <a mat-list-item routerLinkActive="list-item-active" routerLink="/support" [routerLinkActiveOptions]="{exact:
+            true}">  <mat-icon>dashboard</mat-icon>  Dashboard</a>
+        <mat-divider></mat-divider>
+        <a mat-list-item routerLinkActive="list-item-active" routerLink="/support/customer-Info"> <mat-icon>peoples</mat-icon> Customer Info</a>
+        
+        </div>
 </mat-nav-list>

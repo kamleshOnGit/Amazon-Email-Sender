@@ -1,0 +1,53 @@
+ 
+  <div  class="d-flex justify-content-between align-items-center"  > 
+
+    <label class="mt-4"> Select Key to update</label>
+  <mat-form-field appearance="none" >
+    <mat-label>Order ID</mat-label>
+    <mat-select (selectionChange)="selectedValue($event)"> 
+        <mat-option *ngFor="let order of allorder" [value]="order">
+        {{order.orderId}}
+      </mat-option> 
+    </mat-select>
+  </mat-form-field>
+ </div>
+   <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+     <div fxFlex="100">
+ <table  mat-table [dataSource]="dataSource" matSort class="custom-table">
+ 
+     <!-- Position Column -->
+    
+     <!-- Name Column -->
+     <ng-container matColumnDef="orderId">
+       <th mat-header-cell *matHeaderCellDef mat-sort-header> Order ID </th>
+       <td mat-cell *matCellDef="let element"> {{element.orderId}} </td>
+     </ng-container>
+   
+     <!-- Weight Column -->
+     <ng-container matColumnDef="buyerName">
+       <th mat-header-cell *matHeaderCellDef mat-sort-header> Buyer Name </th>
+       <td mat-cell *matCellDef="let element"> {{element.buyerName}} </td>
+     </ng-container>
+   
+     <!-- Symbol Column -->
+     <ng-container matColumnDef="buyerEmail">
+       <th mat-header-cell *matHeaderCellDef mat-sort-header> Order By </th>
+       <td mat-cell *matCellDef="let element"> {{element.buyerEmail}} </td>
+     </ng-container>
+ 
+     <ng-container matColumnDef="buyerPhoneNumber">
+         <th mat-header-cell *matHeaderCellDef mat-sort-header> Buyer PhoneNumber</th>
+         <td mat-cell *matCellDef="let element" > {{element.buyerPhoneNumber}} </td>
+       </ng-container>
+ 
+       <!-- <ng-container matColumnDef="orderStatus">
+         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+         <td mat-cell *matCellDef="let element" (click)="openDialog('updateorder',element)"> {{element.orderStatus}} </td>
+       </ng-container> -->
+  
+     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+   </table>
+   </div>
+   </div>
+   

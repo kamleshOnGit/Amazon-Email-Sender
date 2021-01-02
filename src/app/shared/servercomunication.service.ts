@@ -25,8 +25,12 @@ export class RepositoryService {
     return this.http.put(this.createCompleteRoute(route, environment.urlAddress), body, this.generateHeaders());
   }
 
-  public delete = (route: string) => {
+  public delete1 = (route: string ) => {
     return this.http.delete(this.createCompleteRoute(route, environment.urlAddress));
+  }
+
+  public delete2 = (route: string , bodyobj) => {
+    return this.http.request( 'delete' , this.createCompleteRoute(route, environment.urlAddress) , { body : bodyobj});
   }
 
   private createCompleteRoute = (route: string, envAddress: string) => {

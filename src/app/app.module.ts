@@ -34,6 +34,10 @@ import { RegistorComponent } from './auth/registor/registor.component';
 import { ForgetpasswordComponent } from './auth/forgetpassword/forgetpassword.component';
 import { AuthInterceptor } from './shared/auth.config.interceptor';
 import { AllowUsersComponent } from './modules/allow-users/allow-users.component';
+import { VieworderComponent } from './employee/vieworder/vieworder.component';
+import { ViewproductsComponent } from './employee/viewproducts/viewproducts.component';
+import { ViewuniquesComponent } from './employee/viewuniques/viewuniques.component';
+import { CustomerInfoComponent } from './support/customer-info/customer-info.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,7 +56,11 @@ import { AllowUsersComponent } from './modules/allow-users/allow-users.component
     LoginComponent,
     RegistorComponent,
     ForgetpasswordComponent,
-    AllowUsersComponent
+    AllowUsersComponent,
+    VieworderComponent,
+    ViewproductsComponent,
+    ViewuniquesComponent,
+    CustomerInfoComponent
   ],
   imports: [
     BrowserModule,

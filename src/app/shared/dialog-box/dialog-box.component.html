@@ -313,6 +313,12 @@
       <li *ngFor="let productkey of localdata[0]" id="productkey"> {{productkey}} </li>
     </ul>
   </div>
+  <div *ngIf="action === 'productdeleted'">
+    <p> {{this.localdata.name}} is deleted</p>
+  </div>
+  <div *ngIf="action === 'mailSent'">
+    <p>Mail sent for {{this.localdata.name}} </p>
+  </div>
 </div>
 <div mat-dialog-actions class="model-footer mt-4 " align="end">
   <div class="d-flex justify-content-end" *ngIf="action === 'AddNewUser' || action ==='AddUser' || action === 'EditVendorSetting' || action == 'Updatekey' || action ==  'AddSinglekey' || action == 'Update' || action ==  'Add'"> 

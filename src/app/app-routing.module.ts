@@ -18,7 +18,10 @@ import { SystemSettingComponent } from './superAdmin/system-setting/system-setti
 import { TextEditorComponent } from './modules/text-editor/text-editor.component';
 import { AuthGuard } from './shared/auth.guard';
 import {AllowUsersComponent} from './modules/allow-users/allow-users.component';
-
+import { ViewproductsComponent} from './employee/viewproducts/viewproducts.component';
+import { VieworderComponent} from './employee/vieworder/vieworder.component';
+import { ViewuniquesComponent} from './employee/viewuniques/viewuniques.component';
+import { CustomerInfoComponent} from './support/customer-info/customer-info.component';
 const routes: Routes = [{
       path: '',
       component: LoginComponent,
@@ -114,6 +117,52 @@ const routes: Routes = [{
       canActivateChild: [AuthGuard ]
     }
   ]
+},
+{
+  path: 'employee',
+  component: DefaultComponent,
+  canActivate: [AuthGuard ],
+  children : [
+    {
+      path: '',
+      component: DashboardComponent,
+      canActivateChild: [AuthGuard ]
+    },
+  {
+    path: 'products',
+    component: ViewproductsComponent,
+    canActivateChild: [AuthGuard ]
+  },
+  {
+    path: 'orders',
+    component: VieworderComponent,
+    canActivateChild: [AuthGuard ]
+  },
+  {
+    path: 'uniqueKey',
+    component: ViewuniquesComponent,
+    canActivateChild: [AuthGuard ]
+  },
+
+]
+},
+{
+  path: 'support',
+  component: DefaultComponent,
+  canActivate: [AuthGuard ],
+  children : [
+    {
+      path: '',
+      component: DashboardComponent,
+      canActivateChild: [AuthGuard ]
+    },
+  {
+    path: 'customer-Info',
+    component: CustomerInfoComponent,
+    canActivateChild: [AuthGuard ]
+  }
+
+]
 }
 
 ];

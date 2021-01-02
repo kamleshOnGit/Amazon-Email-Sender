@@ -145,7 +145,8 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   ];
 
   public dataSource ;
-
+  public pagenumber = 1;
+  public pagesize = 50;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -175,7 +176,7 @@ get toDate() { return this.filterForm.get('toDate').value; }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    // this.dataSource.paginator = this.paginator;
   }
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
@@ -194,9 +195,9 @@ get toDate() { return this.filterForm.get('toDate').value; }
 
   }
   public getAllOwners = () => {
-    this.repoService.getData('orders').subscribe((res: any) => {
+    this.repoService.getData('orders/' + this.pagenumber + '/' + this.pagesize).subscribe((res: any) => {
       if (res && res.data  && res.data.length > 0) {
-        res.data.forEach(element => {
+        res.data.rows.forEach(element => {
             let Email = '';
             if (element.buyerEmail.length > 0) {
                 Email = this.Decription.decript(element.buyerEmail);
@@ -204,7 +205,7 @@ get toDate() { return this.filterForm.get('toDate').value; }
             element.email = Email;
         });
     }
-      this.dataSource = new MatTableDataSource(res.data);
+      this.dataSource = new MatTableDataSource(res.data.rows);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       console.log(res.data);
@@ -236,7 +237,20 @@ get toDate() { return this.filterForm.get('toDate').value; }
       }
     });
   }
+  public openDialogSmall(action, obj) {
+    obj.action = action;
+    const dialogRef = this.dialog.open( DialogBoxComponent, {
+      width: '500px',
+      data: obj
+    });
 
+    dialogRef.afterClosed().subscribe( (result) => {
+      if (result.event === 'product not found') {
+        this.addRowData(result.data);
+      } else if (result.event === 'Updatekey') {
+        this.updateRowData(result.data);
+      }  });
+  }
   public addRowData(rowobj: any) {
     const d = new Date();
     // this.dataSourceNew .push( {
@@ -258,7 +272,7 @@ get toDate() { return this.filterForm.get('toDate').value; }
         // value.CodeUsed = rowobj.CodeUsed;
       }
       this.dataSource = new MatTableDataSource(this.dataSource);
-      this.paginator._changePageSize(this.paginator.pageSize);
+      // this.paginator._changePageSize(this.paginator.pageSize);
       return true;
     });
   }
@@ -272,7 +286,7 @@ get toDate() { return this.filterForm.get('toDate').value; }
         // value.CodeUsed = rowobj.CodeUsed;
       }
       this.dataSource = new MatTableDataSource(this.dataSource);
-      this.paginator._changePageSize(this.paginator.pageSize);
+      // this.paginator._changePageSize(this.paginator.pageSize);
       return true;
     });
   }
@@ -281,14 +295,15 @@ get toDate() { return this.filterForm.get('toDate').value; }
       return value.id !== rowobj.id;
     });
     this.dataSource = new MatTableDataSource(this.dataSource);
-    this.paginator._changePageSize(this.paginator.pageSize);
+    // this.paginator._changePageSize(this.paginator.pageSize);
   }
  public updateOrders(data: any) {
   console.log( data);
-  this.repoService.create('import/orders', {'orders' : data}).subscribe((res: any) => console.log(res));
+  this.repoService.create('import/orders/', {'orders' : data}).subscribe((res: any) => console.log(res));
  }
- public revokeOrder(id) {
-  console.log( id);
-  this.repoService.create('productkey/revoke', {'orderId' : '' + id}).subscribe((res: any) => console.log(res));
+ public revokeOrder(element) {
+  console.log( element.orderId);
+  this.repoService.create('productkey/revoke', {'orderId' : '' + element.orderId}).subscribe((res: any) =>  console.log(res));
+  this.openDialogSmall('revokeorder', element);
  }
-}
+} 

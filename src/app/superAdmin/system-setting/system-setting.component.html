@@ -5,12 +5,13 @@
         </div>
         <div class="col-12 text-left py-0">
             <mat-form-field appearance="none" class="w-50">
-                <mat-label>Select time</mat-label>
+                <!-- <mat-label>Select time</mat-label>
                 <mat-select>
                   <mat-option *ngFor="let time of times" [value]="time">
                     {{time}}
                   </mat-option>
-                </mat-select>
+                </mat-select> -->
+                <input type="tel" matInput  placeholder="time" [(ngModel)]="formdata.schedulerMinutes">
               </mat-form-field>
         </div>
     </div>
@@ -24,9 +25,49 @@
               </mat-form-field>
         </div>
     </div>
+    <div class="row mt-4 mb-5">
+        <div class="col-12 py-0">
+           <label> Email Host </label> 
+        </div>
+        <div class="col-12 text-left py-0">
+            <mat-form-field  appearance="none" class="w-50">
+                <input  matInput placeholder="emailHost" [(ngModel)]="formdata.emailHost">
+              </mat-form-field>
+        </div>
+    </div>
+    <div class="row mt-4 mb-5">
+        <div class="col-12 py-0">
+           <label> Email User name </label> 
+        </div>
+        <div class="col-12 text-left py-0">
+            <mat-form-field  appearance="none" class="w-50">
+                <input  matInput placeholder="emailUsername" [(ngModel)]="formdata.emailUsername">
+              </mat-form-field>
+        </div>
+    </div>
+    <div class="row mt-4 mb-5">
+        <div class="col-12 py-0">
+           <label> Email Password </label> 
+        </div>
+        <div class="col-12 text-left py-0">
+            <mat-form-field  appearance="none" class="w-50">
+                <input  matInput placeholder="emailPassword"  [(ngModel)]="formdata.emailPassword">
+              </mat-form-field>
+        </div>
+    </div>
+    <div class="row mt-4 mb-5">
+        <div class="col-12 py-0">
+           <label> Email Port </label> 
+        </div>
+        <div class="col-12 text-left py-0">
+            <mat-form-field  appearance="none" class="w-50">
+                <input  matInput placeholder="emailPort" [(ngModel)]="formdata.emailPort">
+              </mat-form-field>
+        </div>
+    </div>
     <div class="row">
         <div class="col-2 ">
-            <button class="btn btn-custom mt-3"> Save</button>
+            <button class="btn btn-custom mt-3" (click)="setconfig()"> Save</button>
         </div>
         <div class="col-4 text-left">
             <button class="btn btn-custom mt-3"> Run the Schduler now</button>

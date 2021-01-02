@@ -41,6 +41,10 @@ export class AuthService {
           this.router.navigate(['admin/']);
         } else if (res.data.roleName === 'superAdmin') {
           this.router.navigate(['superadmin/']);
+        } else if (res.data.roleName === 'employee') {
+          this.router.navigate(['employee/']);
+        } else if (res.data.roleName === 'support') {
+          this.router.navigate(['support/']);
         }
 
 

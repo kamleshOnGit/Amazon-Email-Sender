@@ -130,7 +130,7 @@ export class EmailTemplateComponent implements OnInit , AfterViewInit {
 }
 
 deleteTemplate(id: number) {
-  this.repoService.delete('emailTemplate/' + id).subscribe((res: any) => console.log( res));
+  this.repoService.delete1('emailTemplate/' + id).subscribe((res: any) => console.log( res));
 }
 
 }
