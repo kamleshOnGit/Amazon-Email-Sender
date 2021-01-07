@@ -1,7 +1,7 @@
 import { Component, Inject, Optional, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Products } from '../products.model';
-import {ProductKeys} from '../uniqueKeys.model';
+import { ProductKeys } from '../uniqueKeys.model';
 import { Orders } from '../orders.model';
 import { RepositoryService } from '../../shared/servercomunication.service';
 import { MatSelectChange } from '@angular/material/select';
@@ -33,24 +33,23 @@ export class DialogBoxComponent {
   productnotfound = [];
   errortext = 'Unknow Error';
 
-  @ViewChild('csvReader', {static: true}) csvReader: any;
+  @ViewChild('csvReader', { static: true }) csvReader: any;
 
-  constructor(private repoService: RepositoryService ,
-              public dialogRef: MatDialogRef<DialogBoxComponent>,
-              @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData) {
+  constructor(private repoService: RepositoryService,
+    public dialogRef: MatDialogRef<DialogBoxComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData) {
 
-    this.localdata = {...data};
-    this.localdata.message =  this.localdata.message !== undefined ? this.localdata.message : this.errortext;
+    this.localdata = { ...data };
+    this.localdata.message = this.localdata.message !== undefined ? this.localdata.message : this.errortext;
     console.log(this.localdata);
     this.action = this.localdata.action;
     this.selectcheck = this.localdata.IsActive;
     // this.repoService.getData('products').subscribe((res: any) => {
     //   this.productsAll = res.data.data;
-    //   console.log(res.data.data);
     // });
   }
   doAction() {
-    this.dialogRef.close({event: this.action, data: this.localdata});
+    this.dialogRef.close({ event: this.action, data: this.localdata });
   }
 
   // public getadminsettings(id: string) {
@@ -58,7 +57,7 @@ export class DialogBoxComponent {
   // }
 
   closeDialog() {
-    this.dialogRef.close({event: 'Cancel'});
+    this.dialogRef.close({ event: 'Cancel' });
     window.location.reload();
   }
   updateIsActive() {
@@ -128,8 +127,14 @@ export class DialogBoxComponent {
     }
   }
 
+  async loadproduct() {
+    this.repoService.getData('products').subscribe((res: any) => {
+      this.productsAll = res.data.data;
+    });
+  }
+  async uploadListenerKeys($event: any) {
+    await this.loadproduct();
 
-  uploadListenerKeys($event: any): void {
     const text = [];
     const files = $event.srcElement.files;
 
@@ -165,7 +170,7 @@ export class DialogBoxComponent {
     for (let i = 1; i < csvRecordsArray.length; i++) {
       const curruntRecord = (csvRecordsArray[i] as string).split(',');
       if (curruntRecord.length === headerLength) {
-        const csvRecord: UsersData  = new Products();
+        const csvRecord: UsersData = new Products();
         csvRecord.itemName = curruntRecord[0];
         csvRecord.ProductId = curruntRecord[22];
         csvRecord.sellerSku = curruntRecord[3];
@@ -184,7 +189,7 @@ export class DialogBoxComponent {
     for (let i = 1; i < csvRecordsArray.length; i++) {
       const curruntRecord = (csvRecordsArray[i] as string).split(',');
       if (curruntRecord.length === headerLength) {
-        const csvRecord: Orders  = new Orders();
+        const csvRecord: Orders = new Orders();
         csvRecord.orderId = curruntRecord[0];
         csvRecord.orderItemId = curruntRecord[1];
         // csvRecord.paymentsDate = curruntRecord[3];
@@ -209,18 +214,20 @@ export class DialogBoxComponent {
     for (let i = 1; i < csvRecordsArray.length; i++) {
       const curruntRecord = (csvRecordsArray[i] as string).split(',');
       if (curruntRecord.length === headerLength) {
-        const csvRecord: ProductKeys  = new ProductKeys();
-        for (let j =0 ; j < this.productsAll.length ; j++) {
+        const csvRecord: ProductKeys = new ProductKeys();
+        // for (let j = 0; j < this.productsAll.length; j++) {
         if (curruntRecord[1] !== '') {
-        if (curruntRecord[0] === this.productsAll[j].marketPlaceProductId ) {
-        csvRecord.key = curruntRecord[1];
-        csvRecord.status = curruntRecord[2];
-        csvRecord.priority = 'High';
-        csvRecord.sku = curruntRecord[0];
-        csvArr.push(csvRecord);
-       } else {
-          this.productnotfound.push(curruntRecord[0]);
-        } } }
+          if (this.productsAll.filter(x => x.marketPlaceProductId == curruntRecord[0]).length > 0) {
+            csvRecord.key = curruntRecord[1];
+            csvRecord.status = curruntRecord[2];
+            csvRecord.priority = 'High';
+            csvRecord.sku = curruntRecord[0];
+            csvArr.push(csvRecord);
+          } else {
+            this.productnotfound.push(curruntRecord[0]);
+          }
+        }
+        // }
       }
     }
 
@@ -288,7 +295,7 @@ export class DialogBoxComponent {
     this.updateIsActiveEmail();
     this.localdata.id = event.value.id;
     this.localdata.priority = event.value.priority;
-    console.log( event.value);
+    console.log(event.value);
   }
 
 }
