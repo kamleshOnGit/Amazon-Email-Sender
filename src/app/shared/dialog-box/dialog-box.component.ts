@@ -37,8 +37,8 @@ export class DialogBoxComponent {
   @ViewChild('csvReader', { static: true }) csvReader: any;
 
   constructor(private repoService: RepositoryService,
-    public dialogRef: MatDialogRef<DialogBoxComponent>,@Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData) {
-      debugger
+    public dialogRef: MatDialogRef<DialogBoxComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData) {
     this.localdata = { ...data };
     this.localdata.message = this.localdata.message !== undefined ? this.localdata.message : this.errortext;
     console.log(this.localdata);
@@ -46,7 +46,6 @@ export class DialogBoxComponent {
     this.selectcheck = this.localdata.IsActive;
     // this.repoService.getData('products').subscribe((res: any) => {
     //   this.productsAll = res.data.data;
-    //   console.log(res.data.data);
     // });
   }
   doAction() {
@@ -128,8 +127,14 @@ export class DialogBoxComponent {
     }
   }
 
+  async loadproduct() {
+    this.repoService.getData('products').subscribe((res: any) => {
+      this.productsAll = res.data.data;
+    });
+  }
+  async uploadListenerKeys($event: any) {
+    await this.loadproduct();
 
-  uploadListenerKeys($event: any): void {
     const text = [];
     const files = $event.srcElement.files;
 
@@ -210,19 +215,19 @@ export class DialogBoxComponent {
       const curruntRecord = (csvRecordsArray[i] as string).split(',');
       if (curruntRecord.length === headerLength) {
         const csvRecord: ProductKeys = new ProductKeys();
-        for (let j = 0; j < this.productsAll.length; j++) {
-          if (curruntRecord[1] !== '') {
-            if (curruntRecord[0] === this.productsAll[j].marketPlaceProductId) {
-              csvRecord.key = curruntRecord[1];
-              csvRecord.status = curruntRecord[2];
-              csvRecord.priority = 'High';
-              csvRecord.sku = curruntRecord[0];
-              csvArr.push(csvRecord);
-            } else {
-              this.productnotfound.push(curruntRecord[0]);
-            }
+        // for (let j = 0; j < this.productsAll.length; j++) {
+        if (curruntRecord[1] !== '') {
+          if (this.productsAll.filter(x => x.marketPlaceProductId == curruntRecord[0]).length > 0) {
+            csvRecord.key = curruntRecord[1];
+            csvRecord.status = curruntRecord[2];
+            csvRecord.priority = 'High';
+            csvRecord.sku = curruntRecord[0];
+            csvArr.push(csvRecord);
+          } else {
+            this.productnotfound.push(curruntRecord[0]);
           }
         }
+        // }
       }
     }
 
