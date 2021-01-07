@@ -45,8 +45,8 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Action</th>
         <td mat-cell *matCellDef="let element" >
            <mat-icon (click)="giveVenderId(element.id)" >search</mat-icon> 
-           <span class="badge badge-primary m-2 btn" (click)="openDialog('AddVendorSetting',{tenantId: element.id})"> Add Setting</span>
-           <span class="badge badge-primary m-2 btn" (click)="openDialog('EditVendorSetting',{tenantId: element.id})"> Edit Setting</span>
+           <span class="badge badge-primary m-2 btn" *ngIf="!element.setting" (click)="openDialog('AddVendorSetting',{tenantId: element.id})"> Add Setting</span>
+           <span class="badge badge-primary m-2 btn" *ngIf="element.setting" (click)="openDialog('EditVendorSetting',{tenantId: element.id},element.setting)"> Edit Setting</span>
            </td>
       </ng-container>
   

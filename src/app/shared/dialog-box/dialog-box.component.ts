@@ -38,8 +38,7 @@ export class DialogBoxComponent {
 
   constructor(private repoService: RepositoryService,
     public dialogRef: MatDialogRef<DialogBoxComponent>,@Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData) {
-    
-
+      debugger
     this.localdata = { ...data };
     this.localdata.message = this.localdata.message !== undefined ? this.localdata.message : this.errortext;
     console.log(this.localdata);

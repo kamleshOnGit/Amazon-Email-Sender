@@ -82,14 +82,17 @@ export class VendorsComponent implements OnInit , AfterViewInit {
   public redirectToDelete = (id: string) => {
   }
 
- public openDialog(action, obj) {
+ public openDialog(action, obj,setting) {
+   debugger
     obj.action = action;
+       obj.setting = setting;
     const dialogRef = this.dialog.open( DialogBoxComponent, {
       width: '1000px',
       data: obj
     });
 
     dialogRef.afterClosed().subscribe( (result) => {
+      debugger
       if (result.event === 'AddNewVendor') {
         this.addNewVendor(result.data);
       } else if (result.event === 'Update') {

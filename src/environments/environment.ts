@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  urlAddress: 'http://sp.vancotech.com/api'
+  // urlAddress: 'http://sp.vancotech.com/api'
+  urlAddress: 'http://localhost:8080/api'
 };
 
 /*

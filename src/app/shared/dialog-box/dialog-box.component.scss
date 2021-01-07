@@ -146,8 +146,9 @@
   :host ::ng-deep .mat-form-field-infix  { border-top:0px!important}
   
   input , select { font-family: 'Proxima Nova',sans-serif;}
+
   .ng-invalid:not(form) {
-    border-bottom:2px solid  #eb6c6a; /* red */
+    border-bottom:2px solid  #f3f2f2; /* red */
      
   }
 
