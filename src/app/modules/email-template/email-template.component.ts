@@ -87,8 +87,8 @@ export class EmailTemplateComponent implements OnInit , AfterViewInit {
     .subscribe( (res: any ) => {
       this.dataSource = new MatTableDataSource(res.data);
       this.dataSource.sort = this.sort;
-      // this.dataSource.paginator = this.paginator;
-      // console.log(res.data);
+      this.dataSource.paginator = this.paginator;
+      console.log(res.data);
     }, error => {
       console.log(error.error.message);
       this.popupmsg.message =  error.error.message;

@@ -5,6 +5,7 @@ import { ProductKeys } from '../uniqueKeys.model';
 import { Orders } from '../orders.model';
 import { RepositoryService } from '../../shared/servercomunication.service';
 import { MatSelectChange } from '@angular/material/select';
+
 export interface UsersData {
   itemName: string;
   ProductId: string;
@@ -265,14 +266,11 @@ export class DialogBoxComponent {
 
       reader.onload = () => {
         const htmlData = reader.result;
-        // console.log(htmlData);
         this.localdata.emailTemplate = htmlData;
       };
-
       reader.onerror = () => {
         console.log('error is occured while reading file!');
       };
-
     } else {
       alert('Please import valid .csv file.');
       this.fileReset();
