@@ -137,9 +137,9 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
     });
 
     dialogRef.afterClosed().subscribe( (result) => {
-      if (result.event === 'product not found') {
+      if (result && result.event === 'product not found') {
         this.addRowData(result.data);
-      } else if (result.event === 'Updatekey') {
+      } else if (result && result.event === 'Updatekey') {
         this.updateRowData(result.data);
       }  });
   }
