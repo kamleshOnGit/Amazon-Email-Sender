@@ -35,7 +35,6 @@ export class AuthService {
       .subscribe((res: any) => {
         localStorage.setItem('access_token', res.data.token);
         localStorage.setItem('rolename', res.data.roleName);
-        console.log(res.data);
         this.currentUser = res.data.roleName;
         if (res.data.roleName === 'admin') {
           this.router.navigate(['admin/']);
@@ -80,7 +79,7 @@ export class AuthService {
     const api = `${this.endpoint}/user-profile/${id}`;
     return this.http.get(api, { headers: this.headers }).pipe(
       map((res: Response) => {
-        return res || {} ;
+        return res || {};
       }),
       catchError(this.handleError)
     );

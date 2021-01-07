@@ -197,12 +197,12 @@
   <div mat-dialog-content class="model-body ">
 
     <div *ngIf="action == 'AddVendorSetting'">
-      <label class="mt-4"> Tenant Id</label>
-      <mat-form-field appearance="none">
+      <!-- <label class="mt-4"> Tenant Id</label> -->
+      <!-- <mat-form-field appearance="none">
         <input placeholder="tenant Id" name="tenent" #tenent="ngModel"
           [ngClass]="{ 'is-invalid': e.submitted && tenent.invalid }" required matInput
           [(ngModel)]="localdata.tenantId">
-      </mat-form-field>
+      </mat-form-field> -->
       <label class="mt-4"> Seller Id </label>
       <mat-form-field appearance="none">
         <input placeholder="seller Id" name="sellerid" #sellerid="ngModel"
@@ -584,23 +584,23 @@
   <div mat-dialog-content class="model-body ">
 
     <div *ngIf="action == 'UploadEmail';">
-      <label class="mt-4"> productId</label>
+      <label class="mt-4"> ProductId</label>
       <mat-form-field appearance="none">
         <input placeholder="productId" name="productId2" #productId2="ngModel"
           [ngClass]="{ 'is-invalid': o.submitted && productId2.invalid }" required matInput
           [(ngModel)]="localdata.productId">
       </mat-form-field>
 
-      <label class="mt-4"> name </label>
+      <label class="mt-4"> Name </label>
       <mat-form-field appearance="none">
         <input placeholder="name" name="name5" #name5="ngModel"
           [ngClass]="{ 'is-invalid': o.submitted && name5.invalid }" required matInput [(ngModel)]="localdata.name">
       </mat-form-field>
-      <label class="mt-4"> emailHtml </label>
+      <label class="mt-4"> EmailHtml </label>
       <div class="form-group">
         <input placeholder="upload file" name="uploadfile5" #uploadfile5="ngModel" [(ngModel)]="localdata.file"
           [ngClass]="{ 'is-invalid': o.submitted && uploadfile5.invalid }" required #csvReader id="txtFileUpload"
-          (change)="uploadListenerHtml($event)" accept=".html,.txt" type="file">
+          (change)="uploadListenerHtml($event)" accept=".html" type="file">
       </div>
       <div class="mt-5 d-block">
         <mat-checkbox class="d-inline mb-4" name="Active5" #Active5="ngModel"
@@ -623,6 +623,7 @@
     </div>
   </div>
 </form>
+
 <div class="model-header" *ngIf="action === 'ViewAll'">
   <div (click)="closeDialog()" class="close">
     <mat-icon> close</mat-icon>
