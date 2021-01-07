@@ -9,7 +9,7 @@
     <div *ngIf="action == 'AddNewVendor';">
       <label class="mt-4"> Name</label>
       <mat-form-field appearance="none">
-        <input placeholder="User name" name="name" [ngClass]="{ 'is-invalid': a.submitted && name.invalid }"
+        <input placeholder="Vendor name" name="name" [ngClass]="{ 'is-invalid': a.submitted && name.invalid }"
           #name="ngModel" required matInput [(ngModel)]="localdata.name">
       </mat-form-field>
 
@@ -18,6 +18,7 @@
           <input placeholder="upload file" class="form-control mb-2 h-auto" name="uploadfile1" id="txtFileUpload"
             (change)="selectLogo($event)" type="file">
         </div>
+        <span *ngIf="logoImage">Logo Uploaded</span>
       </div>
       <div class="mt-4">
         <mat-checkbox [(ngModel)]="selectcheckemail" name="active" #active="ngModel" required
@@ -194,7 +195,7 @@
     <div (click)="closeDialog()" class="close">
       <mat-icon> close</mat-icon>
     </div>
-    <h2 mat-dialog-title *ngIf="action == 'Updatekey';"> Add Settings For Vendor</h2>
+    <h2 mat-dialog-title *ngIf="action == 'AddVendorSetting';"> Add Settings For Vendor</h2>
   </div>
   <div mat-dialog-content class="model-body ">
 
@@ -207,26 +208,26 @@
       </mat-form-field> -->
       <label class="mt-4"> Seller Id </label>
       <mat-form-field appearance="none">
-        <input placeholder="seller Id" name="sellerid" #sellerid="ngModel"
+        <input placeholder="Seller Id" name="sellerid" #sellerid="ngModel"
           [ngClass]="{ 'is-invalid': e.submitted && sellerid.invalid }" required matInput
           [(ngModel)]="localdata.sellerId">
       </mat-form-field>
-      <label class="mt-4"> marketplace Id</label>
+      <label class="mt-4"> Marketplace Id</label>
       <mat-form-field appearance="none">
-        <input placeholder="marketplace Id" name="marketplace" #marketplace="ngModel"
+        <input placeholder="Marketplace Id" name="marketplace" #marketplace="ngModel"
           [ngClass]="{ 'is-invalid': e.submitted && marketplace.invalid }" required matInput
           [(ngModel)]="localdata.marketplaceId">
       </mat-form-field>
-      <label class="mt-4">refresh Token</label>
+      <label class="mt-4">Refresh Token</label>
       <mat-form-field appearance="none">
-        <input placeholder="refreshToken" name="refreshToken" #refreshToken="ngModel"
+        <input placeholder="RefreshToken" name="refreshToken" #refreshToken="ngModel"
           [ngClass]="{ 'is-invalid': e.submitted && refreshToken.invalid }" required matInput
           [(ngModel)]="localdata.refreshToken">
       </mat-form-field>
-      <label class="mt-4">default Values</label>
+      <label class="mt-4">Default Values</label>
       <mat-form-field appearance="none">
-        <textarea placeholder="defaultValues" name="defaultValues" #defaultValues="ngModel"
-          [ngClass]="{ 'is-invalid': e.submitted && defaultValues.invalid }" required matInput
+        <textarea placeholder="DefaultValues" name="defaultValues" #defaultValues="ngModel"
+          [ngClass]="{'is-invalid': e.submitted && defaultValues.invalid }" required matInput
           [(ngModel)]="localdata.defaultValues"></textarea>
       </mat-form-field>
     </div>
@@ -245,40 +246,40 @@
     <div (click)="closeDialog()" class="close">
       <mat-icon> close</mat-icon>
     </div>
-    <h2 mat-dialog-title *ngIf="action == 'Updatekey';"> Edit Settings For Vendor</h2>
+    <h2 mat-dialog-title *ngIf="action == 'EditVendorSetting';"> Edit Settings For Vendor</h2>
   </div>
   <div mat-dialog-content class="model-body ">
 
     <div *ngIf="action == 'EditVendorSetting'">
-      <label class="mt-4"> Tenant Id</label>
+      <!-- <label class="mt-4"> Tenant Id</label>
       <mat-form-field appearance="none">
         <input placeholder="tenant Id" name="tenant1" #tenant1="ngModel"
           [ngClass]="{ 'is-invalid': f.submitted && tenant1.invalid }" required matInput
           [(ngModel)]="localdata.tenantId">
-      </mat-form-field>
+      </mat-form-field> -->
       <label class="mt-4"> Seller Id </label>
       <mat-form-field appearance="none">
-        <input placeholder="seller Id" name="seller1" #seller1="ngModel"
+        <input placeholder="Seller Id" name="seller1" #seller1="ngModel"
           [ngClass]="{ 'is-invalid': f.submitted && seller1.invalid }" required matInput
-          [(ngModel)]="localdata.sellerId">
+          [(ngModel)]="localdata.setting.sellerId">
       </mat-form-field>
-      <label class="mt-4"> marketplace Id</label>
+      <label class="mt-4"> Marketplace Id</label>
       <mat-form-field appearance="none">
-        <input placeholder="marketplace Id" name="marketplace1" #marketplace1="ngModel"
+        <input placeholder="Marketplace Id" name="marketplace1" #marketplace1="ngModel"
           [ngClass]="{ 'is-invalid': f.submitted && marketplace1.invalid }" required matInput
-          [(ngModel)]="localdata.marketplaceId">
+          [(ngModel)]="localdata.setting.marketplaceId">
       </mat-form-field>
-      <label class="mt-4">refresh Token</label>
+      <label class="mt-4">Refresh Token</label>
       <mat-form-field appearance="none">
-        <input placeholder="refreshToken" name="refreshToken1" #refreshToken1="ngModel"
+        <input placeholder="RefreshToken" name="refreshToken1" #refreshToken1="ngModel"
           [ngClass]="{ 'is-invalid': f.submitted && refreshToken1.invalid }" required matInput
-          [(ngModel)]="localdata.refreshToken">
+          [(ngModel)]="localdata.setting.refreshToken">
       </mat-form-field>
-      <label class="mt-4">default Values</label>
+      <label class="mt-4">Default Values</label>
       <mat-form-field appearance="none">
-        <textarea placeholder="defaultValues" name="defaultValues1" #defaultValues1="ngModel"
+        <textarea placeholder="DefaultValues" name="defaultValues1" #defaultValues1="ngModel"
           [ngClass]="{ 'is-invalid': f.submitted && defaultValues1.invalid }" required matInput
-          [(ngModel)]="localdata.defaultValues"></textarea>
+          [(ngModel)]="localdata.setting.defaultValues"></textarea>
       </mat-form-field>
     </div>
   </div>
@@ -302,15 +303,15 @@
 
 
     <div *ngIf="action == 'AddUser';">
-      <label class="mt-4"> FirstName</label>
+      <label class="mt-4"> First Name</label>
       <mat-form-field appearance="none">
-        <input placeholder="Vendor name" name="Vendor1" #Vendor1="ngModel"
+        <input placeholder="First Name" name="Vendor1" #Vendor1="ngModel"
           [ngClass]="{ 'is-invalid': g.submitted && Vendor1.invalid }" required matInput
           [(ngModel)]="localdata.firstname">
       </mat-form-field>
-      <label class="mt-4"> last Name</label>
+      <label class="mt-4"> Last Name</label>
       <mat-form-field appearance="none">
-        <input placeholder="Vendor name" name="Vendorlast1" #Vendorlast1="ngModel"
+        <input placeholder="Last Name" name="Vendorlast1" #Vendorlast1="ngModel"
           [ngClass]="{ 'is-invalid': g.submitted && Vendorlast1.invalid }" required matInput
           [(ngModel)]="localdata.lastname">
       </mat-form-field>
@@ -367,14 +368,14 @@
         <input  matInput  placeholder="Role Id" name="Role2" #Role2="ngModel"
           [ngClass]="{ 'is-invalid': p.submitted && Role2.invalid }" required [(ngModel)]="localdata.roleId">
       </mat-form-field>  -->
-      <label class="mt-4"> FirstName</label>
+      <label class="mt-4"> First Name</label>
       <mat-form-field appearance="none">
-        <input placeholder="Vendor name" matInput name="Vendor2" #Vendor2="ngModel"
+        <input placeholder="First Name" matInput name="Vendor2" #Vendor2="ngModel"
           [ngClass]="{ 'is-invalid': p.submitted && Vendor2.invalid }" required [(ngModel)]="localdata.firstName">
       </mat-form-field>
-      <label class="mt-4"> last Name</label>
+      <label class="mt-4"> Last Name</label>
       <mat-form-field appearance="none">
-        <input placeholder="Vendor name" matInput name="Vendorlast2" #Vendorlast2="ngModel"
+        <input placeholder="Last Name" matInput name="Vendorlast2" #Vendorlast2="ngModel"
           [ngClass]="{ 'is-invalid': p.submitted && Vendorlast2.invalid }" required [(ngModel)]="localdata.lastName">
       </mat-form-field>
       <div class="mt-4">

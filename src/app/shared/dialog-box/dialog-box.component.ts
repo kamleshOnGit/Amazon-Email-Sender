@@ -43,7 +43,6 @@ export class DialogBoxComponent {
     public dialogRef: MatDialogRef<DialogBoxComponent>,
     private http: HttpClient,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData) {
-
     this.localdata = { ...data };
     this.localdata.message = this.localdata.message !== undefined ? this.localdata.message : this.errortext;
     console.log(this.localdata);
@@ -301,13 +300,12 @@ export class DialogBoxComponent {
   }
   selectLogo(event) {
     if (event && event.target.files && event.target.files.length > 0) {
-      this.logoImage = event.target.files[0]
-      this.imageupload()
+      this.imageupload(event.target.files[0])
     } 
   }
-  imageupload() {
+  imageupload(event) {
     const formData = new FormData();
-    formData.append('file',this.logoImage);
+    formData.append('file',event);
     this.http.post<any>(`${environment.urlAddress}` + '/upload', formData).subscribe((res) => {
       this.logoImage = environment.img_url + res.filename;
       // this.clientForm.patchValue({
