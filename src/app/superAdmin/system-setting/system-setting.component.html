@@ -1,4 +1,5 @@
-<div class="container">
+<div class="container" >
+    <form #systemsettingform="ngForm" (ngSubmit)="setconfig()">
     <div class="row">
         <div class="col-12 py-0">
            <label> Scheduler Time</label> 
@@ -11,7 +12,7 @@
                     {{time}}
                   </mat-option>
                 </mat-select> -->
-                <input type="tel" matInput  placeholder="time" [(ngModel)]="formdata.schedulerMinutes">
+                <input type="tel" matInput  placeholder="time" name="schedulerMinutes" #schedulerMinutes="ngModel" [(ngModel)]="formdata.schedulerMinutes" [ngClass]="{ 'is-invalid': systemsettingform.submitted && schedulerMinutes.invalid }"  required >
               </mat-form-field>
         </div>
     </div>
@@ -20,8 +21,8 @@
            <label> SMS Gateway Keys </label> 
         </div>
         <div class="col-12 text-left py-0">
-            <mat-form-field  appearance="none" class="w-50">
-                <input  matInput placeholder="gateways" >
+            <mat-form-field  appearance="none"  class="w-50">
+                <input  matInput placeholder="gateways"  >
               </mat-form-field>
         </div>
     </div>
@@ -31,7 +32,7 @@
         </div>
         <div class="col-12 text-left py-0">
             <mat-form-field  appearance="none" class="w-50">
-                <input  matInput placeholder="emailHost" [(ngModel)]="formdata.emailHost">
+                <input  matInput placeholder="emailHost" name="emailHost" #emailHost="ngModel" [ngClass]="{ 'is-invalid': systemsettingform.submitted && emailHost.invalid }" required [(ngModel)]="formdata.emailHost">
               </mat-form-field>
         </div>
     </div>
@@ -41,7 +42,7 @@
         </div>
         <div class="col-12 text-left py-0">
             <mat-form-field  appearance="none" class="w-50">
-                <input  matInput placeholder="emailUsername" [(ngModel)]="formdata.emailUsername">
+                <input  matInput placeholder="emailUsername" name="emailUsername" #emailUsername="ngModel" [ngClass]="{ 'is-invalid': systemsettingform.submitted && emailUsername.invalid }" required [(ngModel)]="formdata.emailUsername">
               </mat-form-field>
         </div>
     </div>
@@ -51,7 +52,7 @@
         </div>
         <div class="col-12 text-left py-0">
             <mat-form-field  appearance="none" class="w-50">
-                <input  matInput placeholder="emailPassword"  [(ngModel)]="formdata.emailPassword">
+                <input type="password"  matInput placeholder="emailPassword" name="emailPassword" #emailPassword [ngClass]="{ 'is-invalid': systemsettingform.submitted && emailPassword.invalid }" required  [(ngModel)]="formdata.emailPassword">
               </mat-form-field>
         </div>
     </div>
@@ -61,16 +62,17 @@
         </div>
         <div class="col-12 text-left py-0">
             <mat-form-field  appearance="none" class="w-50">
-                <input  matInput placeholder="emailPort" [(ngModel)]="formdata.emailPort">
+                <input type="tel"  matInput required name="emailPort" #emailPort="ngModel" [ngClass]="{ 'is-invalid': systemsettingform.submitted && emailPort.invalid }"  placeholder="emailPort" [(ngModel)]="formdata.emailPort">
               </mat-form-field>
         </div>
     </div>
     <div class="row">
         <div class="col-2 ">
-            <button class="btn btn-custom mt-3" (click)="setconfig()"> Save</button>
+            <button class="btn btn-custom mt-3" [disabled]="!systemsettingform.valid" > Save</button>
         </div>
         <div class="col-4 text-left">
             <button class="btn btn-custom mt-3"> Run the Schduler now</button>
         </div>
     </div>
+</form>
 </div>

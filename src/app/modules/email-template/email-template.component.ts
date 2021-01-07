@@ -61,7 +61,7 @@ export class EmailTemplateComponent implements OnInit , AfterViewInit {
   displayedColumns: string[] = [ 'name', 'category', 'IsActive', 'createdAt', 'Action' ];
 
   public dataSource;
-
+  popupmsg = {message: ''};
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator , {static: true}) paginator: MatPaginator;
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
@@ -87,8 +87,12 @@ export class EmailTemplateComponent implements OnInit , AfterViewInit {
     .subscribe( (res: any ) => {
       this.dataSource = new MatTableDataSource(res.data);
       this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-      console.log(res.data);
+      // this.dataSource.paginator = this.paginator;
+      // console.log(res.data);
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
     });
   }
   public redirectToDetails = (id: string) => {
@@ -99,7 +103,7 @@ export class EmailTemplateComponent implements OnInit , AfterViewInit {
   }
   redirectTemplate(id: number ) {
     this.repoService.id = id ;
-    this.router.navigate(['/admin/edit-email-template']);
+    this.router.navigate(['./edit-email-template']);
   }
 
   public openDialog(action, obj) {
@@ -115,7 +119,20 @@ export class EmailTemplateComponent implements OnInit , AfterViewInit {
       }
     });
   }
+  public openDialogSmall(action, obj) {
+    obj.action = action;
+    const dialogRef = this.dialog.open( DialogBoxComponent, {
+      width: '500px',
+      data: obj
+    });
 
+    dialogRef.afterClosed().subscribe( (result) => {
+      if (result.event === 'product not found') {
+        // this.addRowData(result.data);
+      } else if (result.event === 'Updatekey') {
+        // this.updateRowData(result.data);
+      }  });
+  }
  newemailtemplate(data: any) {
 
     const bodydata = {
@@ -126,11 +143,29 @@ export class EmailTemplateComponent implements OnInit , AfterViewInit {
       comments : data.comments
     };
     console.log(data , bodydata);
-    this.repoService.create('emailTemplate' , bodydata).subscribe((res: any) => console.log( res));
+    this.repoService.create('emailTemplate' , bodydata).subscribe((res: any) => {
+    console.log( res);
+    this.popupmsg.message = res.message;
+    this.openDialogSmall('addemailtemplate', this.popupmsg);
+    this.getAllOwners();
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
+    });
 }
 
 deleteTemplate(id: number) {
-  this.repoService.delete1('emailTemplate/' + id).subscribe((res: any) => console.log( res));
+  this.repoService.delete1('emailTemplate/' + id).subscribe((res: any) => {
+    console.log( res);
+    this.popupmsg.message = res.message;
+    this.openDialogSmall('deleteemailtemplate', this.popupmsg);
+    this.getAllOwners();
+  }, error => {
+    console.log(error.error.message);
+    this.popupmsg.message =  error.error.message;
+    this.openDialogSmall('mailsenterror', this.popupmsg);
+  } );
 }
 
 }

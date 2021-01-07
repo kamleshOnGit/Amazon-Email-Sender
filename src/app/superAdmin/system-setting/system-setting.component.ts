@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RepositoryService } from '../../shared/servercomunication.service';
-
+import { MatDialog } from '@angular/material/dialog';
+import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
 @Component({
   selector: 'app-system-setting',
   templateUrl: './system-setting.component.html',
@@ -11,8 +12,8 @@ export class SystemSettingComponent implements OnInit {
   formdata: any = {
     id: '1'
   };
-  constructor(private repoService: RepositoryService ) { }
-
+  constructor(private repoService: RepositoryService,  public dialog: MatDialog ) { }
+  popupmsg = {message: ''};
   ngOnInit() {
     this.getconfig();
   }
@@ -20,8 +21,26 @@ export class SystemSettingComponent implements OnInit {
     this.repoService.getData('globalSettings')
             .subscribe((res: any) => {this.formdata = res.data[0];
                                       console.log(res.data , this.formdata);
+            } , error => {
+              console.log(error.error.message);
+              this.popupmsg.message =  error.error.message;
+              this.openDialogSmall('mailsenterror', this.popupmsg);
             } );
 
+}
+public openDialogSmall(action, obj) {
+  obj.action = action;
+  const dialogRef = this.dialog.open( DialogBoxComponent, {
+    width: '500px',
+    data: obj
+  });
+
+  dialogRef.afterClosed().subscribe( (result) => {
+    if (result.event === 'product not found') {
+      // this.addRowData(result.data);
+    } else if (result.event === 'Updatekey') {
+      // this.updateRowData(result.data);
+    }  });
 }
 
 public setconfig() {
@@ -31,6 +50,14 @@ public setconfig() {
     emailPassword : this.formdata.emailPassword,
     emailPort : this.formdata.emailPort,
   };
-  this.repoService.update('globalSettings/' + this.formdata.id , bodydata ).subscribe((res: any) => console.log(res));
+  this.repoService.update('globalSettings/' + this.formdata.id , bodydata ).subscribe((res: any) => {
+    this.popupmsg.message = res.message;
+    this.openDialogSmall('adduser', this.popupmsg);
+    console.log(res.data);
+  } , error => {
+    console.log(error.error.message);
+    this.popupmsg.message =  error.error.message;
+    this.openDialogSmall('mailsenterror', this.popupmsg);
+  } );
 }
 }

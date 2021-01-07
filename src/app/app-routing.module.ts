@@ -74,6 +74,11 @@ const routes: Routes = [{
         component: SendManualEmailComponent,
         canActivateChild: [AuthGuard ]
       },
+      {
+        path: 'edit-email-template',
+        component: TextEditorComponent,
+        canActivateChild: [AuthGuard ]
+      }
     ]
   },
   {
@@ -109,11 +114,6 @@ const routes: Routes = [{
     {
       path: 'system-setting',
       component: SystemSettingComponent,
-      canActivateChild: [AuthGuard ]
-    },
-    {
-      path: 'edit-email-template',
-      component: TextEditorComponent,
       canActivateChild: [AuthGuard ]
     }
   ]

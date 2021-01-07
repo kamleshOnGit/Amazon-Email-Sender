@@ -1,12 +1,12 @@
  <div class="container">
    <div class="row">
      <div class="col-12">
-       <form class="contact-form">
+       <form class="contact-form" #sendmaualmail="ngForm" (ngSubmit)="sendManualEmail()">
          <div class="row">
            <div class="col-12 mb-4">
              <label> To Email Address</label>
              <mat-form-field class="d-block w-50" appearance="none">
-              <input type="email" matInput placeholder="Ex. pat@example.com" name="email" [(ngModel)]="manualsenddata.email">
+              <input type="email" matInput placeholder="Ex. pat@example.com" [ngClass]="{ 'is-invalid': sendmaualmail.submitted && email.invalid }" name="email" #email="ngModel" [(ngModel)]="manualsenddata.email" required>
             </mat-form-field>
            </div>
             
@@ -27,7 +27,7 @@
              <label> Customer Order from</label>
              <mat-form-field class="d-block w-50" appearance="none">
               <mat-label>Market Place</mat-label>
-               <mat-select (selectionChange)="selectedValue2($event)" name="marketplace">
+               <mat-select (selectionChange)="selectedValue2($event)" [ngClass]="{ 'is-invalid': sendmaualmail.submitted && marketplace.invalid }" name="marketplace" #marketplace="ngModel" required [(ngModel)]="manualsenddata.marketplace">
                  <mat-option selected value="Amazon">Amazon</mat-option>
                  <mat-option value="Flipkart">Flipkart</mat-option>
                  <mat-option value="Snapdeal">Snapdeal</mat-option>
@@ -40,7 +40,7 @@
              <label> SKU</label>
              <mat-form-field class="d-block w-50" appearance="none">
               <mat-label>SKU</mat-label>
-               <mat-select (selectionChange)="selectedValue($event)" name="sellerSku">
+               <mat-select (selectionChange)="selectedValue($event)" name="sellerSku" #sellerSku="ngModel" [ngClass]="{ 'is-invalid': sendmaualmail.submitted && sellerSku.invalid }" [(ngModel)]="manualsenddata.sku" required>
                  <mat-option *ngFor="let prod of productsku" [value]="prod.sellerSku">{{prod.sellerSku}} </mat-option>
                  
                </mat-select>
@@ -50,11 +50,11 @@
              <div class="col-12 mb-4">
                <label> Quantity</label>
                <mat-form-field class="d-block w-50" appearance="none">
-                <input matInput placeholder="2" name="quantity" [(ngModel)]="manualsenddata.quantity">
+                <input matInput placeholder="2" name="quantity" #quantity="ngModel" [ngClass]="{ 'is-invalid': sendmaualmail.submitted && quantity.invalid }"  [(ngModel)]="manualsenddata.quantity" required>
               </mat-form-field>
              </div>
               <div class="col-12 mb-4">
-                <button class="btn btn-primary" (click)="sendManualEmail()">Send Mail </button>
+                <button class="btn btn-primary" [disabled]="!sendmaualmail.valid" >Send Mail </button>
               </div>
            </div>
        </form>

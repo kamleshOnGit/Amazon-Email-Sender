@@ -19,7 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
 import {ProductKeys} from '../../shared/uniqueKeys.model';
-
+import { MatSelectChange } from '@angular/material/select';
 export interface PeriodicElement {
   id: number;
   Action: string;
@@ -50,6 +50,9 @@ export class UniqueKeysComponent implements OnInit , AfterViewInit {
   // dataSourceNew = ELEMENT_DATA;
   dataSource ;
   codeUsed = 0;
+  productData;
+  selectedSelectBox;
+  popupmsg = {message: ''};
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator , {static: true}) paginator: MatPaginator;
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
@@ -68,8 +71,22 @@ export class UniqueKeysComponent implements OnInit , AfterViewInit {
     this.getAllOwners();
     this.dataSource = new MatTableDataSource(this.dataSource);
   }
+
   public getAllOwners = () => {
-    this.repoService.create('productkeys/sku', {sku : 'K7_EM_IS_1U_1Y1' , pageNumber: 1, pageSize: 50})
+    this.repoService.getData('products')
+    .subscribe( (res: any) => {
+      console.log(res.data.data);
+      this.productData = res.data.data;
+
+    });
+  }
+  public selectedValue(event: MatSelectChange) {
+    this.selectedSelectBox = event.value;
+    this.getAllkeys();
+    console.log( event.value);
+  }
+  public getAllkeys = () => {
+    this.repoService.create('productkeys/sku', {sku : this.selectedSelectBox , pageNumber: 1, pageSize: 50})
             .subscribe((res: any) => {
                 console.log(res.data);
                 // if (res && res.data && res.data.data && res.data.data.length > 0) {
@@ -87,6 +104,10 @@ export class UniqueKeysComponent implements OnInit , AfterViewInit {
                 this.dataSource = new MatTableDataSource(res.data.data.rows);
                 this.dataSource.sort = this.sort;
                 this.dataSource.paginator = this.paginator;
+            }, error => {
+              console.log(error.error.message);
+              this.popupmsg.message =  error.error.message;
+              this.openDialogSmall('mailsenterror', this.popupmsg);
             });
   }
 
@@ -128,9 +149,9 @@ export class UniqueKeysComponent implements OnInit , AfterViewInit {
 
     dialogRef.afterClosed().subscribe( (result) => {
       if (result.event === 'product not found') {
-        this.addRowData(result.data);
+        // this.addRowData(result.data);
       } else if (result.event === 'Updatekey') {
-        this.updateRowData(result.data);
+        // this.updateRowData(result.data);
       }  });
   }
 
@@ -183,16 +204,44 @@ export class UniqueKeysComponent implements OnInit , AfterViewInit {
     // const bodydata = JSON.parse(JSON.stringify(data));
     console.log( data);
     this.openDialogSmall('product not found', data.productnotfound);
-    this.repoService.create('import/productskeys', {'productskey' : data}).subscribe((res: any) => console.log(res));
-    // this.getAllOwners();
+    this.repoService.create('import/productskeys', {'productskey' : data}).subscribe((res: any) => {
+      console.log(res);
+      this.popupmsg.message = res.message;
+      this.openDialogSmall('productdeleted', this.popupmsg);
+      this.getAllOwners();
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
+    });
 
   }
   public delepredouct(element: any) {
     console.log(element.id);
     this.repoService.delete2('productkey/delete' , { id : element.id}  ).subscribe((res: any) => {
-      this.openDialogSmall('productdeleted', element.name);
+      this.popupmsg.message = res.message;
+      this.openDialogSmall('productdeleted', this.popupmsg);
       console.log(res.data);
+      this.getAllOwners();
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
     });
   }
+
+  public revokeOrder(element) {
+    console.log( element.orderId);
+    this.repoService.create('productkey/revoke', {'orderId' : '' + element.orderId}).subscribe((res: any) => {
+      console.log(res);
+      this.popupmsg.message = res.message;
+      this.openDialogSmall('updatestatus', this.popupmsg);
+      this.getAllOwners();
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
+    }) ;
+   }
 
 }

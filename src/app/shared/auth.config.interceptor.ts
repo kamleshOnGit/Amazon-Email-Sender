@@ -3,12 +3,13 @@ import { HttpInterceptor, HttpRequest, HttpHandler  , HttpEvent} from '@angular/
 import { AuthService } from './auth.services';
 import { Observable, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError  } from 'rxjs/operators';
-
+import { catchError, retry  } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 @Injectable()
 
 export class AuthInterceptor implements HttpInterceptor {
-    constructor(private authService: AuthService , private router: Router , private route: ActivatedRoute ) { }
+    constructor(private authService: AuthService , private router: Router , private route: ActivatedRoute , public dialog: MatDialog, ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const authToken = this.authService.getToken();
@@ -17,11 +18,11 @@ export class AuthInterceptor implements HttpInterceptor {
                 Authorization: 'Bearer ' + authToken,
             }
         });
-        return next.handle(req).pipe(
+        return next.handle(req).pipe( retry(0) ,
             catchError(
                 (err, caught) => {
                   if (err.status === 401) {
-                    this.handleAuthError();
+                    this.handleAuthError(err);
                     return of(err);
                   }
                   throw err;
@@ -30,8 +31,25 @@ export class AuthInterceptor implements HttpInterceptor {
         );
     }
 
-    private handleAuthError() {
+  public openDialogSmall(action, obj) {
+    obj.action = action;
+    const dialogRef = this.dialog.open( DialogBoxComponent, {
+      width: '500px',
+      data: obj
+    });
+
+    dialogRef.afterClosed().subscribe( (result) => {
+      if (result.event === 'product not found') {
+        // this.addRowData(result.data);
+      } else if (result.event === 'Updatekey') {
+        // this.updateRowData(result.data);
+      }  });
+  }
+    private handleAuthError(err: any) {
+        this.openDialogSmall('Loginback', {message: err.error.msg});
         this.authService.doLogout();
         this.router.navigate(['']);
+        console.log(err);
+        window.location.reload();
       }
 }

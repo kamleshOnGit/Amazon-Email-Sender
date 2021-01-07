@@ -82,7 +82,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements AfterViewInit , OnInit {
 
@@ -91,7 +91,7 @@ export class UsersComponent implements AfterViewInit , OnInit {
   vendors = [
     'Vendor1' , 'Vendor2' , 'Vendor3' , 'Vendor4'
   ];
-
+  popupmsg = {message: ''};
   dataSource ;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator , {static: true}) paginator: MatPaginator;
@@ -121,12 +121,20 @@ export class UsersComponent implements AfterViewInit , OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       console.log(res.data);
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
     });
   }
   public getAllvendors = () => {
     this.repoService.getData('tenants')
     .subscribe( (res: any) => {
       this.vendors  = res.data.data;
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
     });
   }
 
@@ -159,9 +167,24 @@ export class UsersComponent implements AfterViewInit , OnInit {
         this.updateAll(result.data);
       } else if (result.event === 'AddNewUser') {
           this.addNewUser(result.data);
-      } });
+      } else if (result.event === 'updatenewUser') {
+        this.updateNewUser(result.data);
+    } });
   }
+  public openDialogSmall(action, obj) {
+    obj.action = action;
+    const dialogRef = this.dialog.open( DialogBoxComponent, {
+      width: '500px',
+      data: obj
+    });
 
+    dialogRef.afterClosed().subscribe( (result) => {
+      if (result.event === 'product not found') {
+        this.addRowData(result.data);
+      } else if (result.event === 'Updatekey') {
+        this.updateRowData(result.data);
+      }  });
+  }
  public addRowData( rowobj: any ) {
     const d = new Date();
     this.dataSource .push( {
@@ -215,17 +238,46 @@ export class UsersComponent implements AfterViewInit , OnInit {
   }
   public addNewUser(data) {
     console.log( data);
-    this.getAllOwners();
     const bodydata = {
       tenantId: data.tenentId,
       roleId: data.roleId,
-      firstName: data.firstname,
-      lastName: data.lastname,
+      firstName: data.firstName,
+      lastName: data.lastName,
       status: data.status,
       email: data.email,
       password: data.password
     };
-    this.repoService.create('adminUser', bodydata).subscribe((res: any) => console.log(res));
+    this.repoService.create('adminUser', bodydata).subscribe((res: any) => {
+      this.popupmsg.message = res.message;
+      this.openDialogSmall('adduser', this.popupmsg);
+      this.getAllOwners();
+      console.log(res.data);
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
+    });
+
  }
 
+ public updateNewUser(data) {
+  console.log( data);
+  const bodydata = {
+    id: data.id,
+    // roleId: data.roleId,
+    firstName: data.firstName,
+    lastName: data.lastName,
+    status: data.status,
+  };
+  this.repoService.update('updateUser', bodydata).subscribe((res: any) => {
+    this.popupmsg.message = res.message;
+    this.openDialogSmall('adduser', this.popupmsg);
+    this.getAllOwners();
+    console.log(res.data);
+  }, error => {
+    console.log(error.error.message);
+    this.popupmsg.message =  error.error.message;
+    this.openDialogSmall('mailsenterror', this.popupmsg);
+  });
+}
 }

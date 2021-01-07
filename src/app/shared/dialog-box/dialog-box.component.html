@@ -1,344 +1,675 @@
-<div class="model-header">
-  <div (click)="closeDialog()"  class="close"> <mat-icon> close</mat-icon></div>
-  <h2 mat-dialog-title *ngIf="action == 'AddNewVendor';">Add New Vendor </h2>
-  <h2 mat-dialog-title *ngIf="action === 'Upload File'"> Upload Multiple products</h2>
-  <h2 mat-dialog-title *ngIf="action == 'Update' || action ==  'Add';"> Add/Edit Product Details</h2>
-  <h2 mat-dialog-title *ngIf="action === 'Upload Multiple Keys'">Upload Multiple Keys </h2>
-  <h2 mat-dialog-title *ngIf="action == 'filteruniquekey';"> Filter Keys</h2>
-  <h2 mat-dialog-title *ngIf="action ==  'AddSinglekey';"> Add Single SKU Unique Key</h2>
-  <h2 mat-dialog-title *ngIf="action == 'Updatekey';"> Update Single SKU Unique Key</h2>
-  <h2 mat-dialog-title *ngIf="action ==  'updateorder';"> Update Orders</h2>
-  <h2 mat-dialog-title *ngIf="action == 'AddVendorSetting'"> Add Settings For Vendor</h2>
-  <h2 mat-dialog-title *ngIf="action == 'EditVendorSetting'"> Edit Settings For Vendor</h2>
-  <h2 mat-dialog-title *ngIf="action == 'AddUser'"> Add New User</h2>
-  <h2 mat-dialog-title *ngIf="action == 'product not found'"> Notification</h2>
-  <!-- <h2> Add/Edit Email Template</h2>
-  <h2> Add/Edit SMS Template</h2> -->
-  <h2 mat-dialog-title *ngIf="action == 'AddNewUser';"> Add New User </h2>
-</div>
-<div mat-dialog-content  class="model-body ">
-  <div *ngIf="action === 'Upload Product File'"  class="row form-group">
-    <div class="col-5 px-2 py-0 text-center">
-    <input placeholder="upload file" class="form-control mb-2 h-auto" #csvReader id="txtFileUpload" (change)="uploadListener($event)" accept=".csv"  type="file">
-    <!-- <button class="btn btn-primary" (click)=csvJSON(products.value)> Upload </button> -->
+<form #a="ngForm" *ngIf="action == 'AddNewVendor';">
+  <div class="model-header">
+    <div (click)="closeDialog()" class="close">
+      <mat-icon> close</mat-icon>
     </div>
-  <a href="../../assets/products.cvs"  class="btn btn-warning col-4 d-inline-block mb-2 text-white  ml-2"> Download Template</a>
+    <h2 mat-dialog-title *ngIf="action == 'AddNewVendor';">Add New Vendor </h2>
   </div>
-  <div *ngIf="action === 'Upload Order File'"  class="row form-group">
-    <div class="col-6 px-2 py-0 text-center">
-      <input placeholder="upload file" class="form-control mb-2 h-auto" #csvReader id="txtFileUpload" (change)="uploadListenerOrders($event)" accept=".csv"  type="file">
+  <div mat-dialog-content class="model-body ">
+    <div *ngIf="action == 'AddNewVendor';">
+      <label class="mt-4"> Name</label>
+      <mat-form-field appearance="none">
+        <input placeholder="User name" name="name" [ngClass]="{ 'is-invalid': a.submitted && name.invalid }"
+          #name="ngModel" required matInput [(ngModel)]="localdata.name">
+      </mat-form-field>
+      <label class="mt-4"> Logo</label>
+      <mat-form-field appearance="none">
+        <input placeholder="Logo" name="logo" [ngClass]="{ 'is-invalid': a.submitted && logo.invalid }" #logo="ngModel"
+          required matInput [(ngModel)]="localdata.logo">
+      </mat-form-field>
+      <div class="mt-4">
+        <mat-checkbox [(ngModel)]="selectcheckemail" name="active" #active="ngModel" required
+          (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> Active
+      </div>
+
     </div>
-  <a href="../../assets/orders.csv" class="btn btn-warning col-5 d-inline-block mb-2 text-white  ml-2"> Download Template</a>
   </div>
-  <div *ngIf="action === 'Upload Multiple Keys'" class="row form-group">
-  <div class="col-5 px-2 py-0 text-center">
-    <input placeholder="upload file" class="form-control mb-2 h-auto" #csvReader id="txtFileUpload" (change)="uploadListenerKeys($event)" accept=".csv"  type="file">
+  <div mat-dialog-actions class="model-footer mt-4 " align="end">
+    <div class="d-flex justify-content-end" *ngIf="action == 'AddNewVendor' || action === 'AddVendorSetting';">
+      <button class="d-flex btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
+      <button class="d-flex btn btn-custom" [disabled]="!a.valid" mat-button (click)="doAction()"
+        mat-flat-button>Add</button>
+    </div>
   </div>
-  <a href="../../assets/unqiuekeys.csv" class="btn btn-warning col-5 d-inline-block mb-2 text-white ml-2"> Download Template</a>
+</form>
+
+
+<form *ngIf="action == 'Update' || action ==  'Add';" #b="ngForm">
+  <div class="model-header">
+    <div (click)="closeDialog()" class="close">
+      <mat-icon> close</mat-icon>
+    </div>
+    <h2 mat-dialog-title *ngIf="action == 'Update' || action ==  'Add';"> Add/Edit Product Details</h2>
   </div>
-  <div *ngIf="action == 'Update' || action ==  'Add';">
-    <label class="mt-4"> Name</label>
-   <mat-form-field appearance="none">
-    <input placeholder="name"  matInput [(ngModel)]="localdata.itemName">
-  </mat-form-field>
-  <label class="mt-4"> Category </label>
-  <!-- <mat-form-field appearance="none" >
-    <mat-label>Select category</mat-label>
-    <mat-select> -->
-      <!-- <mat-option *ngFor="let category of localdata.category" [value]="category">
-        {{category}}
-      </mat-option> -->
-      <!-- <mat-option>Category 1</mat-option>
-    </mat-select>
-  </mat-form-field> -->
-  <mat-form-field appearance="none">
-    <input placeholder="category"  matInput [(ngModel)]="localdata.category">
-  </mat-form-field>
-  <label class="mt-4"> ProductId </label>
-  <mat-form-field appearance="none">
-    <input placeholder="Product Id"  matInput [(ngModel)]="localdata.marketPlaceProductId">
-  </mat-form-field>
-  <label class="mt-4"> Seller Sku </label>
-  <mat-form-field appearance="none">
-    <input placeholder="Seller Sku"  matInput [(ngModel)]="localdata.sellerSku">
-  </mat-form-field>
-  <div class="mt-4"> 
-    <mat-checkbox [(ngModel)]="selectcheckemail"  (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> {{selecttext}}
+  <div mat-dialog-content class="model-body ">
+    <div *ngIf="action == 'Update' || action ==  'Add';">
+      <label class="mt-4"> Name</label>
+      <mat-form-field appearance="none">
+        <input placeholder="name" matInput name="itemName" [ngClass]="{ 'is-invalid': b.submitted && itemName.invalid }"
+          #itemname="ngModel" required [(ngModel)]="localdata.itemName">
+      </mat-form-field>
+      <label class="mt-4"> Category </label>
+
+      <mat-form-field appearance="none">
+        <input placeholder="category" matInput name="category" #category="ngModel"
+          [ngClass]="{ 'is-invalid': b.submitted && category.invalid }" required [(ngModel)]="localdata.category">
+      </mat-form-field>
+      <label class="mt-4"> ProductId </label>
+      <mat-form-field appearance="none">
+        <input placeholder="Product Id" matInput name="productId" #productId="ngModel"
+          [ngClass]="{ 'is-invalid': b.submitted && productId.invalid }" required
+          [(ngModel)]="localdata.marketPlaceProductId">
+      </mat-form-field>
+      <label class="mt-4"> Seller Sku </label>
+      <mat-form-field appearance="none">
+        <input placeholder="Seller Sku" matInput name="sellersku" #sellersku="ngModel"
+          [ngClass]="{ 'is-invalid': b.submitted && sellersku.invalid }" required [(ngModel)]="localdata.sellerSku">
+      </mat-form-field>
+      <div class="mt-4">
+        <mat-checkbox [(ngModel)]="selectcheckemail" name="Active" #Active="ngModel" required
+          (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> {{selecttext}}
+      </div>
+      <label class="mt-4"> quantity</label>
+      <mat-form-field appearance="none">
+        <input type="tel" placeholder="quantity" name="quantity" #quantity="ngModel"
+          [ngClass]="{ 'is-invalid': b.submitted && quantity.invalid }" required matInput
+          [(ngModel)]="localdata.quantity">
+      </mat-form-field>
+      <label class="mt-4"> Price</label>
+      <mat-form-field appearance="none">
+        <input placeholder="price" name="price" #price="ngModel"
+          [ngClass]="{ 'is-invalid': b.submitted && price.invalid }" required matInput [(ngModel)]="localdata.price">
+      </mat-form-field>
+    </div>
   </div>
-  <label class="mt-4"> quantity</label>
-  <mat-form-field appearance="none">
-    <input type="tel" placeholder="quantity"  matInput [(ngModel)]="localdata.quantity">
-  </mat-form-field>
-  <label class="mt-4"> Price</label>
-  <mat-form-field appearance="none">
-    <input  placeholder="price"  matInput [(ngModel)]="localdata.price">
-  </mat-form-field>
-</div>
-<div *ngIf="action ==  'AddSinglekey';"> 
-  <label class="mt-4"> SKU</label>
-  <mat-form-field appearance="none">
-    <input placeholder="SKU"   matInput [(ngModel)]="localdata.sku">
-  </mat-form-field>
-  <label class="mt-4"> Batch Code </label>
-  <mat-form-field appearance="none">
-    <input placeholder="Batch Code"   matInput [(ngModel)]="localdata.batch">
-  </mat-form-field>
-  <label class="mt-4"> Key</label>
-  <mat-form-field appearance="none">
-    <input placeholder="key"   matInput [(ngModel)]="localdata.key">
-  </mat-form-field >
-  <label class="mt-4">priority</label>
-  <mat-form-field appearance="none">
-    <input placeholder="Priority"   matInput [(ngModel)]="localdata.priority">
-  </mat-form-field >
-  <div class="mt-4"> 
-    <mat-checkbox [(ngModel)]="selectcheckemail"  (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> {{selecttext}}
+  <div mat-dialog-actions class="model-footer mt-4 " align="end">
+    <div class="d-flex justify-content-end">
+      <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
+      <button class="d-flex  btn btn-custom" [disabled]="!b.valid" mat-button (click)="doAction()">Save Changes</button>
+    </div>
   </div>
-</div>
-<div *ngIf="action == 'Updatekey' "> 
-  <label class="mt-4"> Select Key to update</label>
+</form>
+
+
+<form *ngIf="action ==  'AddSinglekey';" #c="ngForm">
+  <div class="model-header">
+    <div (click)="closeDialog()" class="close">
+      <mat-icon> close</mat-icon>
+    </div>
+    <h2 mat-dialog-title *ngIf="action == 'Update' || action ==  'Add';"> Add Single SKU Unique Key</h2>
+  </div>
+  <div mat-dialog-content class="model-body ">
+    <div *ngIf="action ==  'AddSinglekey';">
+      <label class="mt-4"> SKU</label>
+      <mat-form-field appearance="none">
+        <input placeholder="SKU" matInput name="Sku" #Sku="ngModel"
+          [ngClass]="{ 'is-invalid': c.submitted && Sku.invalid }" required [(ngModel)]="localdata.sku">
+      </mat-form-field>
+      <label class="mt-4"> Batch Code </label>
+      <mat-form-field appearance="none">
+        <input placeholder="Batch Code" name="batch" #batch="ngModel"
+          [ngClass]="{ 'is-invalid': c.submitted && batch.invalid }" required matInput [(ngModel)]="localdata.batch">
+      </mat-form-field>
+      <label class="mt-4"> Key</label>
+      <mat-form-field appearance="none">
+        <input placeholder="key" matInput name="key" #key="ngModel"
+          [ngClass]="{ 'is-invalid': c.submitted && key.invalid }" required [(ngModel)]="localdata.key">
+      </mat-form-field>
+      <label class="mt-4">priority</label>
+      <mat-form-field appearance="none">
+        <input placeholder="Priority" name="priority" #priority="ngModel"
+          [ngClass]="{ 'is-invalid': c.submitted && priority.invalid }" required matInput
+          [(ngModel)]="localdata.priority">
+      </mat-form-field>
+      <div class="mt-4">
+        <mat-checkbox [(ngModel)]="selectcheckemail" name="Active" #Active="ngModel"
+          [ngClass]="{ 'is-invalid': c.submitted && Active.invalid }" required (ngModelChange)="updateIsActiveEmail()">
+        </mat-checkbox> {{selecttext}}
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="model-footer mt-4 " align="end">
+    <div class="d-flex justify-content-end">
+      <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
+      <button class="d-flex  btn btn-custom" mat-button [disabled]="!c.valid" (click)="doAction()">Save Changes</button>
+    </div>
+  </div>
+</form>
+
+
+<form *ngIf="action == 'Updatekey';" #d="ngForm">
+  <div class="model-header">
+    <div (click)="closeDialog()" class="close">
+      <mat-icon> close</mat-icon>
+    </div>
+    <h2 mat-dialog-title *ngIf="action == 'Updatekey';"> Update Single SKU Unique Key</h2>
+  </div>
+  <div mat-dialog-content class="model-body ">
+
+    <div *ngIf="action == 'Updatekey' ">
+      <!-- <label class="mt-4"> Select Key to update</label>
   <mat-form-field appearance="none" >
     <mat-label>Keys</mat-label>
-    <mat-select (selectionChange)="selectedValue($event)"> 
-        <mat-option *ngFor="let key of localdata.productKeys" [value]="key">
+    <mat-select (selectionChange)="selectedValue($event)" name="updateKeys" #updateKeys="ngModel" [ngClass]="{ 'is-invalid': d.submitted && updateKeys.invalid }"  [(ngModel)]="localdata.keys" required> 
+        <mat-option *ngFor="let key of localdata.productKeys"  [value]="key">
         {{key.id}}
       </mat-option> 
     </mat-select>
-  </mat-form-field>
-  <label class="mt-4"> Batch Code </label>
-  <mat-form-field appearance="none">
-    <input placeholder="Batch Code"   matInput [(ngModel)]="localdata.batch">
-  </mat-form-field>
-  <label class="mt-4"> Key</label>
-  <mat-form-field appearance="none">
-    <input placeholder="key"   matInput [(ngModel)]="localdata.key">
-  </mat-form-field >
-  <label class="mt-4">Priority</label>
-  <mat-form-field appearance="none">
-    <input placeholder="Priority"   matInput [(ngModel)]="localdata.priority">
-  </mat-form-field >
-  <div class="mt-4"> 
-    <mat-checkbox [(ngModel)]="selectcheckemail"  (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> {{selecttext}}
-  </div>
-</div>
-<div *ngIf="action == 'AddVendorSetting' || action == 'EditVendorSetting'"> 
-  <label class="mt-4"> Tenant Id</label>
-  <mat-form-field appearance="none">
-    <input placeholder="tenant Id"   matInput [(ngModel)]="localdata.tenantId">
-  </mat-form-field>
-  <label class="mt-4"> Seller Id </label>
-  <mat-form-field appearance="none">
-    <input placeholder="seller Id"   matInput [(ngModel)]="localdata.sellerId">
-  </mat-form-field>
-  <label class="mt-4"> marketplace Id</label>
-  <mat-form-field appearance="none">
-    <input placeholder="marketplace Id"   matInput [(ngModel)]="localdata.marketplaceId">
-  </mat-form-field >
-  <label class="mt-4">refresh Token</label>
-  <mat-form-field appearance="none">
-    <input placeholder="refreshToken"   matInput [(ngModel)]="localdata.refreshToken">
-  </mat-form-field >
-  <label class="mt-4">default Values</label>
-  <mat-form-field appearance="none">
-    <textarea placeholder="defaultValues"   matInput [(ngModel)]="localdata.defaultValues"></textarea>
-  </mat-form-field >
-</div>
-<div *ngIf="action == 'filteruniquekey';">
-  <label class="mt-4"> Brand </label>
-  <mat-form-field appearance="none">
-    <input placeholder="Brand"   matInput [(ngModel)]="localdata.SKU">
-  </mat-form-field>
-  <label class="mt-4"> SKU</label>
-  <mat-form-field appearance="none">
-    <input placeholder="SKU"   matInput [(ngModel)]="localdata.SKU">
-  </mat-form-field>
-  <label class="mt-4"> Status</label>
-  <mat-form-field appearance="none">
-    <input placeholder="SKU"   matInput [(ngModel)]="localdata.SKU">
-  </mat-form-field>
-  <label class="mt-4"> Batch Code </label>
-  <mat-form-field appearance="none">
-    <input placeholder="Batch Code"   matInput [(ngModel)]="localdata.BatchCode">
-  </mat-form-field>
-</div>
-  <div *ngIf="action == 'AddNewUser';">
-    <label class="mt-4"> Tenent Id</label>
-    <mat-form-field appearance="none">
-    <input placeholder="Tenent Id"  matInput [(ngModel)]="localdata.tenentId">
-  </mat-form-field >
-  <label class="mt-4"> Role Id</label>
-    <mat-form-field appearance="none">
-    <input placeholder="Role Id"  matInput [(ngModel)]="localdata.roleId">
-  </mat-form-field >
-    <label class="mt-4"> FirstName</label>
-    <mat-form-field appearance="none">
-    <input placeholder="Vendor name"   matInput [(ngModel)]="localdata.firstname">
-  </mat-form-field > 
-  <label class="mt-4"> last Name</label>
-    <mat-form-field appearance="none">
-    <input placeholder="Vendor name"   matInput [(ngModel)]="localdata.lastname">
-  </mat-form-field > 
-  <div class="mt-4"> 
-    <mat-checkbox [(ngModel)]="selectcheckemail"  (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> {{selecttext}}
-  </div>
-  <label class="mt-4"> Email Address </label>
-  <mat-form-field appearance="none">
-    <input placeholder="Email Address"  matInput [(ngModel)]="localdata.email">
-  </mat-form-field >
-  <label class="mt-4"> Password</label>
-  <mat-form-field appearance="none">
-    <input placeholder="Password"  matInput [(ngModel)]="localdata.password">
-  </mat-form-field >
-  <!-- <div class="mt-4"> 
-    <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox> Manual Email Allowed
-  </div> -->
-  <!-- <label class="mt-4">Number of Manual emails per hour</label>
-  <mat-form-field appearance="none">
-    <input placeholder=""  matInput [(ngModel)]="localdata.nofmailperhour">
-  </mat-form-field > -->
-  <!-- <p> 
-    <label class="mt-4"> Sync Products to MWS (Each days in hours) </label>
-    <mat-label>Choose a date</mat-label>
-    <mat-form-field appearance="none"> 
-    <input matInput [matDatepicker]="picker">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-  </p> -->
-  </div>
-  <div *ngIf="action == 'AddUser';">
-    
-  
-    <label class="mt-4"> FirstName</label>
-    <mat-form-field appearance="none">
-    <input placeholder="Vendor name"   matInput [(ngModel)]="localdata.firstname">
-  </mat-form-field > 
-  <label class="mt-4"> last Name</label>
-    <mat-form-field appearance="none">
-    <input placeholder="Vendor name"   matInput [(ngModel)]="localdata.lastname">
-  </mat-form-field > 
-  <div class="mt-4"> 
-    <mat-checkbox [(ngModel)]="selectcheckemail"  (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> {{selecttext}}
-  </div>
-  <label class="mt-4"> Email Address </label>
-  <mat-form-field appearance="none">
-    <input placeholder="Email Address"  matInput [(ngModel)]="localdata.email">
-  </mat-form-field >
-  <label class="mt-4"> Password</label>
-  <mat-form-field appearance="none">
-    <input placeholder="Password"  matInput [(ngModel)]="localdata.password">
-  </mat-form-field >
-  <label class="mt-4"> Role Id</label>
-    <mat-form-field appearance="none">
-    <input placeholder="Role Id"  matInput [(ngModel)]="localdata.roleId">
-  </mat-form-field >
-  </div>
-  <div *ngIf="action == 'AddNewVendor';">
-    <label class="mt-4"> Name</label>
-    <mat-form-field appearance="none"> 
-     <input placeholder="User name"   matInput [(ngModel)]="localdata.name">
-    </mat-form-field > 
-    <label class="mt-4"> Logo</label>
-    <mat-form-field appearance="none"> 
-     <input placeholder="Logo"   matInput [(ngModel)]="localdata.logo">
-    </mat-form-field >
-    <div class="mt-4"> 
-     <mat-checkbox [(ngModel)]="selectcheckemail"  (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> Active 
+  </mat-form-field> -->
+      <label class="mt-4"> Batch Code </label>
+      <mat-form-field appearance="none">
+        <input placeholder="Batch Code" name="Batch1" #Batch1="ngModel"
+          [ngClass]="{ 'is-invalid': d.submitted && Batch1.invalid }" required matInput [(ngModel)]="localdata.batch">
+      </mat-form-field>
+      <label class="mt-4"> Key</label>
+      <mat-form-field appearance="none">
+        <input placeholder="key" name="Key1" #Key1="ngModel" [ngClass]="{ 'is-invalid': d.submitted && Key1.invalid }"
+          required matInput [(ngModel)]="localdata.key">
+      </mat-form-field>
+      <label class="mt-4">Priority</label>
+      <mat-form-field appearance="none">
+        <input placeholder="Priority1" name="Priority1" #Priority="ngModel"
+          [ngClass]="{ 'is-invalid': d.submitted && Priority1.invalid }" required matInput
+          [(ngModel)]="localdata.priority">
+      </mat-form-field>
+      <div class="mt-4">
+        <mat-checkbox [(ngModel)]="selectcheckemail" name="Active7" #Active7="ngModel"
+          [ngClass]="{ 'is-invalid': d.submitted && Active7.invalid }" required (ngModelChange)="updateIsActiveEmail()">
+        </mat-checkbox> {{selecttext}}
+      </div>
     </div>
-    <!-- <label class="mt-4">  Email Address </label>
-    <mat-form-field appearance="none"> 
-     <input placeholder="Email Address"  matInput [(ngModel)]="localdata.Emailaddress">
-    </mat-form-field >
-    <label class="mt-4"> Password</label>
-    <mat-form-field appearance="none"> 
-     <input placeholder="Password"   matInput [(ngModel)]="localdata.password">
-    </mat-form-field >
-    <div class="mt-4">
-     <mat-checkbox [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()"></mat-checkbox> Manual Email Allowed
+  </div>
+  <div mat-dialog-actions class="model-footer mt-4 " align="end">
+    <div class="d-flex justify-content-end">
+      <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
+      <button class="d-flex  btn btn-custom" [disabled]="!d.valid" mat-button (click)="doAction()">Save Changes</button>
     </div>
-    <label class="mt-4">Number of Manual emails per hour</label>
-    <mat-form-field appearance="none"> 
-     <input placeholder=""   matInput [(ngModel)]="localdata.nofmailperhour">
-    </mat-form-field >
-   <p> 
-     <label class="mt-4"> Sync Products to MWS (Each days in hours) </label>
-     <mat-label>Choose a date</mat-label>
-     <mat-form-field appearance="none"> 
-     <input matInput [matDatepicker]="picker">
-     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-     <mat-datepicker #picker></mat-datepicker>
-     </mat-form-field>
-   </p> -->
-   </div>
+  </div>
+</form>
 
-   <div *ngIf="action == 'UploadEmail';">
-    <label class="mt-4"> productId</label>
-    <mat-form-field appearance="none"> 
-     <input placeholder="productId"   matInput [(ngModel)]="localdata.productId">
-    </mat-form-field > 
-    
-    <label class="mt-4">  name </label>
-    <mat-form-field appearance="none"> 
-     <input placeholder="name"  matInput [(ngModel)]="localdata.name">
-    </mat-form-field >
-    <label class="mt-4">  emailHtml </label>
-    <div class="form-group"> 
-      <input placeholder="upload file" #csvReader id="txtFileUpload" (change)="uploadListenerHtml($event)" accept=".html,.txt"  type="file">
+<form *ngIf="action ==  'AddVendorSetting'" #e="ngForm">
+  <div class="model-header">
+    <div (click)="closeDialog()" class="close">
+      <mat-icon> close</mat-icon>
     </div>
-    <div class="mt-5 d-block">
-      <mat-checkbox  class="d-inline mb-4" [(ngModel)]="selectcheckemail"  (ngModelChange)="updateIsActiveEmail()" ></mat-checkbox> {{selecttext}}
+    <h2 mat-dialog-title *ngIf="action == 'Updatekey';"> Add Settings For Vendor</h2>
+  </div>
+  <div mat-dialog-content class="model-body ">
+
+    <div *ngIf="action == 'AddVendorSetting'">
+      <label class="mt-4"> Tenant Id</label>
+      <mat-form-field appearance="none">
+        <input placeholder="tenant Id" name="tenent" #tenent="ngModel"
+          [ngClass]="{ 'is-invalid': e.submitted && tenent.invalid }" required matInput
+          [(ngModel)]="localdata.tenantId">
+      </mat-form-field>
+      <label class="mt-4"> Seller Id </label>
+      <mat-form-field appearance="none">
+        <input placeholder="seller Id" name="sellerid" #sellerid="ngModel"
+          [ngClass]="{ 'is-invalid': e.submitted && sellerid.invalid }" required matInput
+          [(ngModel)]="localdata.sellerId">
+      </mat-form-field>
+      <label class="mt-4"> marketplace Id</label>
+      <mat-form-field appearance="none">
+        <input placeholder="marketplace Id" name="marketplace" #marketplace="ngModel"
+          [ngClass]="{ 'is-invalid': e.submitted && marketplace.invalid }" required matInput
+          [(ngModel)]="localdata.marketplaceId">
+      </mat-form-field>
+      <label class="mt-4">refresh Token</label>
+      <mat-form-field appearance="none">
+        <input placeholder="refreshToken" name="refreshToken" #refreshToken="ngModel"
+          [ngClass]="{ 'is-invalid': e.submitted && refreshToken.invalid }" required matInput
+          [(ngModel)]="localdata.refreshToken">
+      </mat-form-field>
+      <label class="mt-4">default Values</label>
+      <mat-form-field appearance="none">
+        <textarea placeholder="defaultValues" name="defaultValues" #defaultValues="ngModel"
+          [ngClass]="{ 'is-invalid': e.submitted && defaultValues.invalid }" required matInput
+          [(ngModel)]="localdata.defaultValues"></textarea>
+      </mat-form-field>
     </div>
-    <label class="mt-4"> Comments</label>
-    <mat-form-field appearance="none"> 
-     <input placeholder=""  matInput [(ngModel)]="localdata.comments">
-    </mat-form-field >
-   
-   </div>
+  </div>
+  <div mat-dialog-actions class="model-footer mt-4 " align="end">
+    <div class="d-flex justify-content-end">
+      <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
+      <button class="d-flex  btn btn-custom" mat-button [disabled]="!e.valid" (click)="doAction()">Save Changes</button>
+    </div>
+  </div>
+</form>
+
+
+<form *ngIf="action ==  'EditVendorSetting'" #f="ngForm">
+  <div class="model-header">
+    <div (click)="closeDialog()" class="close">
+      <mat-icon> close</mat-icon>
+    </div>
+    <h2 mat-dialog-title *ngIf="action == 'Updatekey';"> Edit Settings For Vendor</h2>
+  </div>
+  <div mat-dialog-content class="model-body ">
+
+    <div *ngIf="action == 'EditVendorSetting'">
+      <label class="mt-4"> Tenant Id</label>
+      <mat-form-field appearance="none">
+        <input placeholder="tenant Id" name="tenant1" #tenant1="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && tenant1.invalid }" required matInput
+          [(ngModel)]="localdata.tenantId">
+      </mat-form-field>
+      <label class="mt-4"> Seller Id </label>
+      <mat-form-field appearance="none">
+        <input placeholder="seller Id" name="seller1" #seller1="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && seller1.invalid }" required matInput
+          [(ngModel)]="localdata.sellerId">
+      </mat-form-field>
+      <label class="mt-4"> marketplace Id</label>
+      <mat-form-field appearance="none">
+        <input placeholder="marketplace Id" name="marketplace1" #marketplace1="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && marketplace1.invalid }" required matInput
+          [(ngModel)]="localdata.marketplaceId">
+      </mat-form-field>
+      <label class="mt-4">refresh Token</label>
+      <mat-form-field appearance="none">
+        <input placeholder="refreshToken" name="refreshToken1" #refreshToken1="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && refreshToken1.invalid }" required matInput
+          [(ngModel)]="localdata.refreshToken">
+      </mat-form-field>
+      <label class="mt-4">default Values</label>
+      <mat-form-field appearance="none">
+        <textarea placeholder="defaultValues" name="defaultValues1" #defaultValues1="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && defaultValues1.invalid }" required matInput
+          [(ngModel)]="localdata.defaultValues"></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="model-footer mt-4 " align="end">
+    <div class="d-flex justify-content-end">
+      <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
+      <button class="d-flex  btn btn-custom" mat-button [disabled]="!f.valid" (click)="doAction()">Save Changes</button>
+    </div>
+  </div>
+</form>
+
+
+<form *ngIf="action ==  'AddUser'" #g="ngForm">
+  <div class="model-header">
+    <div (click)="closeDialog()" class="close">
+      <mat-icon> close</mat-icon>
+    </div>
+    <h2 mat-dialog-title > Add New User</h2>
+  </div>
+  <div mat-dialog-content class="model-body ">
+
+
+    <div *ngIf="action == 'AddUser';">
+      <label class="mt-4"> FirstName</label>
+      <mat-form-field appearance="none">
+        <input placeholder="Vendor name" name="Vendor1" #Vendor1="ngModel"
+          [ngClass]="{ 'is-invalid': g.submitted && Vendor1.invalid }" required matInput
+          [(ngModel)]="localdata.firstname">
+      </mat-form-field>
+      <label class="mt-4"> last Name</label>
+      <mat-form-field appearance="none">
+        <input placeholder="Vendor name" name="Vendorlast1" #Vendorlast1="ngModel"
+          [ngClass]="{ 'is-invalid': g.submitted && Vendorlast1.invalid }" required matInput
+          [(ngModel)]="localdata.lastname">
+      </mat-form-field>
+      <div class="mt-4">
+        <mat-checkbox [(ngModel)]="selectcheckemail" name="Active1" #Active1="ngModel"
+          [ngClass]="{ 'is-invalid': g.submitted && Active1.invalid }" required (ngModelChange)="updateIsActiveEmail()">
+        </mat-checkbox> {{selecttext}}
+      </div>
+      <label class="mt-4"> Email Address </label>
+      <mat-form-field appearance="none">
+        <input placeholder="Email Address" type="email" name="Email1" #Email1="ngModel"
+          [ngClass]="{ 'is-invalid': g.submitted && Email1.invalid }" required matInput [(ngModel)]="localdata.email">
+      </mat-form-field>
+      <label class="mt-4"> Password</label>
+      <mat-form-field appearance="none">
+        <input type="password" placeholder="Password" name="Password1" #Password1="ngModel"
+          [ngClass]="{ 'is-invalid': g.submitted && Password1.invalid }" required matInput
+          [(ngModel)]="localdata.password">
+      </mat-form-field>
+      <label class="mt-4"> Role Id</label>
+      <mat-form-field appearance="none">
+        <input placeholder="Role Id" matInput name="Role1" #Role1="ngModel"
+          [ngClass]="{ 'is-invalid': g.submitted && Role1.invalid }" required [(ngModel)]="localdata.roleId">
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="model-footer mt-4 " align="end">
+    <div class="d-flex justify-content-end">
+      <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
+      <button class="d-flex  btn btn-custom" [disabled]="!g.valid" mat-button (click)="doAction()">Save Changes</button>
+    </div>
+  </div>
+</form>
+
+
+<form *ngIf="action ==  'AddNewUser'" #p="ngForm">
+  <div class="model-header">
+    <div (click)="closeDialog()" class="close">
+      <mat-icon> close</mat-icon>
+    </div>
+    <h2 mat-dialog-title >Add New User</h2>
+  </div>
+  <div mat-dialog-content class="model-body ">
+
+    <div *ngIf="action == 'AddNewUser'">
+      <!-- <label class="mt-4 d-none"> Tenent Id</label>
+      <mat-form-field class="d-none" appearance="none">
+        <input matInput placeholder="Tenent Id" name="Tenent2" #Tenent2="ngModel"
+          [ngClass]="{ 'is-invalid': p.submitted && Tenent2.invalid }" required 
+          [(ngModel)]="localdata.tenentId">
+      </mat-form-field> -->
+      <label class="mt-4"> Role Id</label>
+      <mat-form-field   appearance="none">
+        <input  matInput  placeholder="Role Id" name="Role2" #Role2="ngModel"
+          [ngClass]="{ 'is-invalid': p.submitted && Role2.invalid }" required [(ngModel)]="localdata.roleId">
+      </mat-form-field> 
+      <label class="mt-4"> FirstName</label>
+      <mat-form-field appearance="none">
+        <input placeholder="Vendor name"  matInput name="Vendor2" #Vendor2="ngModel"
+          [ngClass]="{ 'is-invalid': p.submitted && Vendor2.invalid }" required
+          [(ngModel)]="localdata.firstName">
+      </mat-form-field>
+      <label class="mt-4"> last Name</label>
+      <mat-form-field appearance="none">
+        <input placeholder="Vendor name" matInput name="Vendorlast2" #Vendorlast2="ngModel"
+          [ngClass]="{ 'is-invalid': p.submitted && Vendorlast2.invalid }" required 
+          [(ngModel)]="localdata.lastName">
+      </mat-form-field>
+      <div class="mt-4">
+        <mat-checkbox [(ngModel)]="selectcheckemail" name="Active3" #Active3="ngModel"
+           required (ngModelChange)="updateIsActiveEmail()">
+        </mat-checkbox> {{selecttext}}
+      </div>
+      <label class="mt-4"> Email Address </label>
+      <mat-form-field appearance="none">
+        <input placeholder="Email Address"  matInput  name="Email3" #Email3="ngModel"
+          [ngClass]="{ 'is-invalid': p.submitted && Email3.invalid }" required [(ngModel)]="localdata.email">
+      </mat-form-field>
+      <label class="mt-4"> Password</label>
+      <mat-form-field appearance="none">
+        <input type="password"  matInput placeholder="Password" name="Password3" #Password3="ngModel"
+          [ngClass]="{ 'is-invalid': p.submitted && Password3.invalid }" required
+          [(ngModel)]="localdata.password">
+      </mat-form-field>
+
+    </div>
+  </div>
+  <div mat-dialog-actions class="model-footer mt-4 " align="end">
+    <div class="d-flex justify-content-end">
+      <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
+      <button class="d-flex  btn btn-custom" mat-button [disabled]="!p.valid"  (click)="doAction()">Save Changes</button>
+    </div>
+  </div>
+</form>
+
+
+<form *ngIf="action ==  'updatenewUser'" #i="ngForm">
+  <div class="model-header">
+    <div (click)="closeDialog()" class="close">
+      <mat-icon> close</mat-icon>
+    </div>
+    <h2 mat-dialog-title *ngIf="action == 'Updatekey';">Update User</h2>
+  </div>
+  <div mat-dialog-content class="model-body ">
+
+    <div *ngIf=" action == 'updatenewUser'">
+      <!-- <label class="mt-4 d-none"> Tenent Id</label>
+      <mat-form-field class="d-none" appearance="none">
+        <input placeholder="Tenent Id" name="Tenent4" #Tenent4="ngModel"
+          [ngClass]="{ 'is-invalid': i.submitted && Tenent4.invalid }" required matInput
+          [(ngModel)]="localdata.tenentId">
+      </mat-form-field> -->
+
+      <label class="mt-4"> FirstName</label>
+      <mat-form-field appearance="none">
+        <input placeholder="Vendor name" name="Vendor4" #Vendor4="ngModel"
+          [ngClass]="{ 'is-invalid': i.submitted && Vendor4.invalid }" required matInput
+          [(ngModel)]="localdata.firstName">
+      </mat-form-field>
+      <label class="mt-4"> last Name</label>
+      <mat-form-field appearance="none">
+        <input placeholder="Vendor name" name="VendorLast4" #VendorLast4="ngModel"
+          [ngClass]="{ 'is-invalid': i.submitted && VendorLast4.invalid }" required matInput
+          [(ngModel)]="localdata.lastName">
+      </mat-form-field>
+      <div class="mt-4">
+        <mat-checkbox [(ngModel)]="selectcheckemail" name="Active4" #Active4="ngModel"
+          [ngClass]="{ 'is-invalid': i.submitted && Active4.invalid }" required (ngModelChange)="updateIsActiveEmail()">
+        </mat-checkbox> {{selecttext}}
+      </div>
+
+    </div>
+  </div>
+  <div mat-dialog-actions class="model-footer mt-4 " align="end">
+    <div class="d-flex justify-content-end">
+      <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
+      <button class="d-flex  btn btn-custom" [disabled]="!i.valid" mat-button (click)="doAction()">Save Changes</button>
+    </div>
+  </div>
+</form>
+
+
+<form *ngIf="action ==  'filteruniquekey'" #j="ngForm">
+  <div class="model-header">
+    <div (click)="closeDialog()" class="close">
+      <mat-icon> close</mat-icon>
+    </div>
+    <h2 mat-dialog-title *ngIf="action == 'Updatekey';">Update User</h2>
+  </div>
+  <div mat-dialog-content class="model-body ">
+
+    <div *ngIf="action == 'filteruniquekey';">
+      <label class="mt-4"> Brand </label>
+      <mat-form-field appearance="none">
+        <input placeholder="Brand" name="Brand1" #Brand1="ngModel"
+          [ngClass]="{ 'is-invalid': j.submitted && Brand1.invalid }" required matInput [(ngModel)]="localdata.SKU">
+      </mat-form-field>
+      <label class="mt-4"> SKU</label>
+      <mat-form-field appearance="none">
+        <input placeholder="SKU" name="SKU1" #SKU1="ngModel" [ngClass]="{ 'is-invalid': j.submitted && SKU1.invalid }"
+          required matInput [(ngModel)]="localdata.SKU">
+      </mat-form-field>
+      <label class="mt-4"> Status</label>
+      <mat-form-field appearance="none">
+        <input placeholder="Status" name="Status1" #Status1="ngModel"
+          [ngClass]="{ 'is-invalid': j.submitted && Status1.invalid }" required matInput [(ngModel)]="localdata.SKU">
+      </mat-form-field>
+      <label class="mt-4"> Batch Code </label>
+      <mat-form-field appearance="none">
+        <input placeholder="Batch Code" name="Batch4" #Batch4="ngModel"
+          [ngClass]="{ 'is-invalid': j.submitted && Batch4.invalid }" required matInput
+          [(ngModel)]="localdata.BatchCode">
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="model-footer mt-4 " align="end">
+    <div class="d-flex justify-content-end" *ngIf="action == 'filteruniquekey';">
+      <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
+      <button class="d-flex  btn btn-custom" [disabled]="!j.valid" mat-button (click)="doAction()"
+        mat-flat-button>Filter</button>
+    </div>
+  </div>
+</form>
+
+
+<form *ngIf="action ==  'Upload Product File'">
+   <div class="model-header">
+  <div (click)="closeDialog()" class="close">
+    <mat-icon> close</mat-icon>
+  </div>
+  <h2 mat-dialog-title *ngIf="action == 'Updatekey';">Update User</h2>
+  </div>
+  <div mat-dialog-content class="model-body ">
+    <div *ngIf="action === 'Upload Product File'" class="row form-group">
+      <div class="col-5 px-2 py-0 text-center">
+        <input placeholder="upload file" class="form-control mb-2 h-auto" name="uploadfile1" #csvReader
+          id="txtFileUpload" (change)="uploadListener($event)" accept=".csv" type="file">
+        <!-- <button class="btn btn-primary" (click)=csvJSON(products.value)> Upload </button> -->
+      </div>
+      <a href="../../assets/products.cvs" class="btn btn-warning col-4 d-inline-block mb-2 text-white  ml-2"> Download
+        Template</a>
+    </div>
+  </div>
+  <div mat-dialog-actions class="model-footer mt-4 " align="end">
+    <div class="d-flex justify-content-end">
+      <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
+      <button class="d-flex  btn btn-custom" mat-button (click)="doAction()" mat-flat-button>Upload</button>
+    </div>
+  </div>
+</form>
+
+
+<form *ngIf="action ==  'Upload Multiple Keys'"  > 
+  <div class="model-header">
+  <div (click)="closeDialog()" class="close">
+    <mat-icon> close</mat-icon>
+  </div>
+  <h2 mat-dialog-title *ngIf="action == 'Updatekey';">Update User</h2>
+  </div>
+  <div mat-dialog-content class="model-body ">
+
+    <div *ngIf="action === 'Upload Multiple Keys'" class="row form-group">
+      <div class="col-5 px-2 py-0 text-center">
+        <input placeholder="upload file" class="form-control mb-2 h-auto" name="uploadfile3" #csvReader
+          id="txtFileUpload" (change)="uploadListenerKeys($event)" accept=".csv" type="file">
+      </div>
+      <a href="../../assets/unqiuekeys.csv" class="btn btn-warning col-5 d-inline-block mb-2 text-white ml-2"> Download
+        Template</a>
+    </div>
+  </div>
+  <div mat-dialog-actions class="model-footer mt-4 " align="end">
+    <div class="d-flex justify-content-end">
+      <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
+      <button class="d-flex  btn btn-custom" mat-button (click)="doAction()" mat-flat-button>Upload</button>
+    </div>
+  </div>
+</form>
+
+
+<form *ngIf="action ==  'Upload Order File'">
+  <div class="model-header">
+    <div (click)="closeDialog()" class="close">
+      <mat-icon> close</mat-icon>
+    </div>
+    <h2 mat-dialog-title *ngIf="action == 'Updatekey';">Update User</h2>
+  </div>
+  <div mat-dialog-content class="model-body ">
+
+    <div *ngIf="action === 'Upload Order File'" class="row form-group">
+      <div class="col-6 px-2 py-0 text-center">
+        <input placeholder="upload file" class="form-control mb-2 h-auto" name="uploadfile4" #csvReader
+          id="txtFileUpload" (change)="uploadListenerOrders($event)" accept=".csv" type="file">
+      </div>
+      <a href="../../assets/orders.csv" class="btn btn-warning col-5 d-inline-block mb-2 text-white  ml-2"> Download
+        Template</a>
+    </div>
+  </div>
+  <div mat-dialog-actions class="model-footer mt-4 " align="end">
+    <div class="d-flex justify-content-end">
+      <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
+      <button class="d-flex  btn btn-custom" mat-button (click)="doAction()" mat-flat-button>Upload</button>
+    </div>
+  </div>
+</form>
+
+<form *ngIf="action ==  'UploadEmail'" #o="ngForm">
+  <div class="model-header">
+    <div (click)="closeDialog()" class="close">
+      <mat-icon> close</mat-icon>
+    </div>
+    <h2 mat-dialog-title *ngIf="action == 'Updatekey';">Update User</h2>
+  </div>
+  <div mat-dialog-content class="model-body ">
+
+    <div *ngIf="action == 'UploadEmail';">
+      <label class="mt-4"> productId</label>
+      <mat-form-field appearance="none">
+        <input placeholder="productId" name="productId2" #productId2="ngModel"
+          [ngClass]="{ 'is-invalid': o.submitted && productId2.invalid }" required matInput
+          [(ngModel)]="localdata.productId">
+      </mat-form-field>
+
+      <label class="mt-4"> name </label>
+      <mat-form-field appearance="none">
+        <input placeholder="name" name="name5" #name5="ngModel"
+          [ngClass]="{ 'is-invalid': o.submitted && name5.invalid }" required matInput [(ngModel)]="localdata.name">
+      </mat-form-field>
+      <label class="mt-4"> emailHtml </label>
+      <div class="form-group">
+        <input placeholder="upload file" name="uploadfile5" #uploadfile5="ngModel" [(ngModel)]="localdata.file"
+          [ngClass]="{ 'is-invalid': o.submitted && uploadfile5.invalid }" required #csvReader id="txtFileUpload"
+          (change)="uploadListenerHtml($event)" accept=".html,.txt" type="file">
+      </div>
+      <div class="mt-5 d-block">
+        <mat-checkbox class="d-inline mb-4" name="Active5" #Active5="ngModel"
+          [ngClass]="{ 'is-invalid': o.submitted && Active5.invalid }" required [(ngModel)]="selectcheckemail"
+          (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> {{selecttext}}
+      </div>
+      <label class="mt-4"> Comments</label>
+      <mat-form-field appearance="none">
+        <input placeholder="Comments" matInput name="Comments" #Comments="ngModel"
+          [ngClass]="{ 'is-invalid': o.submitted && Comments.invalid }" required [(ngModel)]="localdata.comments">
+      </mat-form-field>
+
+    </div>
+  </div>
+  <div mat-dialog-actions class="model-footer mt-4 " align="end">
+    <div class="d-flex justify-content-end">
+      <button class="d-flex btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
+      <button class="d-flex btn btn-custom" mat-button [disabled]="!o.valid" (click)="doAction()" mat-flat-button>Add
+        Email Template</button>
+    </div>
+  </div>
+</form>
+<div class="model-header" *ngIf="action === 'ViewAll'">
+  <div (click)="closeDialog()" class="close">
+    <mat-icon> close</mat-icon>
+  </div>
+</div>
+<div mat-dialog-content *ngIf="action === 'ViewAll'" class="model-body ">
+
+  <mat-card>
+    <p> Name : {{localdata.name}} </p>
+    <p> Category : {{localdata.category }} </p>
+    <p> Is Active :{{localdata.IsActive}} </p>
+    <p> Unique Key : {{localdata.UniqueKey}} </p>
+  </mat-card>
+</div>
+
+<div class="model-header" *ngIf="action === 'Delete'">
+  <div (click)="closeDialog()" class="close">
+    <mat-icon> close</mat-icon>
+  </div>
+</div>
+<div mat-dialog-content *ngIf="action === 'Delete'" class="model-body ">
 
   <mat-card *ngIf="action === 'Delete'">
     <p>Sure to delete <b>{{local_data.name}}</b>?</p>
   </mat-card>
+</div>
+<div class="model-header" *ngIf="action === 'product not found'">
+  <div (click)="closeDialog()" class="close">
+    <mat-icon> close</mat-icon>
+  </div>
+</div>
+<div mat-dialog-content *ngIf="action === 'product not found'" class="model-body ">
 
-  <mat-card *ngIf="action === 'ViewAll'">
-    <p> Name : {{localdata.name}}  </p>
-    <p> Category : {{localdata.category }} </p>
-    <p>  Is Active :{{localdata.IsActive}} </p>
-    <p> Unique Key : {{localdata.UniqueKey}} </p>
-  </mat-card>
-
-  <div  *ngIf="action === 'product not found'">
+  <div *ngIf="action === 'product not found'">
     <p> Your Unique for the availabe product is updated!!</p>
     <p class="font-weight-bold mt-4">No Product was found for these SKU</p>
     <ul>
       <li *ngFor="let productkey of localdata[0]" id="productkey"> {{productkey}} </li>
     </ul>
   </div>
-  <div *ngIf="action === 'productdeleted'">
-    <p> {{this.localdata.name}} is deleted</p>
-  </div>
-  <div *ngIf="action === 'mailSent'">
-    <p>Mail sent for {{this.localdata.name}} </p>
-  </div>
 </div>
-<div mat-dialog-actions class="model-footer mt-4 " align="end">
-  <div class="d-flex justify-content-end" *ngIf="action === 'AddNewUser' || action ==='AddUser' || action === 'EditVendorSetting' || action == 'Updatekey' || action ==  'AddSinglekey' || action == 'Update' || action ==  'Add'"> 
-  <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button >Close</button>
-  <button class="d-flex  btn btn-custom" mat-button (click)="doAction()">Save Changes</button>
-  </div>
-  <div class="d-flex justify-content-end" *ngIf="action === 'Upload File'  || action === 'Upload Multiple Keys' || action == 'Upload Product File' || action === 'Upload Order File'">
-    <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button >Close</button>
-  <button class="d-flex  btn btn-custom" mat-button (click)="doAction()"  mat-flat-button>Upload</button>
-  </div>
-  <div class="d-flex justify-content-end" *ngIf="action == 'filteruniquekey';">
-    <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
-    <button class="d-flex  btn btn-custom" mat-button (click)="doAction()"  mat-flat-button>Filter</button>
-  </div>
-  <div class="d-flex justify-content-end" *ngIf="action == 'AddNewVendor' || action === 'AddVendorSetting';">
-    <button class="d-flex btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button >Close</button>
-    <button class="d-flex btn btn-custom" mat-button (click)="doAction()"  mat-flat-button>Add</button>
-  </div>
-  <div class="d-flex justify-content-end" *ngIf="action == 'UploadEmail';">
-    <button class="d-flex btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button >Close</button>
-    <button class="d-flex btn btn-custom" mat-button (click)="doAction()"  mat-flat-button>Add Email Template</button>
+<div *ngIf="action === 'revokeorder' || action === 'updatestatus' || action === 'productdeleted'  || action === 'deleteemailtemplate' || action === 'deleteemailtemplate' || action === 'addemailtemplate'
+    || action === 'mailSent' || action === 'mailSenterror' || action === 'Loginback' || action === 'adduser' || action === 'addVendor' || action === 'addsetting' || action === 'updatesetting' || action === 'loaded'">
+  <!-- <div class="model-header">
+      <div (click)="closeDialog()"  class="close"> <mat-icon> close</mat-icon></div>
+    </div> -->
+  <div mat-dialog-content class="model-body ">
+    <p class="text-center mb-0"> {{ localdata.message }} </p>
   </div>
 </div>

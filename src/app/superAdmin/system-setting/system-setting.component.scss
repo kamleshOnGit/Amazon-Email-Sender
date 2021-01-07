@@ -104,7 +104,7 @@
   
   :host ::ng-deep .mat-form-field { line-height:1.5 ;border-radius: 6px;
     background-color: #fff;
-    box-shadow: 0 0 4px 0 rgba(0,0,0,.2);}
+    box-shadow: 0 0 4px 0 rgba(0,0,0,.2); border:none!important}
 
   :host ::ng-deep  .mat-form-field-wrapper {
        margin: 0;
@@ -137,3 +137,10 @@
   input , select { font-family: 'Proxima Nova',sans-serif;}
   :host ::ng-deep  tr.mat-footer-row, tr.mat-row { height: 34px;}
   :host ::ng-deep td.mat-cell { padding:3px!important}
+  .ng-valid[required], .ng-valid.required  {
+    border-bottom: 2px solid #42A948; /* green */
+  }
+  
+  .ng-invalid:not(form)  {
+    border-bottom: 2px solid #a94442; /* red */
+  }

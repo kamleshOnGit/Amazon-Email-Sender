@@ -23,6 +23,7 @@ import { MatTable } from '@angular/material/table';
 import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
 import { DatePipe } from '@angular/common';
 import {DecriptionService} from '../../shared/decription.service';
+import {SelectionModel} from '@angular/cdk/collections';
 
 export interface PeriodicElement {
   buyerEmail: string;
@@ -135,6 +136,7 @@ const ELEMENT_DATA: PeriodicElement[]  =   [
 })
 export class OrdersComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = [
+    'select',
     'orderId',
     'sku',
     'buyerEmail',
@@ -145,9 +147,11 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   ];
 
   public dataSource ;
-  public pagenumber = 1;
+  public pagenumber = 0;
   public pagesize = 50;
-
+  public orderIds = [];
+  popupmsg = {message: ''};
+  selection = new SelectionModel<PeriodicElement>(true, []);
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
@@ -194,7 +198,9 @@ get toDate() { return this.filterForm.get('toDate').value; }
     // this.dataSource = new MatTableDataSource(this.dataSourceNew);
 
   }
-  public getAllOwners = () => {
+  public getAllOwners = ()  => {
+    this.pagenumber += 1;
+    console.log(this.pagenumber ,);
     this.repoService.getData('orders/' + this.pagenumber + '/' + this.pagesize).subscribe((res: any) => {
       if (res && res.data  && res.data.length > 0) {
         res.data.rows.forEach(element => {
@@ -208,8 +214,39 @@ get toDate() { return this.filterForm.get('toDate').value; }
       this.dataSource = new MatTableDataSource(res.data.rows);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-      console.log(res.data);
+      if (res.data.rows.length === 0) {
+        this.popupmsg.message =  res.message;
+        this.openDialogSmall('loaded', this.popupmsg);
+      }
+      console.log(res);
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
     });
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    this.orderIds  = this.selection.selected;
+    console.log(this.orderIds.map( v => v.orderId), );
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: PeriodicElement): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
   public redirectToDetails = (id: string) => {};
@@ -246,9 +283,9 @@ get toDate() { return this.filterForm.get('toDate').value; }
 
     dialogRef.afterClosed().subscribe( (result) => {
       if (result.event === 'product not found') {
-        this.addRowData(result.data);
+        // this.addRowData(result.data);
       } else if (result.event === 'Updatekey') {
-        this.updateRowData(result.data);
+        // this.updateRowData(result.data);
       }  });
   }
   public addRowData(rowobj: any) {
@@ -299,11 +336,31 @@ get toDate() { return this.filterForm.get('toDate').value; }
   }
  public updateOrders(data: any) {
   console.log( data);
-  this.repoService.create('import/orders/', {'orders' : data}).subscribe((res: any) => console.log(res));
+  this.repoService.create('import/orders/', {'orders' : data}).subscribe((res: any) => {
+    console.log(res);
+    this.popupmsg.message = res.message;
+    this.openDialogSmall('updatestatus', this.popupmsg);
+    this.getAllOwners();
+  }, error => {
+    console.log(error.error.message);
+    this.popupmsg.message =  error.error.message;
+    this.openDialogSmall('mailsenterror', this.popupmsg);
+  });
  }
- public revokeOrder(element) {
-  console.log( element.orderId);
-  this.repoService.create('productkey/revoke', {'orderId' : '' + element.orderId}).subscribe((res: any) =>  console.log(res));
-  this.openDialogSmall('revokeorder', element);
+ public updateOrderStatus(element) {
+
+  const orderIdarray = this.orderIds.map( v => v.orderId);
+  this.repoService.update('order/updateOrderStatus', {orderIdArray :  orderIdarray}).subscribe((res: any) => {
+    console.log(res);
+    this.popupmsg.message = res.message;
+    this.openDialogSmall('updatestatus', this.popupmsg);
+    this.getAllOwners();
+  }, error => {
+    console.log(error.error.message);
+    this.popupmsg.message =  error.error.message;
+    this.openDialogSmall('mailsenterror', this.popupmsg);
+  });
+
+
  }
-} 
+}

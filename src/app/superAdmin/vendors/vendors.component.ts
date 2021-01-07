@@ -28,12 +28,7 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {id: 1,  Vendorname: 'Vendor1', Emailaddress: 'abc@test@com', IsActive: 'Yes' , Phonenumber: '987654321' },
-  {id: 1,  Vendorname: 'Vendor1', Emailaddress: 'abc@test@com', IsActive: 'Yes' , Phonenumber: '987654321' },
-  {id: 1,  Vendorname: 'Vendor1', Emailaddress: 'abc@test@com', IsActive: 'Yes' , Phonenumber: '987654321' },
-  {id: 1,  Vendorname: 'Vendor1', Emailaddress: 'abc@test@com', IsActive: 'Yes' , Phonenumber: '987654321' },
-  {id: 1,  Vendorname: 'Vendor1', Emailaddress: 'abc@test@com', IsActive: 'Yes' , Phonenumber: '987654321' },
-  {id: 1,  Vendorname: 'Vendor1', Emailaddress: 'abc@test@com', IsActive: 'Yes' , Phonenumber: '987654321' },
+  {id: 1,  Vendorname: '', Emailaddress: '', IsActive: '' , Phonenumber: '' },
 ];
 
 @Component({
@@ -44,7 +39,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class VendorsComponent implements OnInit , AfterViewInit {
 
   displayedColumns: string[] = ['Vendorname', 'Emailaddress', 'IsActive', 'Phonenumber' , 'Action'];
-
+  popupmsg = {message: ''};
   dataSourceNew = ELEMENT_DATA;
   dataSource = new MatTableDataSource(this.dataSourceNew) ;
 
@@ -74,6 +69,10 @@ export class VendorsComponent implements OnInit , AfterViewInit {
     .subscribe( (res: any) => {
       this.dataSource  = new MatTableDataSource(res.data.data);
       console.log(res.data.data);
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
     });
   }
   public redirectToDetails = (id: string) => {
@@ -105,6 +104,20 @@ export class VendorsComponent implements OnInit , AfterViewInit {
         this.settingVenderUpdate(result.data);
       }
      });
+  }
+  public openDialogSmall(action, obj) {
+    obj.action = action;
+    const dialogRef = this.dialog.open( DialogBoxComponent, {
+      width: '500px',
+      data: obj
+    });
+
+    dialogRef.afterClosed().subscribe( (result) => {
+      if (result.event === 'product not found') {
+        // this.addRowData(result.data);
+      } else if (result.event === 'Updatekey') {
+        // this.updateRowData(result.data);
+      }  });
   }
 
  public addRowData( rowobj: any ) {
@@ -167,7 +180,16 @@ export class VendorsComponent implements OnInit , AfterViewInit {
       logo: data.logo,
       status: data.status,
     };
-    this.repoService.create('addTenant', bodydata).subscribe((res: any) => console.log(res));
+    this.repoService.create('addTenant', bodydata).subscribe((res: any) => {
+      this.popupmsg.message = res.message;
+      this.openDialogSmall('addVendor', this.popupmsg);
+      this.getAllOwners();
+      console.log(res.data);
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
+    });
   }
   public settingVender(data) {
     console.log( data);
@@ -178,7 +200,16 @@ export class VendorsComponent implements OnInit , AfterViewInit {
       refreshToken: data.refreshToken,
       defaultValues: data.defaultValues
     };
-    this.repoService.create('setting', bodydata).subscribe((res: any) => console.log(res));
+    this.repoService.create('setting', bodydata).subscribe((res: any) => {
+      this.popupmsg.message = res.message;
+      this.openDialogSmall('addsetting', this.popupmsg);
+      this.getAllOwners();
+      console.log(res.data);
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
+    });
   }
   public settingVenderUpdate(data) {
     console.log( data);
@@ -189,6 +220,15 @@ export class VendorsComponent implements OnInit , AfterViewInit {
       refreshToken: data.refreshToken,
       defaultValues: data.defaultValues
     };
-    this.repoService.create('updateSetting', bodydata).subscribe((res: any) => console.log(res));
+    this.repoService.update('updateSetting', bodydata).subscribe((res: any) => {
+      this.popupmsg.message = res.message;
+      this.openDialogSmall('updatesetting', this.popupmsg);
+      this.getAllOwners();
+      console.log(res.data);
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
+    });
   }
 }

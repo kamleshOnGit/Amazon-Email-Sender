@@ -71,7 +71,7 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
   displayedColumns: string[] = [ 'Brand' , 'name', 'category', 'status', 'productkey' , 'Action' ];
 
   public dataSource;
-
+  popupmsg = {message: ''};
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator , {static: true}) paginator: MatPaginator;
@@ -170,7 +170,16 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
      ProductId : data.marketPlaceProductId,
      price : data.price
      };
-     this.repoService.update('product/product/' + data.id , bodydata ).subscribe((res: any) => console.log(res));
+     this.repoService.update('product/product/' + data.id , bodydata ).subscribe((res: any) => {
+      this.popupmsg.message = res.message;
+      this.openDialogSmall('productdeleted', this.popupmsg);
+      console.log(res.data);
+      this.getAllOwners();
+    } , error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
+    });
      this.paginator._changePageSize(this.paginator.pageSize);
   }
 
@@ -199,15 +208,30 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
   public updateproduct(data: any) {
     // const bodydata = JSON.parse(JSON.stringify(data));
     console.log( data);
-    this.repoService.create('import/products', {'products' : data}).subscribe((res: any) => console.log(res));
-    this.getAllOwners();
+    this.repoService.create('import/products', {'products' : data}).subscribe((res: any) => {
+      console.log(res);
+      this.popupmsg.message = res.message;
+      this.openDialogSmall('productdeleted', this.popupmsg);
+      this.getAllOwners();
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
+    }
+    );
   }
 
   public delepredouct(element: any) {
     console.log(element.id);
     this.repoService.delete2('product/delete' , { id : element.id}  ).subscribe((res: any) => {
-      this.openDialogSmall('productdeleted', element.name);
+      this.popupmsg.message = res.message;
+      this.openDialogSmall('productdeleted', this.popupmsg);
       console.log(res.data);
+      this.getAllOwners();
+    } , error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
     });
   }
 

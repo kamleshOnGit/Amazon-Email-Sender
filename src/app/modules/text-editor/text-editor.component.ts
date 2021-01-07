@@ -5,6 +5,8 @@ import {ActivatedRoute , Params} from '@angular/router';
 import { map } from 'rxjs/operators';
 import { RepositoryService } from '../../shared/servercomunication.service';
 import { Location } from '@angular/common';
+import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-text-editor',
@@ -13,9 +15,11 @@ import { Location } from '@angular/common';
 })
 
 export class TextEditorComponent implements OnInit {
+  popupmsg = {message: ''};
   public Editor = ClassicEditor;
   public id;
-  constructor( public route: ActivatedRoute , public location: Location , private repoService: RepositoryService, ) { }
+  constructor( public route: ActivatedRoute , public location: Location ,
+               private repoService: RepositoryService, public dialog: MatDialog, ) { }
  name: string;
  productid: string;
  selectcheck = false;
@@ -42,9 +46,28 @@ export class TextEditorComponent implements OnInit {
       this.productid = res.data.data.productId;
       this.model.content =  template ;
 
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
     });
   }
 
+
+  public openDialogSmall(action, obj) {
+    obj.action = action;
+    const dialogRef = this.dialog.open( DialogBoxComponent, {
+      width: '500px',
+      data: obj
+    });
+
+    dialogRef.afterClosed().subscribe( (result) => {
+      if (result.event === 'product not found') {
+        // this.addRowData(result.data);
+      } else if (result.event === 'Updatekey') {
+        // this.updateRowData(result.data);
+      }  });
+  }
   onChange($event) {
     const data = $event;
 
@@ -95,6 +118,14 @@ export class TextEditorComponent implements OnInit {
       status : this.selecttext,
       comments : 'text'
     };
-    this.repoService.update('emailTemplate/' + this.id , bodytext ).subscribe((res: any) => console.log(res));
+    this.repoService.update('emailTemplate/' + this.id , bodytext ).subscribe((res: any) => {
+    console.log( res);
+    this.popupmsg.message = res.message;
+    this.openDialogSmall('updateemailtemplate', this.popupmsg);
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
+    });
   }
 }

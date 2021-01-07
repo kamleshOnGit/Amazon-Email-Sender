@@ -88,7 +88,7 @@ export class AllowUsersComponent implements OnInit {
   vendors = [
     'Vendor1' , 'Vendor2' , 'Vendor3' , 'Vendor4'
   ];
-
+  popupmsg = {message: ''};
   dataSource ;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator , {static: true}) paginator: MatPaginator;
@@ -113,6 +113,10 @@ export class AllowUsersComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       console.log(res.data);
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
     });
   }
 
@@ -147,7 +151,20 @@ export class AllowUsersComponent implements OnInit {
           this.addNewUser(result.data);
       } });
   }
+  public openDialogSmall(action, obj) {
+    obj.action = action;
+    const dialogRef = this.dialog.open( DialogBoxComponent, {
+      width: '500px',
+      data: obj
+    });
 
+    dialogRef.afterClosed().subscribe( (result) => {
+      if (result.event === 'product not found') {
+        this.addRowData(result.data);
+      } else if (result.event === 'Updatekey') {
+        this.updateRowData(result.data);
+      }  });
+  }
  public addRowData( rowobj: any ) {
     const d = new Date();
     this.dataSource .push( {
@@ -210,7 +227,15 @@ export class AllowUsersComponent implements OnInit {
       email: data.email,
       password: data.password
     };
-    this.repoService.create('user', bodydata).subscribe((res: any) => console.log(res));
+    this.repoService.create('user', bodydata).subscribe((res: any) => {
+      this.popupmsg.message = res.message;
+      this.openDialogSmall('adduser', this.popupmsg);
+      console.log(res.data);
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message =  error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
+    });
  }
 
 

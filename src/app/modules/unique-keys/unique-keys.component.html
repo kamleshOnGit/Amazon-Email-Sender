@@ -13,7 +13,15 @@
     </button>
     </div>
     <div class="d-flex buttonsgroup " > 
-  <button class="d-flex btn btn-custom"  (click)="openDialog('AddSinglekey',{})" mat-raised-button>Add Single Key</button>
+      <mat-form-field appearance="none"> 
+        <mat-label>Products</mat-label>
+        <mat-select (selectionChange)="selectedValue($event)" >
+          <mat-option *ngFor="let product of productData" [value]="product.sellerSku">
+            {{product.sellerSku}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  <button class="d-flex btn btn-custom ml-5"  (click)="openDialog('AddSinglekey',{})" mat-raised-button>Add Single Key</button>
   <button  class="d-flex btn btn-custom ml-5" (click)="openDialog('Upload Multiple Keys',{})"  mat-raised-button>Upload Keys</button> 
 </div>
 </div>
@@ -50,6 +58,7 @@
         <td mat-cell *matCellDef="let element" > 
           <mat-icon (click)="openDialog('Updatekey',element)">edit</mat-icon> 
           <mat-icon (click)="delepredouct(element)">delete</mat-icon> 
+          <button (click)="revokeOrder(element)" class="badge py-1 border-0 badge-primary">Revoke Order</button>
         </td>
       </ng-container>
   

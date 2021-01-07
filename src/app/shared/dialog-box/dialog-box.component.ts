@@ -31,6 +31,7 @@ export class DialogBoxComponent {
   selecttext = 'InActive';
   productsAll = [];
   productnotfound = [];
+  errortext = 'Unknow Error';
 
   @ViewChild('csvReader', {static: true}) csvReader: any;
 
@@ -39,13 +40,14 @@ export class DialogBoxComponent {
               @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData) {
 
     this.localdata = {...data};
+    this.localdata.message =  this.localdata.message !== undefined ? this.localdata.message : this.errortext;
     console.log(this.localdata);
     this.action = this.localdata.action;
     this.selectcheck = this.localdata.IsActive;
-    this.repoService.getData('products').subscribe((res: any) => {
-      this.productsAll = res.data.data;
-      console.log(res.data.data);
-    });
+    // this.repoService.getData('products').subscribe((res: any) => {
+    //   this.productsAll = res.data.data;
+    //   console.log(res.data.data);
+    // });
   }
   doAction() {
     this.dialogRef.close({event: this.action, data: this.localdata});
@@ -57,6 +59,7 @@ export class DialogBoxComponent {
 
   closeDialog() {
     this.dialogRef.close({event: 'Cancel'});
+    window.location.reload();
   }
   updateIsActive() {
     if (this.selectcheck === true) {
@@ -220,7 +223,7 @@ export class DialogBoxComponent {
         } } }
       }
     }
-    
+
     return csvArr;
   }
 
