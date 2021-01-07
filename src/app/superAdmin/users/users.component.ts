@@ -240,7 +240,7 @@ export class UsersComponent implements AfterViewInit , OnInit {
     console.log( data);
     const bodydata = {
       tenantId: data.tenentId,
-      roleId: data.roleId,
+      roleId: 2,
       firstName: data.firstName,
       lastName: data.lastName,
       status: data.status,
