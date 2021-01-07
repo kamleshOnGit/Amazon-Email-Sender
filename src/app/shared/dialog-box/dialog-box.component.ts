@@ -5,6 +5,8 @@ import { ProductKeys } from '../uniqueKeys.model';
 import { Orders } from '../orders.model';
 import { RepositoryService } from '../../shared/servercomunication.service';
 import { MatSelectChange } from '@angular/material/select';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 export interface UsersData {
   itemName: string;
@@ -35,9 +37,11 @@ export class DialogBoxComponent {
   errortext = 'Unknow Error';
 
   @ViewChild('csvReader', { static: true }) csvReader: any;
+  logoImage: any;
 
   constructor(private repoService: RepositoryService,
     public dialogRef: MatDialogRef<DialogBoxComponent>,
+    private http: HttpClient,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData) {
 
     this.localdata = { ...data };
@@ -295,5 +299,21 @@ export class DialogBoxComponent {
     this.localdata.priority = event.value.priority;
     console.log(event.value);
   }
-
+  selectLogo(event) {
+    if (event && event.target.files && event.target.files.length > 0) {
+      this.logoImage = event.target.files[0]
+      this.imageupload()
+    } 
+  }
+  imageupload() {
+    const formData = new FormData();
+    formData.append('file',this.logoImage);
+    this.http.post<any>(`${environment.urlAddress}` + '/upload', formData).subscribe((res) => {
+      this.logoImage = environment.img_url + res.filename;
+      // this.clientForm.patchValue({
+      //   profilePicture: res.filename
+      // });
+    }, (err) => console.log(err)
+    );
+  }
 }

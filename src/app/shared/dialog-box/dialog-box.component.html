@@ -12,11 +12,13 @@
         <input placeholder="User name" name="name" [ngClass]="{ 'is-invalid': a.submitted && name.invalid }"
           #name="ngModel" required matInput [(ngModel)]="localdata.name">
       </mat-form-field>
-      <label class="mt-4"> Logo</label>
-      <mat-form-field appearance="none">
-        <input placeholder="Logo" name="logo" [ngClass]="{ 'is-invalid': a.submitted && logo.invalid }" #logo="ngModel"
-          required matInput [(ngModel)]="localdata.logo">
-      </mat-form-field>
+
+      <div class="row form-group py-3 align-items-center">
+        <div class="col-md-6 px-2 text-center">
+          <input placeholder="upload file" class="form-control mb-2 h-auto" name="uploadfile1" id="txtFileUpload"
+            (change)="selectLogo($event)" type="file">
+        </div>
+      </div>
       <div class="mt-4">
         <mat-checkbox [(ngModel)]="selectcheckemail" name="active" #active="ngModel" required
           (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> Active
@@ -294,7 +296,7 @@
     <div (click)="closeDialog()" class="close">
       <mat-icon> close</mat-icon>
     </div>
-    <h2 mat-dialog-title > Add New User</h2>
+    <h2 mat-dialog-title> Add New User</h2>
   </div>
   <div mat-dialog-content class="model-body ">
 
@@ -349,7 +351,7 @@
     <div (click)="closeDialog()" class="close">
       <mat-icon> close</mat-icon>
     </div>
-    <h2 mat-dialog-title >Add New User</h2>
+    <h2 mat-dialog-title>Add New User</h2>
   </div>
   <div mat-dialog-content class="model-body ">
 
@@ -367,31 +369,28 @@
       </mat-form-field>  -->
       <label class="mt-4"> FirstName</label>
       <mat-form-field appearance="none">
-        <input placeholder="Vendor name"  matInput name="Vendor2" #Vendor2="ngModel"
-          [ngClass]="{ 'is-invalid': p.submitted && Vendor2.invalid }" required
-          [(ngModel)]="localdata.firstName">
+        <input placeholder="Vendor name" matInput name="Vendor2" #Vendor2="ngModel"
+          [ngClass]="{ 'is-invalid': p.submitted && Vendor2.invalid }" required [(ngModel)]="localdata.firstName">
       </mat-form-field>
       <label class="mt-4"> last Name</label>
       <mat-form-field appearance="none">
         <input placeholder="Vendor name" matInput name="Vendorlast2" #Vendorlast2="ngModel"
-          [ngClass]="{ 'is-invalid': p.submitted && Vendorlast2.invalid }" required 
-          [(ngModel)]="localdata.lastName">
+          [ngClass]="{ 'is-invalid': p.submitted && Vendorlast2.invalid }" required [(ngModel)]="localdata.lastName">
       </mat-form-field>
       <div class="mt-4">
-        <mat-checkbox [(ngModel)]="selectcheckemail" name="Active3" #Active3="ngModel"
-           required (ngModelChange)="updateIsActiveEmail()">
+        <mat-checkbox [(ngModel)]="selectcheckemail" name="Active3" #Active3="ngModel" required
+          (ngModelChange)="updateIsActiveEmail()">
         </mat-checkbox> {{selecttext}}
       </div>
       <label class="mt-4"> Email Address </label>
       <mat-form-field appearance="none">
-        <input placeholder="Email Address"  matInput  name="Email3" #Email3="ngModel"
+        <input placeholder="Email Address" matInput name="Email3" #Email3="ngModel"
           [ngClass]="{ 'is-invalid': p.submitted && Email3.invalid }" required [(ngModel)]="localdata.email">
       </mat-form-field>
       <label class="mt-4"> Password</label>
       <mat-form-field appearance="none">
-        <input type="password"  matInput placeholder="Password" name="Password3" #Password3="ngModel"
-          [ngClass]="{ 'is-invalid': p.submitted && Password3.invalid }" required
-          [(ngModel)]="localdata.password">
+        <input type="password" matInput placeholder="Password" name="Password3" #Password3="ngModel"
+          [ngClass]="{ 'is-invalid': p.submitted && Password3.invalid }" required [(ngModel)]="localdata.password">
       </mat-form-field>
 
     </div>
@@ -399,7 +398,7 @@
   <div mat-dialog-actions class="model-footer mt-4 " align="end">
     <div class="d-flex justify-content-end">
       <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
-      <button class="d-flex  btn btn-custom" mat-button [disabled]="!p.valid"  (click)="doAction()">Save Changes</button>
+      <button class="d-flex  btn btn-custom" mat-button [disabled]="!p.valid" (click)="doAction()">Save Changes</button>
     </div>
   </div>
 </form>
@@ -495,11 +494,11 @@
 
 
 <form *ngIf="action ==  'Upload Product File'">
-   <div class="model-header">
-  <div (click)="closeDialog()" class="close">
-    <mat-icon> close</mat-icon>
-  </div>
-  <h2 mat-dialog-title *ngIf="action == 'Updatekey';">Update User</h2>
+  <div class="model-header">
+    <div (click)="closeDialog()" class="close">
+      <mat-icon> close</mat-icon>
+    </div>
+    <h2 mat-dialog-title *ngIf="action == 'Updatekey';">Update User</h2>
   </div>
   <div mat-dialog-content class="model-body ">
     <div *ngIf="action === 'Upload Product File'" class="row form-group">
@@ -521,12 +520,12 @@
 </form>
 
 
-<form *ngIf="action ==  'Upload Multiple Keys'"  > 
+<form *ngIf="action ==  'Upload Multiple Keys'">
   <div class="model-header">
-  <div (click)="closeDialog()" class="close">
-    <mat-icon> close</mat-icon>
-  </div>
-  <h2 mat-dialog-title *ngIf="action == 'Updatekey';">Update User</h2>
+    <div (click)="closeDialog()" class="close">
+      <mat-icon> close</mat-icon>
+    </div>
+    <h2 mat-dialog-title *ngIf="action == 'Updatekey';">Update User</h2>
   </div>
   <div mat-dialog-content class="model-body ">
 
@@ -665,7 +664,8 @@
     </ul>
   </div>
 </div>
-<div *ngIf="action === 'revokeorder' || action === 'updatestatus' || action === 'productdeleted'  || action === 'deleteemailtemplate' || action === 'deleteemailtemplate' || action === 'addemailtemplate'
+<div
+  *ngIf="action === 'revokeorder' || action === 'updatestatus' || action === 'productdeleted'  || action === 'deleteemailtemplate' || action === 'deleteemailtemplate' || action === 'addemailtemplate'
     || action === 'mailSent' || action === 'mailSenterror' || action === 'Loginback' || action === 'adduser' || action === 'addVendor' || action === 'addsetting' || action === 'updatesetting' || action === 'loaded'">
   <!-- <div class="model-header">
       <div (click)="closeDialog()"  class="close"> <mat-icon> close</mat-icon></div>
