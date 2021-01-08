@@ -53,6 +53,7 @@ export class DialogBoxComponent {
     // });
   }
   doAction() {
+    this.localdata['logo'] = this.logoImage
     this.dialogRef.close({ event: this.action, data: this.localdata });
   }
 
@@ -301,11 +302,11 @@ export class DialogBoxComponent {
   selectLogo(event) {
     if (event && event.target.files && event.target.files.length > 0) {
       this.imageupload(event.target.files[0])
-    } 
+    }
   }
   imageupload(event) {
     const formData = new FormData();
-    formData.append('file',event);
+    formData.append('file', event);
     this.http.post<any>(`${environment.urlAddress}` + '/upload', formData).subscribe((res) => {
       this.logoImage = environment.img_url + res.filename;
       // this.clientForm.patchValue({

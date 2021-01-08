@@ -14,11 +14,12 @@
       </mat-form-field>
 
       <div class="row form-group py-3 align-items-center">
-        <div class="col-md-6 px-2 text-center">
-          <input placeholder="upload file" class="form-control mb-2 h-auto" name="uploadfile1" id="txtFileUpload"
+        <div class="col-md-6 px-2">
+          <label>Logo</label>
+          <input  placeholder="Upload File" class="form-control mb-2 h-auto" id="txtFileUpload"
             (change)="selectLogo($event)" type="file">
         </div>
-        <span *ngIf="logoImage">Logo Uploaded</span>
+        <span *ngIf="logoImage">Uploaded</span>
       </div>
       <div class="mt-4">
         <mat-checkbox [(ngModel)]="selectcheckemail" name="active" #active="ngModel" required
