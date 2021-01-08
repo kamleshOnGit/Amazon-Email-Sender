@@ -10,41 +10,42 @@ import {
   AfterContentInit,
 } from '@angular/core';
 import { AuthService } from '../../shared/auth.services';
-import {MatPaginator} from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { DataSource } from '@angular/cdk/collections';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatSort} from '@angular/material/sort';
-import {MatButtonModule} from '@angular/material/button';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
 import { RepositoryService } from '../../shared/servercomunication.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
+import { Title } from '@angular/platform-browser';
 
 export interface PeriodicElement {
 
-    id: number;
-    tenantId: number;
-    name: string;
-    sellerSku: string;
-    quantity: number;
-    category: string;
-    status: string;
-    marketPlaceProductId: string;
-    createdAt: string;
-    updatedAt: string;
-    productKeys: [
-        {
-            id: number,
-            productId: number,
-            productkey: string,
-            tenantId: number,
-            batch: string,
-            status: string,
-            priority: string,
-            createdAt: string,
-            updatedAt: string,
-        }
-    ];
+  id: number;
+  tenantId: number;
+  name: string;
+  sellerSku: string;
+  quantity: number;
+  category: string;
+  status: string;
+  marketPlaceProductId: string;
+  createdAt: string;
+  updatedAt: string;
+  productKeys: [
+    {
+      id: number,
+      productId: number,
+      productkey: string,
+      tenantId: number,
+      batch: string,
+      status: string,
+      priority: string,
+      createdAt: string,
+      updatedAt: string,
+    }
+  ];
 
 }
 
@@ -66,18 +67,18 @@ export interface PeriodicElement {
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
 })
-export class ProductsComponent implements  AfterViewInit , OnInit {
+export class ProductsComponent implements AfterViewInit, OnInit {
 
-  displayedColumns: string[] = [ 'Brand' , 'name', 'category', 'status', 'productkey' , 'Action' ];
+  displayedColumns: string[] = ['Brand', 'name', 'category', 'status', 'productkey', 'Action'];
 
   public dataSource;
-  popupmsg = {message: ''};
+  popupmsg = { message: '' };
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatPaginator , {static: true}) paginator: MatPaginator;
-  @ViewChild(MatTable, {static: true}) table: MatTable<any>;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatTable, { static: true }) table: MatTable<any>;
 
-  constructor(private repoService: RepositoryService , public dialog: MatDialog ,public authService: AuthService) { }
+  constructor(private repoService: RepositoryService, public dialog: MatDialog, public authService: AuthService, private title: Title) { }
 
   ngAfterViewInit() {
     // this.dataSource.sort = this.sort;
@@ -88,18 +89,20 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
   }
 
   ngOnInit() {
+
+    this.title.setTitle("Products");
     this.getAllOwners();
 
   }
   public getAllOwners = () => {
     this.repoService.getData('products')
-    .subscribe( (res: any) => {
-      console.log(res.data.data);
-      this.dataSource = new MatTableDataSource(res.data.data);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
+      .subscribe((res: any) => {
+        console.log(res.data.data);
+        this.dataSource = new MatTableDataSource(res.data.data);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
 
-    });
+      });
   }
   public redirectToDetails = (id: string) => {
   }
@@ -108,14 +111,17 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
   public redirectToDelete = (id: string) => {
   }
 
- public openDialog(action, obj) {
+  public openDialog(action, obj) {
     obj.action = action;
-    const dialogRef = this.dialog.open( DialogBoxComponent, {
+    if (action == "Add") {
+      obj.IsActive = true;
+    }
+    const dialogRef = this.dialog.open(DialogBoxComponent, {
       width: '1000px',
       data: obj
     });
 
-    dialogRef.afterClosed().subscribe( (result) => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result.event === 'Add') {
         this.addRowData(result.data);
       } else if (result.event === 'Update') {
@@ -126,70 +132,72 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
         this.updateAll(result.data);
       } else if (result.event === 'Upload Product File') {
         this.updateproduct(result.data);
-      } });
+      }
+    });
   }
 
   public openDialogSmall(action, obj) {
     obj.action = action;
-    const dialogRef = this.dialog.open( DialogBoxComponent, {
+    const dialogRef = this.dialog.open(DialogBoxComponent, {
       width: '500px',
       data: obj
     });
 
-    dialogRef.afterClosed().subscribe( (result) => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result && result.event === 'product not found') {
         this.addRowData(result.data);
       } else if (result && result.event === 'Updatekey') {
         this.updateRowData(result.data);
-      }  });
+      }
+    });
   }
 
- public addRowData( data: any ) {
-     console.log(data);
-     const bodydata = {
-      itemName : data.itemName,
-      sellerSku : data.sellerSku,
-      quantity : data.quantity,
-      category : data.category,
-      status : data.status,
-      ProductId : data.marketPlaceProductId,
-      price : data.price
-     };
-     this.repoService.create('product/product', bodydata ).subscribe((res: any) => console.log(res));
+  public addRowData(data: any) {
+    console.log(data);
+    const bodydata = {
+      itemName: data.itemName,
+      sellerSku: data.sellerSku,
+      quantity: data.quantity,
+      category: data.category,
+      status: data.status,
+      ProductId: data.marketPlaceProductId,
+      price: data.price
+    };
+    this.repoService.create('product/product', bodydata).subscribe((res: any) => console.log(res));
     // this.table.renderRows();
-     this.paginator._changePageSize(this.paginator.pageSize);
+    this.paginator._changePageSize(this.paginator.pageSize);
   }
   public updateRowData(data) {
-     console.log(data);
-     const bodydata = {
-     itemName : data.itemName,
-     sellerSku : data.sellerSku,
-     quantity : data.quantity,
-     category : data.category,
-     status : data.status,
-     ProductId : data.marketPlaceProductId,
-     price : data.price
-     };
-     this.repoService.update('product/product/' + data.id , bodydata ).subscribe((res: any) => {
+    console.log(data);
+    const bodydata = {
+      itemName: data.itemName,
+      sellerSku: data.sellerSku,
+      quantity: data.quantity,
+      category: data.category,
+      status: data.status,
+      ProductId: data.marketPlaceProductId,
+      price: data.price
+    };
+    this.repoService.update('product/product/' + data.id, bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
       console.log(res.data);
       this.getAllOwners();
-    } , error => {
+    }, error => {
       console.log(error.error.message);
-      this.popupmsg.message =  error.error.message;
+      this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });
-     this.paginator._changePageSize(this.paginator.pageSize);
+    this.paginator._changePageSize(this.paginator.pageSize);
   }
 
   public updateAll(rowobj) {
-    this.dataSource  = this.dataSource.filter((value, key) => {
+    this.dataSource = this.dataSource.filter((value, key) => {
       if (value.id === rowobj.id) {
         value.name = rowobj.name;
         value.Brand = rowobj.Brand;
         value.category = rowobj.category;
-        value.Status = rowobj.Status ;
+        value.Status = rowobj.Status;
         value.UniqueKey = rowobj.UniqueKey;
       }
       this.dataSource = new MatTableDataSource(this.dataSource);
@@ -197,8 +205,8 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
       return true;
     });
   }
-  public  deleteRowData(rowobj) {
-    this.dataSource  = this.dataSource.filter(( value, key) => {
+  public deleteRowData(rowobj) {
+    this.dataSource = this.dataSource.filter((value, key) => {
       return value.id !== rowobj.id;
     });
     this.dataSource = new MatTableDataSource(this.dataSource);
@@ -207,15 +215,15 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
 
   public updateproduct(data: any) {
     // const bodydata = JSON.parse(JSON.stringify(data));
-    console.log( data);
-    this.repoService.create('import/products', {'products' : data}).subscribe((res: any) => {
+    console.log(data);
+    this.repoService.create('import/products', { 'products': data }).subscribe((res: any) => {
       console.log(res);
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
       this.getAllOwners();
     }, error => {
       console.log(error.error.message);
-      this.popupmsg.message =  error.error.message;
+      this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     }
     );
@@ -223,14 +231,14 @@ export class ProductsComponent implements  AfterViewInit , OnInit {
 
   public delepredouct(element: any) {
     console.log(element.id);
-    this.repoService.delete2('product/delete' , { id : element.id}  ).subscribe((res: any) => {
+    this.repoService.delete2('product/delete', { id: element.id }).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
       console.log(res.data);
       this.getAllOwners();
-    } , error => {
+    }, error => {
       console.log(error.error.message);
-      this.popupmsg.message =  error.error.message;
+      this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });
   }

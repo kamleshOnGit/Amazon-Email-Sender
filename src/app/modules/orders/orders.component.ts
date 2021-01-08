@@ -24,6 +24,7 @@ import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component
 import { DatePipe } from '@angular/common';
 import {DecriptionService} from '../../shared/decription.service';
 import {SelectionModel} from '@angular/cdk/collections';
+import { Title } from '@angular/platform-browser';
 
 export interface PeriodicElement {
   buyerEmail: string;
@@ -168,7 +169,8 @@ get toDate() { return this.filterForm.get('toDate').value; }
   constructor(
     private repoService: RepositoryService,
     public dialog: MatDialog, public authService: AuthService,
-    private Decription: DecriptionService
+    private Decription: DecriptionService,
+    private title:Title
   ) {
     // this.dataSource.filterPredicate = (data, filter) => {
     //   if (this.fromDate && this.toDate) {
@@ -179,6 +181,8 @@ get toDate() { return this.filterForm.get('toDate').value; }
   }
 
   ngAfterViewInit() {
+    
+    this.title.setTitle("Orders");
     this.dataSource.sort = this.sort;
     // this.dataSource.paginator = this.paginator;
   }

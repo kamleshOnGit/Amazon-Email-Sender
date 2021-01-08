@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { Title } from '@angular/platform-browser';
 
 export interface PeriodicElement {
   name: string;
@@ -47,9 +48,11 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(private dashboardService: DashboardService,private title:Title) { }
 
   ngOnInit() {
+    
+    this.title.setTitle("Dashboard");
     this.bigChart = this.dashboardService.bigChart();
     this.cards = this.dashboardService.cards();
     this.pieChart = this.dashboardService.pieChart();

@@ -30,8 +30,9 @@ export class HeaderComponent implements OnInit {
     this.service.doLogout();
     this.router.navigate(['']);
   }
-  changepass() {
-    this.router.navigate(['/forgetpassword']);
-  }
+
+  // changepass() {
+  //   this.router.navigate(['/forgetpassword']);
+  // }
 
 }

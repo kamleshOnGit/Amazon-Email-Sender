@@ -3,6 +3,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { MatTable } from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
+import { Title } from '@angular/platform-browser';
 
 export interface PeriodicElement {
   id: number;
@@ -64,13 +65,15 @@ export class SettingComponent implements OnInit , AfterViewInit {
   displayedColumns: string[] = ['orderTime' , 'shipedAt', 'customerName', 'emailAddress', 'mobileNumber' ];
   dataSource = new MatTableDataSource(ELEMENT_DATA) ;
 
-  constructor() { }
+  constructor( private title:Title) { }
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator , {static: true}) paginator: MatPaginator;
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 
   ngOnInit() {
+    
+    this.title.setTitle("Settings");
   }
 
   onChangeHour(event) {
