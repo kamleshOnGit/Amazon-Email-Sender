@@ -3,5 +3,6 @@ export class Products {
    public 'ProductId';
    public 'sellerSku';
    public 'status';
+   public 'price';
    public 'quantity';
 }

@@ -13,6 +13,7 @@ export interface UsersData {
   ProductId: string;
   sellerSku: string;
   status: string;
+  price: string;
   quantity: string;
 }
 
@@ -53,7 +54,10 @@ export class DialogBoxComponent {
     // });
   }
   doAction() {
-    this.localdata['logo'] = this.logoImage
+
+    if (this.logoImage !== null && this.logoImage !== undefined) {
+      this.localdata['logo'] = this.logoImage
+    }
     this.dialogRef.close({ event: this.action, data: this.localdata });
   }
 
@@ -76,9 +80,7 @@ export class DialogBoxComponent {
   uploadListener($event: any): void {
     const text = [];
     const files = $event.srcElement.files;
-
     if (this.isValidCSVFile(files[0])) {
-
       const input = $event.target;
       const reader = new FileReader();
       reader.readAsText(input.files[0]);
@@ -171,17 +173,30 @@ export class DialogBoxComponent {
 
   getDataRecordsArrayFromCSVFile(csvRecordsArray: any, headerLength: any) {
     const csvArr = [];
-
     for (let i = 1; i < csvRecordsArray.length; i++) {
-      const curruntRecord = (csvRecordsArray[i] as string).split(',');
+      let csv;
+      // if ((csvRecordsArray[i] as string) && csvRecordsArray[i].startsWith("\"")) {
+      //   csv = (csvRecordsArray[i] as string).replace(/,/, '');
+      // } else {
+      // }
+      csv = csvRecordsArray[i]
+      var curruntRecord = (csv as string).split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+      // for (var j = 0; j < arr.length; j++){
+      //   console.log('arr['+i+'] =',arr[i]);
+      // } 
+      // const curruntRecord = (csv as string).split(',');
       if (curruntRecord.length === headerLength) {
         const csvRecord: UsersData = new Products();
         csvRecord.itemName = curruntRecord[0];
         csvRecord.ProductId = curruntRecord[22];
         csvRecord.sellerSku = curruntRecord[3];
+        csvRecord.price = curruntRecord[4];
         csvRecord.status = curruntRecord[28];
         csvRecord.quantity = +curruntRecord[5] > 0 ? curruntRecord[5] : '1';
         csvArr.push(csvRecord);
+      }
+      else {
+        console.log(curruntRecord)
       }
     }
     return csvArr;
@@ -190,7 +205,6 @@ export class DialogBoxComponent {
 
   getDataRecordsArrayOrdersFromCSVFile(csvRecordsArray: any, headerLength: any) {
     const csvArr = [];
-
     for (let i = 1; i < csvRecordsArray.length; i++) {
       const curruntRecord = (csvRecordsArray[i] as string).split(',');
       if (curruntRecord.length === headerLength) {
