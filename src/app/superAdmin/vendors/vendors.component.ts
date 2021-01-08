@@ -19,6 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 export interface PeriodicElement {
   id: number;
   Vendorname: string;
@@ -56,9 +57,11 @@ export class VendorsComponent implements OnInit, AfterViewInit {
   }
 
   constructor(private repoService: RepositoryService,
-    public dialog: MatDialog, private router: Router, private route: ActivatedRoute,) { }
+    public dialog: MatDialog, private router: Router, private route: ActivatedRoute,private title:Title) { }
 
   ngOnInit() {
+    
+    this.title.setTitle("Vendors");
     this.getAllOwners();
 
   }
@@ -84,6 +87,7 @@ export class VendorsComponent implements OnInit, AfterViewInit {
   public openDialog(action, obj, setting) {
     obj.action = action;
     obj.setting = setting;
+    obj.IsActive = true;
     const dialogRef = this.dialog.open(DialogBoxComponent, {
       width: '1000px',
       data: obj

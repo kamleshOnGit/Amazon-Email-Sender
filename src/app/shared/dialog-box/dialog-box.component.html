@@ -23,7 +23,7 @@
       </div>
       <div class="mt-4">
         <mat-checkbox [(ngModel)]="selectcheckemail" name="active" #active="ngModel" required
-          (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> Active
+          (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> {{selecttext}}
       </div>
 
     </div>
@@ -49,16 +49,16 @@
     <div *ngIf="action == 'Update' || action ==  'Add';">
       <label class="mt-4"> Name</label>
       <mat-form-field appearance="none">
-        <input placeholder="name" matInput name="itemName" [ngClass]="{ 'is-invalid': b.submitted && itemName.invalid }"
+        <input placeholder="Name" matInput name="itemName" [ngClass]="{ 'is-invalid': b.submitted && itemName.invalid }"
           #itemname="ngModel" required [(ngModel)]="localdata.itemName">
       </mat-form-field>
       <label class="mt-4"> Category </label>
 
       <mat-form-field appearance="none">
-        <input placeholder="category" matInput name="category" #category="ngModel"
+        <input placeholder="Category" matInput name="category" #category="ngModel"
           [ngClass]="{ 'is-invalid': b.submitted && category.invalid }" required [(ngModel)]="localdata.category">
       </mat-form-field>
-      <label class="mt-4"> ProductId </label>
+      <label class="mt-4"> Product Id </label>
       <mat-form-field appearance="none">
         <input placeholder="Product Id" matInput name="productId" #productId="ngModel"
           [ngClass]="{ 'is-invalid': b.submitted && productId.invalid }" required
@@ -73,15 +73,15 @@
         <mat-checkbox [(ngModel)]="selectcheckemail" name="Active" #Active="ngModel" required
           (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> {{selecttext}}
       </div>
-      <label class="mt-4"> quantity</label>
+      <label class="mt-4"> Quantity</label>
       <mat-form-field appearance="none">
-        <input type="tel" placeholder="quantity" name="quantity" #quantity="ngModel"
+        <input type="tel" placeholder="Quantity" name="quantity" #quantity="ngModel"
           [ngClass]="{ 'is-invalid': b.submitted && quantity.invalid }" required matInput
           [(ngModel)]="localdata.quantity">
       </mat-form-field>
       <label class="mt-4"> Price</label>
       <mat-form-field appearance="none">
-        <input placeholder="price" name="price" #price="ngModel"
+        <input placeholder="Price" name="price" #price="ngModel"
           [ngClass]="{ 'is-invalid': b.submitted && price.invalid }" required matInput [(ngModel)]="localdata.price">
       </mat-form-field>
     </div>
@@ -100,7 +100,7 @@
     <div (click)="closeDialog()" class="close">
       <mat-icon> close</mat-icon>
     </div>
-    <h2 mat-dialog-title *ngIf="action == 'Update' || action ==  'Add';"> Add Single SKU Unique Key</h2>
+    <h2 mat-dialog-title *ngIf="action == 'AddSinglekey' "> Add Single SKU Unique Key</h2>
   </div>
   <div mat-dialog-content class="model-body ">
     <div *ngIf="action ==  'AddSinglekey';">
@@ -119,7 +119,7 @@
         <input placeholder="key" matInput name="key" #key="ngModel"
           [ngClass]="{ 'is-invalid': c.submitted && key.invalid }" required [(ngModel)]="localdata.key">
       </mat-form-field>
-      <label class="mt-4">priority</label>
+      <label class="mt-4">Priority</label>
       <mat-form-field appearance="none">
         <input placeholder="Priority" name="priority" #priority="ngModel"
           [ngClass]="{ 'is-invalid': c.submitted && priority.invalid }" required matInput
@@ -666,6 +666,7 @@
     </ul>
   </div>
 </div>
+
 <div
   *ngIf="action === 'revokeorder' || action === 'updatestatus' || action === 'productdeleted'  || action === 'deleteemailtemplate' || action === 'deleteemailtemplate' || action === 'addemailtemplate'
     || action === 'mailSent' || action === 'mailSenterror' || action === 'Loginback' || action === 'adduser' || action === 'addVendor' || action === 'addsetting' || action === 'updatesetting' || action === 'loaded'">

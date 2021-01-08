@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {RepositoryService} from '../..//shared/servercomunication.service';
+import { RepositoryService } from '../..//shared/servercomunication.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../../shared/auth.services';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-forgetpassword',
@@ -10,28 +11,32 @@ import { AuthService } from '../../shared/auth.services';
   styleUrls: ['./forgetpassword.component.scss']
 })
 export class ForgetpasswordComponent implements OnInit {
- username: string;
- password: string;
- forgetPassword: FormGroup;
+  popupmsg =  '';
+  username: string;
+  password: string;
+  forgetPassword: FormGroup;
 
-  constructor(private router: Router , private route: ActivatedRoute , public fb: FormBuilder,
-              public authService: AuthService , public service: RepositoryService) {
-                this.forgetPassword = this.fb.group({
-                  email: [''],
-                  password: ['']
-                });
-              }
+  constructor(private router: Router, private route: ActivatedRoute, public fb: FormBuilder, private title: Title,
+    public authService: AuthService, public service: RepositoryService) {
+    this.forgetPassword = this.fb.group({
+      email: [''],
+      password: ['']
+    });
+  }
 
   ngOnInit() {
+    this.title.setTitle("Forget Password");
   }
-
   createPassword($event) {
-    console.log(this.username , this.password);
+    
+    this.service.create('changePassword',
+        { email: this.username, newPassword: this.password }).subscribe((res: any) => 
+    this.popupmsg = res.message);
 
-    this.service.create('changePassword' , {email : this.username , newPassword: this.password}).subscribe(res => console.log(res));
   }
-  changePassword() {
-    this.authService.doLogout();
-    this.router.navigate(['']);
-  }
+
+  // changePassword() {
+  //   this.authService.doLogout();
+  //   this.router.navigate(['']);
+  // }
 }

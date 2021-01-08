@@ -9,11 +9,11 @@ import {
   ContentChild,
   AfterContentInit,
 } from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { DataSource } from '@angular/cdk/collections';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatSort} from '@angular/material/sort';
-import {MatButtonModule} from '@angular/material/button';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
 import { RepositoryService } from '../../shared/servercomunication.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
@@ -21,6 +21,7 @@ import { Router } from '@angular/router';
 // import { EmailTemplateDialogBoxComponent  } from '../../shared/email-template-dialog-box/email-template-dialog-box.component';
 import { TextEditorComponent } from '../text-editor/text-editor.component';
 import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
+import { Title } from '@angular/platform-browser';
 
 export interface PeriodicElement {
   id: number;
@@ -54,19 +55,19 @@ export interface PeriodicElement {
   templateUrl: './email-template.component.html',
   styleUrls: ['./email-template.component.scss']
 })
-export class EmailTemplateComponent implements OnInit , AfterViewInit {
+export class EmailTemplateComponent implements OnInit, AfterViewInit {
 
 
 
-  displayedColumns: string[] = [ 'name', 'category', 'IsActive', 'createdAt', 'Action' ];
+  displayedColumns: string[] = ['name', 'category', 'IsActive', 'createdAt', 'Action'];
 
   public dataSource;
-  popupmsg = {message: ''};
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatPaginator , {static: true}) paginator: MatPaginator;
-  @ViewChild(MatTable, {static: true}) table: MatTable<any>;
+  popupmsg = { message: '' };
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatTable, { static: true }) table: MatTable<any>;
 
-  constructor(private repoService: RepositoryService , public dialog: MatDialog, public router: Router ) { }
+  constructor(private repoService: RepositoryService, public dialog: MatDialog, public router: Router, private title: Title) { }
 
 
 
@@ -79,21 +80,23 @@ export class EmailTemplateComponent implements OnInit , AfterViewInit {
   }
 
   ngOnInit() {
+
+    this.title.setTitle("Email Template");
     this.getAllOwners();
 
   }
   public getAllOwners = () => {
     this.repoService.getData('emailTemplate')
-    .subscribe( (res: any ) => {
-      this.dataSource = new MatTableDataSource(res.data);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-      console.log(res.data);
-    }, error => {
-      console.log(error.error.message);
-      this.popupmsg.message =  error.error.message;
-      this.openDialogSmall('mailsenterror', this.popupmsg);
-    });
+      .subscribe((res: any) => {
+        this.dataSource = new MatTableDataSource(res.data);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        console.log(res.data);
+      }, error => {
+        console.log(error.error.message);
+        this.popupmsg.message = error.error.message;
+        this.openDialogSmall('mailsenterror', this.popupmsg);
+      });
   }
   public redirectToDetails = (id: string) => {
   }
@@ -101,13 +104,16 @@ export class EmailTemplateComponent implements OnInit , AfterViewInit {
   }
   public redirectToDelete = (id: string) => {
   }
-  redirectTemplate(id: number ) {
-    this.repoService.id = id ;
+  redirectTemplate(id: number) {
+    this.repoService.id = id;
     this.router.navigate(['./edit-email-template']);
   }
 
   public openDialog(action, obj) {
     obj.action = action;
+    if (action == "UploadEmail") {
+      obj.IsActive = true;
+    }
     const dialogRef = this.dialog.open(DialogBoxComponent, {
       width: '1000px',
       data: obj,
@@ -121,51 +127,52 @@ export class EmailTemplateComponent implements OnInit , AfterViewInit {
   }
   public openDialogSmall(action, obj) {
     obj.action = action;
-    const dialogRef = this.dialog.open( DialogBoxComponent, {
+    const dialogRef = this.dialog.open(DialogBoxComponent, {
       width: '500px',
       data: obj
     });
 
-    dialogRef.afterClosed().subscribe( (result) => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result && result.event === 'product not found') {
         // this.addRowData(result.data);
       } else if (result && result.event === 'Updatekey') {
         // this.updateRowData(result.data);
-      }  });
+      }
+    });
   }
- newemailtemplate(data: any) {
+  newemailtemplate(data: any) {
 
     const bodydata = {
-      productId : data.productId,
-      name : data.name,
+      productId: data.productId,
+      name: data.name,
       emailHtml: data.emailTemplate,
-      status : data.status,
-      comments : data.comments
+      status: data.status,
+      comments: data.comments
     };
-    console.log(data , bodydata);
-    this.repoService.create('emailTemplate' , bodydata).subscribe((res: any) => {
-    console.log( res);
-    this.popupmsg.message = res.message;
-    this.openDialogSmall('addemailtemplate', this.popupmsg);
-    this.getAllOwners();
+    console.log(data, bodydata);
+    this.repoService.create('emailTemplate', bodydata).subscribe((res: any) => {
+      console.log(res);
+      this.popupmsg.message = res.message;
+      this.openDialogSmall('addemailtemplate', this.popupmsg);
+      this.getAllOwners();
     }, error => {
       console.log(error.error.message);
-      this.popupmsg.message =  error.error.message;
+      this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });
-}
+  }
 
-deleteTemplate(id: number) {
-  this.repoService.delete1('emailTemplate/' + id).subscribe((res: any) => {
-    console.log( res);
-    this.popupmsg.message = res.message;
-    this.openDialogSmall('deleteemailtemplate', this.popupmsg);
-    this.getAllOwners();
-  }, error => {
-    console.log(error.error.message);
-    this.popupmsg.message =  error.error.message;
-    this.openDialogSmall('mailsenterror', this.popupmsg);
-  } );
-}
+  deleteTemplate(id: number) {
+    this.repoService.delete1('emailTemplate/' + id).subscribe((res: any) => {
+      console.log(res);
+      this.popupmsg.message = res.message;
+      this.openDialogSmall('deleteemailtemplate', this.popupmsg);
+      this.getAllOwners();
+    }, error => {
+      console.log(error.error.message);
+      this.popupmsg.message = error.error.message;
+      this.openDialogSmall('mailsenterror', this.popupmsg);
+    });
+  }
 
 }

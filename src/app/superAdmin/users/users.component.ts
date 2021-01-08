@@ -20,6 +20,8 @@ import { MatTable } from '@angular/material/table';
 import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
 import { MatSelectChange } from '@angular/material/select';
 
+import { Title ,Meta } from '@angular/platform-browser';
+
 export interface PeriodicElement {
   id: number;
   Action: string;
@@ -97,9 +99,10 @@ export class UsersComponent implements AfterViewInit , OnInit {
   @ViewChild(MatPaginator , {static: true}) paginator: MatPaginator;
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 
-  constructor(private repoService: RepositoryService , public dialog: MatDialog) { }
+  constructor(private repoService: RepositoryService , public dialog: MatDialog,private title:Title) { }
 
   ngOnInit() {
+    this.title.setTitle("Users");
     this.getAllvendors();
     this.selectedSelectBox = this.repoService.vendorId === '' ? +this.repoService.vendorId : 1;
     console.log(this.selectedSelectBox);
@@ -153,6 +156,7 @@ export class UsersComponent implements AfterViewInit , OnInit {
 
  public openDialog(action, obj) {
     obj.action = action;
+    obj.IsActive = true;
     const dialogRef = this.dialog.open( DialogBoxComponent, {
       width: '1000px',
       data: obj

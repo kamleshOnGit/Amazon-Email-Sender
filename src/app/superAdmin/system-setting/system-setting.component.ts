@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RepositoryService } from '../../shared/servercomunication.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-system-setting',
   templateUrl: './system-setting.component.html',
@@ -12,9 +13,10 @@ export class SystemSettingComponent implements OnInit {
   formdata: any = {
     id: '1'
   };
-  constructor(private repoService: RepositoryService,  public dialog: MatDialog ) { }
+  constructor(private repoService: RepositoryService,  public dialog: MatDialog,private title:Title ) { }
   popupmsg = {message: ''};
   ngOnInit() {
+    this.title.setTitle("SystemSetting");
     this.getconfig();
   }
   public getconfig = () => {

@@ -4,6 +4,7 @@ import { RepositoryService } from '../../shared/servercomunication.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
 import { MatSelectChange } from '@angular/material/select';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-send-manual-email',
@@ -12,7 +13,7 @@ import { MatSelectChange } from '@angular/material/select';
 })
 export class SendManualEmailComponent implements OnInit {
 
-  constructor(private repoService: RepositoryService , public dialog: MatDialog) { }
+  constructor(private repoService: RepositoryService , public dialog: MatDialog,private title:Title) { }
   manualsenddata = {
     email: 'test@test.com',
     quantity: '2',
@@ -21,7 +22,8 @@ export class SendManualEmailComponent implements OnInit {
   };
   public popupmsg = {message: ''};
   public productsku;
-  ngOnInit() {
+  ngOnInit() {    
+    this.title.setTitle("Manual Email");
     this.getAllProduct();
   }
   public getAllProduct = () => {

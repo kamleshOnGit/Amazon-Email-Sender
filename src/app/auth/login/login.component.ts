@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {RepositoryService} from '../..//shared/servercomunication.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../../shared/auth.services';
+import { Title ,Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   superadmin = 'superadmin';
   superpass = '12345';
   wrongpass = false;
-  constructor(private router: Router , private route: ActivatedRoute , public fb: FormBuilder,
+  constructor(private title :Title,private router: Router , private route: ActivatedRoute , public fb: FormBuilder,
               public authService: AuthService) {
                 this.signinForm = this.fb.group({
                   email: [''],
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
               }
 
   ngOnInit() {
+    this.title.setTitle("login");
   }
   // onSubmit($event: any) {
   //   $event.preventDefault();

@@ -48,12 +48,23 @@ export class DialogBoxComponent {
     console.log(this.localdata);
     this.action = this.localdata.action;
     this.selectcheck = this.localdata.IsActive;
+    this.check();
     // this.repoService.getData('products').subscribe((res: any) => {
     //   this.productsAll = res.data.data;
     // });
   }
+  check() {
+    if (this.localdata.IsActive == true) {
+
+      this.selectcheck = true;
+      this.selectcheckemail = true;
+      this.selecttext = 'Active';
+      this.localdata.status = this.selecttext;
+    }
+  }
+
   doAction() {
-    this.localdata['logo'] = this.logoImage
+    this.localdata['logo'] = this.logoImage;
     this.dialogRef.close({ event: this.action, data: this.localdata });
   }
 
@@ -282,11 +293,11 @@ export class DialogBoxComponent {
   }
 
   updateIsActiveEmail() {
-    if (this.selectcheckemail === true) {
-      this.selecttext = 'Active';
+    if (this.selectcheckemail !== true) {
+      this.selecttext = 'InActive';
       this.localdata.status = this.selecttext;
     } else {
-      this.selecttext = 'InActive';
+      this.selecttext = 'Active';
       this.localdata.status = this.selecttext;
     }
   }
