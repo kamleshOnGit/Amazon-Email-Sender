@@ -25,7 +25,7 @@ export class ForgetpasswordComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.title.setTitle("Forget Password");
+    this.title.setTitle("Change Password");
   }
   createPassword($event) {
     

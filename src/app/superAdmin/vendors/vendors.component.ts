@@ -23,13 +23,11 @@ import { Title } from '@angular/platform-browser';
 export interface PeriodicElement {
   id: number;
   Vendorname: string;
-  Emailaddress: string;
   IsActive: string;
-  Phonenumber: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { id: 1, Vendorname: '', Emailaddress: '', IsActive: '', Phonenumber: '' },
+  { id: 1, Vendorname: '',  IsActive: '' },
 ];
 
 @Component({
@@ -38,8 +36,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./vendors.component.scss']
 })
 export class VendorsComponent implements OnInit, AfterViewInit {
-
-  displayedColumns: string[] = ['Vendorname', 'Emailaddress', 'IsActive', 'Phonenumber', 'Action'];
+  bodydata = {};
+  displayedColumns: string[] = ['Vendorname', 'IsActive', 'Action'];
   popupmsg = { message: '' };
   dataSourceNew = ELEMENT_DATA;
   dataSource = new MatTableDataSource(this.dataSourceNew);
@@ -130,9 +128,7 @@ export class VendorsComponent implements OnInit, AfterViewInit {
     this.dataSourceNew.push({
       id: d.getTime(),
       Vendorname: rowobj.Vendorname,
-      Emailaddress: rowobj.Emailaddress,
       IsActive: 'Yes',
-      Phonenumber: '987654321'
     });
     this.dataSource = new MatTableDataSource(this.dataSourceNew);
     // this.table.renderRows();
@@ -180,14 +176,20 @@ export class VendorsComponent implements OnInit, AfterViewInit {
   public addNewVendor(data) {
     console.log(data);
     this.getAllOwners();
-    const bodydata = {
+    if (data.logo) {
+      this.bodydata = {
+        name: data.name,
+        logo: data.logo,
+        status: data.status,
+      };
+    }
+    this.bodydata = {
       name: data.name,
-      logo: data.logo,
       status: data.status,
     };
-    this.repoService.create('addTenant', bodydata).subscribe((res: any) => {
+    this.repoService.create('addTenant', this.bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
-      this.openDialogSmall('addVendor', this.popupmsg);
+      this.openDialogSmall('AddVendor', this.popupmsg);
       this.getAllOwners();
       console.log(res.data);
     }, error => {

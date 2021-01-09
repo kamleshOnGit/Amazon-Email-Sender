@@ -24,6 +24,7 @@ export interface UsersData {
   styleUrls: ['./dialog-box.component.scss']
 })
 export class DialogBoxComponent {
+  roles = [{id:3,name:"Employee"},{id:4,name:"Support"}];
   products;
   orders;
   keys;
@@ -77,7 +78,7 @@ export class DialogBoxComponent {
 
   closeDialog() {
     this.dialogRef.close({ event: 'Cancel' });
-    window.location.reload();
+    // window.location.reload();
   }
   updateIsActive() {
     if (this.selectcheck === true) {

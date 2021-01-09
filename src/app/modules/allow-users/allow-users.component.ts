@@ -89,7 +89,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class AllowUsersComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['Username', 'Emailaddress', 'IsActive', 'Role', 'Action'];
+  displayedColumns: string[] = ['Username', 'Emailaddress', 'IsActive', 'Role'];
   selectedSelectBox = 1;
   vendors = [
     'Vendor1', 'Vendor2', 'Vendor3', 'Vendor4'
@@ -143,6 +143,7 @@ export class AllowUsersComponent implements OnInit {
     if (action == "AddUser") {
       obj.IsActive = true;
     }
+    
     const dialogRef = this.dialog.open(DialogBoxComponent, {
       width: '1000px',
       data: obj

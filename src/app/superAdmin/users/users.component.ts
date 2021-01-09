@@ -26,10 +26,8 @@ export interface PeriodicElement {
   id: number;
   Action: string;
   Vendorname: string;
-  Username: string;
   Emailaddress: string;
   IsActive: string;
-  Phonenumber: string;
   Role: string;
 }
 
@@ -38,46 +36,36 @@ const ELEMENT_DATA: PeriodicElement[] = [
     id: 1,
     Action: 'Edit',
     Vendorname: 'Vendor1',
-    Username: 'ABC',
     Emailaddress : 'abc@test.com',
     IsActive: 'Yes' ,
-    Phonenumber: '987654321',
     Role: 'Admin'},
     {
       id: 1,
       Action: 'Edit',
       Vendorname: 'Vendor2',
-      Username: 'Vendor2',
       Emailaddress : 'abc@test.com',
       IsActive: 'Yes' ,
-      Phonenumber: '987654321',
       Role: 'Admin'},
       {
         id: 1,
         Action: 'Edit',
         Vendorname: 'Vendor3',
-        Username: 'Vendor3',
         Emailaddress : 'abc@test.com',
         IsActive: 'Yes' ,
-        Phonenumber: '987654321',
         Role: 'Admin'},
         {
           id: 1,
           Action: 'Edit',
           Vendorname: 'Vendor4',
-          Username: 'Vendor4',
           Emailaddress : 'abc@test.com',
           IsActive: 'Yes' ,
-          Phonenumber: '987654321',
           Role: 'Admin'},
           {
             id: 1,
             Action: 'Edit',
             Vendorname: 'Vendor5',
-            Username: 'Vendor5',
             Emailaddress : 'abc@test.com',
             IsActive: 'Yes' ,
-            Phonenumber: '987654321',
             Role: 'Admin'},
   ];
 
@@ -88,7 +76,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class UsersComponent implements AfterViewInit , OnInit {
 
-  displayedColumns: string[] = ['Vendorname', 'Username', 'Emailaddress', 'IsActive', 'Phonenumber' , 'Role' , 'Action'];
+  displayedColumns: string[] = ['Vendorname', 'Emailaddress', 'IsActive', 'Role' , 'Action'];
   selectedSelectBox = 1;
   vendors = [
     'Vendor1' , 'Vendor2' , 'Vendor3' , 'Vendor4'
@@ -104,7 +92,7 @@ export class UsersComponent implements AfterViewInit , OnInit {
   ngOnInit() {
     this.title.setTitle("Users");
     this.getAllvendors();
-    this.selectedSelectBox = this.repoService.vendorId === '' ? +this.repoService.vendorId : 1;
+    this.selectedSelectBox =  this.repoService.vendorId !== '' ? +this.repoService.vendorId : 1;
     console.log(this.selectedSelectBox);
     this.getAllOwners();
   }
@@ -195,10 +183,8 @@ export class UsersComponent implements AfterViewInit , OnInit {
       id: d.getTime(),
       Action: 'Edit',
       Vendorname: rowobj.Vendorname,
-      Username: rowobj.Username,
       Emailaddress: rowobj.Emailaddress,
       IsActive: rowobj.IsActive,
-      Phonenumber: rowobj.Phonenumber,
       Role: rowobj.Role
     });
     this.dataSource = new MatTableDataSource(this.dataSource);
