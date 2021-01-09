@@ -65,7 +65,6 @@ export class DialogBoxComponent {
   }
 
   doAction() {
-
     if (this.logoImage !== null && this.logoImage !== undefined) {
       this.localdata['logo'] = this.logoImage
     }
@@ -337,7 +336,10 @@ export class DialogBoxComponent {
       // this.clientForm.patchValue({
       //   profilePicture: res.filename
       // });
-    }, (err) => console.log(err)
+    }, (err) => {
+      this.logoImage = 'logo';
+      console.log(err)
+    }
     );
   }
 }

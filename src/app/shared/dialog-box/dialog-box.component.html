@@ -509,7 +509,7 @@
           id="txtFileUpload" (change)="uploadListener($event)" accept=".csv" type="file">
         <!-- <button class="btn btn-primary" (click)=csvJSON(products.value)> Upload </button> -->
       </div>
-      <a href="../../assets/products.cvs" class="btn btn-warning col-4 d-inline-block mb-2 text-white  ml-2"> Download
+      <a href="/src/assets/products.csv" class="btn btn-warning col-4 d-inline-block mb-2 text-white  ml-2" download> Download
         Template</a>
     </div>
   </div>
@@ -536,7 +536,7 @@
         <input placeholder="upload file" class="form-control mb-2 h-auto" name="uploadfile3" #csvReader
           id="txtFileUpload" (change)="uploadListenerKeys($event)" accept=".csv" type="file">
       </div>
-      <a href="../../assets/unqiuekeys.csv" class="btn btn-warning col-5 d-inline-block mb-2 text-white ml-2"> Download
+      <a href="/src/assets/unqiuekeys.csv" class="btn btn-warning col-5 d-inline-block mb-2 text-white ml-2" download> Download
         Template</a>
     </div>
   </div>
@@ -563,7 +563,7 @@
         <input placeholder="upload file" class="form-control mb-2 h-auto" name="uploadfile4" #csvReader
           id="txtFileUpload" (change)="uploadListenerOrders($event)" accept=".csv" type="file">
       </div>
-      <a href="../../assets/orders.csv" class="btn btn-warning col-5 d-inline-block mb-2 text-white  ml-2"> Download
+      <a href="/src/assets/orders.csv" class="btn btn-warning col-5 d-inline-block mb-2 text-white  ml-2" download> Download
         Template</a>
     </div>
   </div>
@@ -585,7 +585,7 @@
   <div mat-dialog-content class="model-body ">
 
     <div *ngIf="action == 'UploadEmail';">
-      <label class="mt-4"> ProductId</label>
+      <label class="mt-4"> Product </label>
       <mat-form-field appearance="none">
         <input placeholder="productId" name="productId2" #productId2="ngModel"
           [ngClass]="{ 'is-invalid': o.submitted && productId2.invalid }" required matInput
@@ -669,7 +669,7 @@
 
 <div
   *ngIf="action === 'revokeorder' || action === 'updatestatus' || action === 'productdeleted'  || action === 'deleteemailtemplate' || action === 'deleteemailtemplate' || action === 'addemailtemplate'
-    || action === 'mailSent' || action === 'mailSenterror' || action === 'Loginback' || action === 'adduser' || action === 'addVendor' || action === 'addsetting' || action === 'updatesetting' || action === 'loaded'">
+    || action === 'mailSent' || action === 'mailSenterror' || action === 'Loginback' || action === 'adduser' || action === 'addVendor' || action === 'addsetting' || action === 'updatesetting' || action === 'loaded' || action === 'mailsent' || action === 'mailsenterror'|| action === 'updatestatus'">
   <!-- <div class="model-header">
       <div (click)="closeDialog()"  class="close"> <mat-icon> close</mat-icon></div>
     </div> -->

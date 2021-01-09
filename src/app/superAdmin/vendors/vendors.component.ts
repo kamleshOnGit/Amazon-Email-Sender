@@ -57,10 +57,10 @@ export class VendorsComponent implements OnInit, AfterViewInit {
   }
 
   constructor(private repoService: RepositoryService,
-    public dialog: MatDialog, private router: Router, private route: ActivatedRoute,private title:Title) { }
+    public dialog: MatDialog, private router: Router, private route: ActivatedRoute, private title: Title) { }
 
   ngOnInit() {
-    
+
     this.title.setTitle("Vendors");
     this.getAllOwners();
 
@@ -84,7 +84,7 @@ export class VendorsComponent implements OnInit, AfterViewInit {
   public redirectToDelete = (id: string) => {
   }
 
-  public openDialog(action, obj, setting) {
+  public openDialog(action, obj, setting = null) {
     obj.action = action;
     obj.setting = setting;
     obj.IsActive = true;
@@ -220,10 +220,10 @@ export class VendorsComponent implements OnInit, AfterViewInit {
     console.log(data);
     const bodydata = {
       tenantId: data.tenantId,
-      sellerId: data.sellerId,
-      marketplaceId: data.marketplaceId,
-      refreshToken: data.refreshToken,
-      defaultValues: data.defaultValues
+      sellerId: data.setting.sellerId,
+      marketplaceId: data.setting.marketplaceId,
+      refreshToken: data.setting.refreshToken,
+      defaultValues: data.setting.defaultValues
     };
     this.repoService.update('updateSetting', bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
