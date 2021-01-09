@@ -1,46 +1,38 @@
 <div class="mt-5">
 
-    <h3 class="bm-1"> Add / Edit Template </h3>
-    <hr>
-    <div class="form-group d-flex">
+  <h3 class="bm-1"> Add / Edit Template </h3>
+  <hr>
+  <div class="form-group d-flex">
     <label class="w-25">Template Name</label>
-    <mat-form-field class="w-50"  appearance="none">
-      <input placeholder="Template name" [(ngModel)]="name"  matInput >
+    <mat-form-field class="w-50" appearance="none">
+      <input placeholder="Template name" [(ngModel)]="name" matInput>
     </mat-form-field>
-    </div>
-    <div class="form-group  d-flex">
-      <label class="w-25"> Product Id</label>
-      <mat-form-field  class="w-50"  appearance="none">
-      <input placeholder="product Id"  [(ngModel)]="productid" matInput >
-      </mat-form-field>
-     </div> 
-    <div class="form-group  d-flex">
-      <label class="w-25"> Category</label>
-      <mat-form-field  class="w-50"  appearance="none">
-      <input placeholder="Template category"  matInput >
-      </mat-form-field>
-     </div> 
-     <div class="form-group">
-     <mat-checkbox  class="d-inline mb-4" [(ngModel)]="selectcheck"  (ngModelChange)="updateIsActive()" ></mat-checkbox> {{selecttext}}
+  </div>
+  <div class="form-group  d-flex">
+    <label class="w-25"> Product Id</label>
+    <mat-form-field class="w-50" appearance="none">
+      <input placeholder="product Id" [(ngModel)]="productid" matInput>
+    </mat-form-field>
+  </div>
+  <div class="form-group  d-flex">
+    <label class="w-25"> Category</label>
+    <mat-form-field class="w-50" appearance="none">
+      <input placeholder="Template category" matInput>
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-checkbox class="d-inline mb-4" [(ngModel)]="selectcheck" (ngModelChange)="updateIsActive()"></mat-checkbox>
+    {{selecttext}}
 
-    </div>
-  <ckeditor
-    [(ngModel)]="model.content"
-    [config]="config"
-    (change)="onChange($event)"
-    (editorChange)="onEditorChange($event)" 
-    (ready)="onReady($event)"
-    (focus)="onFocus($event)"
-    (blur)="onBlur($event)"
-    (contentDom)="onContentDom($event)"
-    (fileUploadRequest)="onFileUploadRequest($event)"
-    (fileUploadResponse)="onFileUploadResponse($event)"
-    (paste)="onPaste($event)"
-    (drop)="onDrop($event)"
+  </div>
+  <ckeditor [(ngModel)]="model.content" [config]="config" (change)="onChange($event)"
+    (editorChange)="onEditorChange($event)" (ready)="onReady($event)" (focus)="onFocus($event)" (blur)="onBlur($event)"
+    (contentDom)="onContentDom($event)" (fileUploadRequest)="onFileUploadRequest($event)"
+    (fileUploadResponse)="onFileUploadResponse($event)" (paste)="onPaste($event)" (drop)="onDrop($event)"
     debounce="500">
   </ckeditor>
-  <div class="d-flex justify-content-end mt-5" > 
-    <button class="d-flex  btn btn-custom" mat-button mat-flat-button >Close</button>
-    <button class="d-flex  btn btn-custom ml-2" (click)="updateEmailTemplate()" mat-button >Save Changes</button>
-    </div>
+  <div class="d-flex justify-content-end mt-5">
+    <button class="d-flex  btn btn-custom" mat-button mat-flat-button>Close</button>
+    <button class="d-flex  btn btn-custom ml-2" (click)="updateEmailTemplate()" mat-button>Save Changes</button>
+  </div>
 </div>

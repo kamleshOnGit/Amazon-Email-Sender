@@ -7,7 +7,7 @@ import { RepositoryService } from '../../shared/servercomunication.service';
 import { MatSelectChange } from '@angular/material/select';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export interface UsersData {
   itemName: string;
   ProductId: string;
@@ -25,6 +25,7 @@ export interface UsersData {
 })
 export class DialogBoxComponent {
   roles = [{id:3,name:"Employee"},{id:4,name:"Support"}];
+  public Editor = ClassicEditor;
   products;
   orders;
   keys;
@@ -51,9 +52,12 @@ export class DialogBoxComponent {
     this.action = this.localdata.action;
     this.selectcheck = this.localdata.IsActive;
     this.check();
-    // this.repoService.getData('products').subscribe((res: any) => {
-    //   this.productsAll = res.data.data;
-    // });
+    this.repoService.getData('products').subscribe((res: any) => {
+      this.productsAll = res.data.data;
+    });
+  }
+  public selectedProductValue(event: MatSelectChange) {
+    this.localdata.productId = event.value;
   }
   check() {
     if (this.localdata.IsActive == true) {
@@ -342,5 +346,37 @@ export class DialogBoxComponent {
       console.log(err)
     }
     );
+  }
+  onChange($event) {
+    
+  }
+
+  onEditorChange($event) {
+
+  }
+  onReady($event) {
+  }
+  onFocus($event) {
+
+  }
+  onBlur($event) {
+
+  }
+  onContentDom($event) {
+
+  }
+
+  onFileUploadRequest($event) {
+
+  }
+
+  onFileUploadResponse($event) {
+
+  }
+  onPaste($event) {
+
+  }
+  onDrop($event) {
+
   }
 }

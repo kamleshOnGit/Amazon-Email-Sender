@@ -38,6 +38,8 @@ import { VieworderComponent } from './employee/vieworder/vieworder.component';
 import { ViewproductsComponent } from './employee/viewproducts/viewproducts.component';
 import { ViewuniquesComponent } from './employee/viewuniques/viewuniques.component';
 import { CustomerInfoComponent } from './support/customer-info/customer-info.component';
+// import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +62,8 @@ import { CustomerInfoComponent } from './support/customer-info/customer-info.com
     VieworderComponent,
     ViewproductsComponent,
     ViewuniquesComponent,
-    CustomerInfoComponent
+    CustomerInfoComponent,
+    DialogBoxComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +80,7 @@ import { CustomerInfoComponent } from './support/customer-info/customer-info.com
     MatFormFieldModule,
     MatButtonModule,
     CKEditorModule,
-    MaterialTimePickerModule
+    MaterialTimePickerModule,
   ],
   entryComponents: [DialogBoxComponent, AppComponent],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } } ,
