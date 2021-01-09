@@ -584,6 +584,7 @@
       <mat-icon> close</mat-icon>
     </div>
     <h2 mat-dialog-title *ngIf="action == 'Updatekey';">Update User</h2>
+    <h2 mat-dialog-title>Add Email Template</h2>
   </div>
   <div mat-dialog-content class="model-body ">
 
@@ -592,9 +593,8 @@
       <mat-form-field class="d-block w-50" appearance="none">
         <mat-label>Product</mat-label>
         <mat-select (selectionChange)="selectedProductValue($event)" name="productId2" #productId2="ngModel"
-          [ngClass]="{ 'is-invalid': o.submitted && productId2.invalid }" [(ngModel)]="localdata.productId"
-          required>
-          <mat-option *ngFor="let prod of productsAll" [value]="prod.id">{{prod.sellerSku}} </mat-option>
+          [ngClass]="{ 'is-invalid': o.submitted && productId2.invalid }" [(ngModel)]="localdata.productId" required>
+          <mat-option *ngFor="let prod of productsAll" [value]="prod.id">{{prod.name}} </mat-option>
         </mat-select>
       </mat-form-field>
       <!-- <mat-form-field appearance="none">
@@ -608,18 +608,28 @@
         <input placeholder="name" name="name5" #name5="ngModel"
           [ngClass]="{ 'is-invalid': o.submitted && name5.invalid }" required matInput [(ngModel)]="localdata.name">
       </mat-form-field>
-      
-      <label class="mt-4"> EmailHtml </label>
-      <div class="form-group">
+      <div class="mt-5">
+        <ckeditor [(ngModel)]= "localdata.emailTemplate" name="emailTemplate" #emailTemplate="ngModel" [config]="config" (change)="onChange($event)"
+          (editorChange)="onEditorChange($event)" (ready)="onReady($event)" (focus)="onFocus($event)"
+          (blur)="onBlur($event)" (contentDom)="onContentDom($event)" (fileUploadRequest)="onFileUploadRequest($event)"
+          (fileUploadResponse)="onFileUploadResponse($event)" (paste)="onPaste($event)" (drop)="onDrop($event)"
+          debounce="500">
+        </ckeditor>
+      </div>
+      <!-- <div class="form-group">
+        <label class="mt-4"> EmailHtml </label>
         <input placeholder="upload file" name="uploadfile5" #uploadfile5="ngModel" [(ngModel)]="localdata.file"
           [ngClass]="{ 'is-invalid': o.submitted && uploadfile5.invalid }" required #csvReader id="txtFileUpload"
           (change)="uploadListenerHtml($event)" accept=".html" type="file">
-      </div>
+      </div> -->
       <div class="mt-5 d-block">
         <mat-checkbox class="d-inline mb-4" name="Active5" #Active5="ngModel"
           [ngClass]="{ 'is-invalid': o.submitted && Active5.invalid }" required [(ngModel)]="selectcheckemail"
           (ngModelChange)="updateIsActiveEmail()"></mat-checkbox> {{selecttext}}
       </div>
+
+
+
       <label class="mt-4"> Comments</label>
       <mat-form-field appearance="none">
         <input placeholder="Comments" matInput name="Comments" #Comments="ngModel"

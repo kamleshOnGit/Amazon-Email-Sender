@@ -7,7 +7,7 @@ import { RepositoryService } from '../../shared/servercomunication.service';
 import { MatSelectChange } from '@angular/material/select';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export interface UsersData {
   itemName: string;
   ProductId: string;
@@ -24,6 +24,7 @@ export interface UsersData {
   styleUrls: ['./dialog-box.component.scss']
 })
 export class DialogBoxComponent {
+  public Editor = ClassicEditor;
   products;
   orders;
   keys;
@@ -344,5 +345,37 @@ export class DialogBoxComponent {
       console.log(err)
     }
     );
+  }
+  onChange($event) {
+    
+  }
+
+  onEditorChange($event) {
+
+  }
+  onReady($event) {
+  }
+  onFocus($event) {
+
+  }
+  onBlur($event) {
+
+  }
+  onContentDom($event) {
+
+  }
+
+  onFileUploadRequest($event) {
+
+  }
+
+  onFileUploadResponse($event) {
+
+  }
+  onPaste($event) {
+
+  }
+  onDrop($event) {
+
   }
 }
