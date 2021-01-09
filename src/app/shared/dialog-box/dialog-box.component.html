@@ -16,7 +16,7 @@
       <div class="row form-group py-3 align-items-center">
         <div class="col-md-6 px-2">
           <label>Logo</label>
-          <input  placeholder="Upload File" class="form-control mb-2 h-auto" id="txtFileUpload"
+          <input placeholder="Upload File" class="form-control mb-2 h-auto" id="txtFileUpload"
             (change)="selectLogo($event)" type="file">
         </div>
         <span *ngIf="logoImage">Uploaded</span>
@@ -509,7 +509,8 @@
           id="txtFileUpload" (change)="uploadListener($event)" accept=".csv" type="file">
         <!-- <button class="btn btn-primary" (click)=csvJSON(products.value)> Upload </button> -->
       </div>
-      <a href="/src/assets/products.csv" class="btn btn-warning col-4 d-inline-block mb-2 text-white  ml-2" download> Download
+      <a href="/src/assets/products.csv" class="btn btn-warning col-4 d-inline-block mb-2 text-white  ml-2" download>
+        Download
         Template</a>
     </div>
   </div>
@@ -536,7 +537,8 @@
         <input placeholder="upload file" class="form-control mb-2 h-auto" name="uploadfile3" #csvReader
           id="txtFileUpload" (change)="uploadListenerKeys($event)" accept=".csv" type="file">
       </div>
-      <a href="/src/assets/unqiuekeys.csv" class="btn btn-warning col-5 d-inline-block mb-2 text-white ml-2" download> Download
+      <a href="/src/assets/unqiuekeys.csv" class="btn btn-warning col-5 d-inline-block mb-2 text-white ml-2" download>
+        Download
         Template</a>
     </div>
   </div>
@@ -563,7 +565,8 @@
         <input placeholder="upload file" class="form-control mb-2 h-auto" name="uploadfile4" #csvReader
           id="txtFileUpload" (change)="uploadListenerOrders($event)" accept=".csv" type="file">
       </div>
-      <a href="/src/assets/orders.csv" class="btn btn-warning col-5 d-inline-block mb-2 text-white  ml-2" download> Download
+      <a href="/src/assets/orders.csv" class="btn btn-warning col-5 d-inline-block mb-2 text-white  ml-2" download>
+        Download
         Template</a>
     </div>
   </div>
@@ -585,18 +588,27 @@
   <div mat-dialog-content class="model-body ">
 
     <div *ngIf="action == 'UploadEmail';">
-      <label class="mt-4"> Product </label>
-      <mat-form-field appearance="none">
+      <!-- <label class="mt-4"> Product </label> -->
+      <mat-form-field class="d-block w-50" appearance="none">
+        <mat-label>Product</mat-label>
+        <mat-select (selectionChange)="selectedProductValue($event)" name="productId2" #productId2="ngModel"
+          [ngClass]="{ 'is-invalid': o.submitted && productId2.invalid }" [(ngModel)]="localdata.productId"
+          required>
+          <mat-option *ngFor="let prod of productsAll" [value]="prod.id">{{prod.sellerSku}} </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- <mat-form-field appearance="none">
         <input placeholder="productId" name="productId2" #productId2="ngModel"
           [ngClass]="{ 'is-invalid': o.submitted && productId2.invalid }" required matInput
           [(ngModel)]="localdata.productId">
-      </mat-form-field>
+      </mat-form-field> -->
 
       <label class="mt-4"> Name </label>
       <mat-form-field appearance="none">
         <input placeholder="name" name="name5" #name5="ngModel"
           [ngClass]="{ 'is-invalid': o.submitted && name5.invalid }" required matInput [(ngModel)]="localdata.name">
       </mat-form-field>
+      
       <label class="mt-4"> EmailHtml </label>
       <div class="form-group">
         <input placeholder="upload file" name="uploadfile5" #uploadfile5="ngModel" [(ngModel)]="localdata.file"

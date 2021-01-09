@@ -50,9 +50,12 @@ export class DialogBoxComponent {
     this.action = this.localdata.action;
     this.selectcheck = this.localdata.IsActive;
     this.check();
-    // this.repoService.getData('products').subscribe((res: any) => {
-    //   this.productsAll = res.data.data;
-    // });
+    this.repoService.getData('products').subscribe((res: any) => {
+      this.productsAll = res.data.data;
+    });
+  }
+  public selectedProductValue(event: MatSelectChange) {
+    this.localdata.productId = event.value;
   }
   check() {
     if (this.localdata.IsActive == true) {
