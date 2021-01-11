@@ -228,8 +228,6 @@ export class AllowUsersComponent implements OnInit {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
   public addNewUser(data) {
-    console.log(data);
-    this.getAllOwners();
     const bodydata = {
       roleId: data.roleId,
       firstName: data.firstname,
@@ -241,7 +239,8 @@ export class AllowUsersComponent implements OnInit {
     this.repoService.create('user', bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('adduser', this.popupmsg);
-      console.log(res.data);
+      console.log(res.data);      
+    this.getAllOwners();
     }, error => {
       console.log(error.error.message);
       this.popupmsg.message = error.error.message;

@@ -52,9 +52,11 @@ export class DialogBoxComponent {
     this.action = this.localdata.action;
     this.selectcheck = this.localdata.IsActive;
     this.check();
-    this.repoService.getData('products').subscribe((res: any) => {
-      this.productsAll = res.data.data;
-    });
+    if( this.localdata.action == "UploadEmail" || this.localdata.action == "Upload Multiple Keys"){
+      this.repoService.getData('products').subscribe((res: any) => {
+        this.productsAll = res.data.data;
+      });
+    }
   }
   public selectedProductValue(event: MatSelectChange) {
     this.localdata.productId = event.value;

@@ -225,12 +225,11 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
 
   }
   public delepredouct(element: any) {
-    console.log(element.id);
     this.repoService.delete2('productkey/delete', { id: element.id }).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
-      console.log(res.data);
-      this.getAllOwners();
+      this.getAllkeys();
+      
     }, error => {
       console.log(error.error.message);
       this.popupmsg.message = error.error.message;
