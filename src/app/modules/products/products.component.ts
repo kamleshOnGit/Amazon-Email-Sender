@@ -153,6 +153,7 @@ export class ProductsComponent implements AfterViewInit, OnInit {
   }
 
   public addRowData(data: any) {
+    
     console.log(data);
     const bodydata = {
       itemName: data.itemName,
@@ -163,7 +164,15 @@ export class ProductsComponent implements AfterViewInit, OnInit {
       ProductId: data.marketPlaceProductId,
       price: data.price
     };
-    this.repoService.create('product/product', bodydata).subscribe((res: any) => console.log(res));
+    this.repoService.create('product/product', bodydata).subscribe((res: any) => {
+      this.popupmsg.message = res.message;
+      this.openDialogSmall('AddProduct', this.popupmsg);
+      this.getAllOwners();
+
+    }, error => {
+      this.popupmsg.message = error.error.message;
+      this.openDialogSmall('AddProduct', this.popupmsg);
+    });
     // this.table.renderRows();
     this.paginator._changePageSize(this.paginator.pageSize);
   }

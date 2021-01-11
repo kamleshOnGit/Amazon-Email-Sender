@@ -11,6 +11,7 @@ import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 export class AuthInterceptor implements HttpInterceptor {
     constructor(private authService: AuthService , private router: Router , private route: ActivatedRoute , public dialog: MatDialog, ) { }
 
+    popupmsg = { message: '' };
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const authToken = this.authService.getToken();
         req = req.clone({
@@ -21,6 +22,7 @@ export class AuthInterceptor implements HttpInterceptor {
         return next.handle(req).pipe( retry(0) ,
             catchError(
                 (err, caught) => {
+                  
                   if (err.status === 401) {
                     this.handleAuthError(err);
                     return of(err);
@@ -32,6 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
   public openDialogSmall(action, obj) {
+    
     obj.action = action;
     const dialogRef = this.dialog.open( DialogBoxComponent, {
       width: '500px',
@@ -46,10 +49,12 @@ export class AuthInterceptor implements HttpInterceptor {
       }  });
   }
     private handleAuthError(err: any) {
-        this.openDialogSmall('Loginback', {message: err.error.msg});
+      this.popupmsg.message=err.error.message
+        this.openDialogSmall('Loginback', this.popupmsg);
         this.authService.doLogout();
         this.router.navigate(['']);
         console.log(err);
-        window.location.reload();
+      
+        // window.location.reload();
       }
 }

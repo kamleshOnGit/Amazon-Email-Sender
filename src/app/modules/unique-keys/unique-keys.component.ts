@@ -172,7 +172,15 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
       priority: data.priority,
       sku: data.sku,
     };
-    this.repoService.create('product/productkey', bodydata).subscribe((res: any) => console.log(res));
+    
+    this.repoService.create('product/productkey', bodydata).subscribe((res: any) => {  
+      this.popupmsg.message = res.message;
+      // console.log(res)
+      this.openDialogSmall('AddProductkey',this.popupmsg);
+    }, error => {
+      this.popupmsg.message = error.error.message;
+      this.openDialogSmall('AddProductkey', this.popupmsg);
+    });
     // this.table.renderRows();
     this.paginator._changePageSize(this.paginator.pageSize);
   }
