@@ -24,7 +24,7 @@ export interface UsersData {
   styleUrls: ['./dialog-box.component.scss']
 })
 export class DialogBoxComponent {
-  roles = [{id:3,name:"Employee"},{id:4,name:"Support"}];
+  roles = [{ id: 3, name: "Employee" }, { id: 4, name: "Support" }];
   public Editor = ClassicEditor;
   products;
   orders;
@@ -52,7 +52,7 @@ export class DialogBoxComponent {
     this.action = this.localdata.action;
     this.selectcheck = this.localdata.IsActive;
     this.check();
-    if( this.localdata.action == "UploadEmail" || this.localdata.action == "Upload Multiple Keys"){
+    if (this.localdata.action == "UploadEmail" || this.localdata.action == "Upload Multiple Keys") {
       this.repoService.getData('products').subscribe((res: any) => {
         this.productsAll = res.data.data;
       });
@@ -60,6 +60,9 @@ export class DialogBoxComponent {
   }
   public selectedProductValue(event: MatSelectChange) {
     this.localdata.productId = event.value;
+  }
+  public selectedEmailValue(event: MatSelectChange) {
+    this.localdata.emailId = event.value;
   }
   check() {
     if (this.localdata.IsActive == true) {
@@ -350,7 +353,7 @@ export class DialogBoxComponent {
     );
   }
   onChange($event) {
-    
+
   }
 
   onEditorChange($event) {

@@ -21,23 +21,6 @@ import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component
 import { ProductKeys } from '../../shared/uniqueKeys.model';
 import { MatSelectChange } from '@angular/material/select';
 import { Title } from '@angular/platform-browser';
-export interface PeriodicElement {
-  id: number;
-  Action: string;
-  SKU: string;
-  BatchCode: string;
-  priority: string;
-  Status: string;
-}
-
-// const ELEMENT_DATA: PeriodicElement[] = [
-//   {id: 1, Action: 'Add New', SKU: 'MacAfee', BatchCode: 'Nov11Batch', CodeAvailable: 5 , CodeUsed: 12 },
-//   {id: 2, Action: 'Add New', SKU: 'Nortan', BatchCode: 'Nov11Batch', CodeAvailable: 5 , CodeUsed: 12 },
-//   {id: 3, Action: 'Add New', SKU: 'AVG', BatchCode: 'Nov11Batch', CodeAvailable: 5 , CodeUsed: 12 },
-//   {id: 4, Action: 'Add New', SKU: 'MacAfee', BatchCode: 'Nov11Batch', CodeAvailable: 5 , CodeUsed: 12 },
-//   {id: 5, Action: 'Add New', SKU: 'Nortan', BatchCode: 'Nov11Batch', CodeAvailable: 5 , CodeUsed: 12 },
-//   {id: 6, Action: 'Add New', SKU: 'AVG', BatchCode: 'Nov11Batch', CodeAvailable: 5 , CodeUsed: 12 },
-// ];
 
 @Component({
   selector: 'app-unique-keys',
@@ -172,11 +155,11 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
       priority: data.priority,
       sku: data.sku,
     };
-    
-    this.repoService.create('product/productkey', bodydata).subscribe((res: any) => {  
+
+    this.repoService.create('product/productkey', bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       // console.log(res)
-      this.openDialogSmall('AddProductkey',this.popupmsg);
+      this.openDialogSmall('AddProductkey', this.popupmsg);
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('AddProductkey', this.popupmsg);
@@ -237,7 +220,7 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
       this.getAllkeys();
-      
+
     }, error => {
       console.log(error.error.message);
       this.popupmsg.message = error.error.message;

@@ -21,56 +21,15 @@ import { MatTable } from '@angular/material/table';
 import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
 import { Title } from '@angular/platform-browser';
 
-export interface PeriodicElement {
-
-  id: number;
-  tenantId: number;
-  name: string;
-  sellerSku: string;
-  quantity: number;
-  category: string;
-  status: string;
-  marketPlaceProductId: string;
-  createdAt: string;
-  updatedAt: string;
-  productKeys: [
-    {
-      id: number,
-      productId: number,
-      productkey: string,
-      tenantId: number,
-      batch: string,
-      status: string,
-      priority: string,
-      createdAt: string,
-      updatedAt: string,
-    }
-  ];
-
-}
-
-// const ELEMENT_DATA: PeriodicElement[] = [
-//   {id: 1, Brand: 'ABC' , Action: 'Edit', name: 'MacAfee', category: 'Anti Virus',   Status: 'Active' , UniqueKey: 'View Details(120)' },
-//   {id: 2, Brand: 'ABC' , Action: 'Edit', name: 'AvG', category: 'Anti Virus', Status: 'Active' , UniqueKey: 'View Details(200)' },
-//   {id: 3, Brand: 'ABC' , Action: 'Edit', name: 'Norton', category: 'Anti Virus', Status: 'Active' , UniqueKey: 'View Details(137)' },
-//   {id: 4, Brand: 'ABC' , Action: 'Edit', name: 'MacAfee', category: 'Anti Virus', Status: 'Active' , UniqueKey: 'View Details(153)' },
-//   {id: 5, Brand: 'ABC' , Action: 'Edit', name: 'AvG', category: 'Anti Virus', Status: 'Active' , UniqueKey: 'View Details(175)' },
-//   {id: 6, Brand: 'ABC' , Action: 'Edit', name: 'Norton', category: 'Anti Virus', Status: 'Active' , UniqueKey: 'View Details(176)' },
-//   {id: 7, Brand: 'ABC' , Action: 'Edit', name: 'MacAfee', category: 'Anti Virus', Status: 'Active' , UniqueKey: 'View Details(20)' },
-//   {id: 8, Brand: 'ABC' , Action: 'Edit', name: 'AvG', category: 'Anti Virus', Status: 'Active', UniqueKey: 'View Details(39)' },
-//   {id: 9, Brand: 'ABC' , Action: 'Edit', name: 'Norton', category: 'Anti Virus', Status: 'Active', UniqueKey: 'View Details(23)' },
-//   {id: 10, Brand: 'ABC' , Action: 'Edit', name: 'MacAfee', category: 'Anti Virus', Status: 'Active' , UniqueKey: 'View Details(35)' },
-// ];
-
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
 })
-export class ProductsComponent implements AfterViewInit, OnInit {
+export class ProductsComponent implements OnInit {
 
   displayedColumns: string[] = ['Brand', 'name', 'category', 'status', 'productkey', 'Action'];
-
+  public EmailTemplateList = [];
   public dataSource;
   popupmsg = { message: '' };
 
@@ -80,19 +39,14 @@ export class ProductsComponent implements AfterViewInit, OnInit {
 
   constructor(private repoService: RepositoryService, public dialog: MatDialog, public authService: AuthService, private title: Title) { }
 
-  ngAfterViewInit() {
-    // this.dataSource.sort = this.sort;
-    // this.dataSource.paginator = this.paginator;
-  }
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
   ngOnInit() {
-
     this.title.setTitle("Products");
     this.getAllOwners();
-
+    this.getEmailTemplate();
   }
   public getAllOwners = () => {
     this.repoService.getData('products')
@@ -101,7 +55,17 @@ export class ProductsComponent implements AfterViewInit, OnInit {
         this.dataSource = new MatTableDataSource(res.data.data);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-
+      });
+  }
+  public getEmailTemplate = () => {
+    this.repoService.getData('emailTemplate')
+      .subscribe((res: any) => {
+        // this.dataSource = new MatTableDataSource(res.data);
+        this.EmailTemplateList = res.data;
+      }, error => {
+        console.log(error.error.message);
+        this.popupmsg.message = error.error.message;
+        this.openDialogSmall('mailsenterror', this.popupmsg);
       });
   }
   public redirectToDetails = (id: string) => {
@@ -113,7 +77,14 @@ export class ProductsComponent implements AfterViewInit, OnInit {
 
   public openDialog(action, obj) {
     obj.action = action;
-    if (action == "Add") {
+    if (this.EmailTemplateList.length == 0) {
+      this.openDialogSmall('AddProduct', { message: 'Email list is empty Please add email First' });
+      return;
+    }
+    if (action == "AsignEmailToProduct") {
+      obj.emailTemplateList = this.EmailTemplateList;
+    }
+    else if (action == "Add") {
       obj.IsActive = true;
     }
     const dialogRef = this.dialog.open(DialogBoxComponent, {
@@ -132,6 +103,8 @@ export class ProductsComponent implements AfterViewInit, OnInit {
         this.updateAll(result.data);
       } else if (result.event === 'Upload Product File') {
         this.updateproduct(result.data);
+      } else if (result.event === 'AsignEmailToProduct') {
+        this.asignEmailToproduct(result.data.emailId, obj.id);
       }
     });
   }
@@ -151,9 +124,17 @@ export class ProductsComponent implements AfterViewInit, OnInit {
       }
     });
   }
-
+  public asignEmailToproduct(emailId, productId) {
+    this.repoService.create('product/asignEmail', { productId: productId, emailId: emailId }).subscribe((res: any) => {
+      this.popupmsg.message = res.message;
+      this.openDialogSmall('AddProduct', this.popupmsg);
+    }, error => {
+      this.popupmsg.message = error.error.message;
+      this.openDialogSmall('AddProduct', this.popupmsg);
+    });
+  }
   public addRowData(data: any) {
-    
+
     console.log(data);
     const bodydata = {
       itemName: data.itemName,

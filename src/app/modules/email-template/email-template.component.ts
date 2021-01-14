@@ -23,41 +23,12 @@ import { TextEditorComponent } from '../text-editor/text-editor.component';
 import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
 import { Title } from '@angular/platform-browser';
 
-export interface PeriodicElement {
-  id: number;
-  Action: string;
-  name: string;
-  category: string;
-  IsActive: string;
-  status: string;
-  createdAt: string;
-  emailHtml: string;
-  productId: string;
-}
-
-// const ELEMENT_DATA: PeriodicElement[] = [
-//   {id: 1, Action: 'Edit/Delete', tamplateName: 'MacAfee', category: 'Anti Virus', IsActive: 'Yes' , DateModified: '11 Nov 20' },
-//   {id: 2,  Action: 'Edit/Delete', tamplateName: 'AvG', category: 'Anti Virus', IsActive: 'Yes' , DateModified: '18 Oct 20' },
-//   {id: 3,  Action: 'Edit/Delete', tamplateName: 'Norton', category: 'Anti Virus', IsActive: 'Yes' , DateModified: '20 July 20' },
-//   {id: 4,  Action: 'Edit/Delete', tamplateName: 'MacAfee', category: 'Anti Virus', IsActive: 'Yes' , DateModified: '14 April 20' },
-//   {id: 5,  Action: 'Edit/Delete', tamplateName: 'AvG', category: 'Anti Virus', IsActive: 'Yes' , DateModified: '16 Sept 20' },
-//   {id: 6,  Action: 'Edit/Delete', tamplateName: 'Norton', category: 'Anti Virus', IsActive: 'Yes' , DateModified: '23 Aug 20' },
-//   {id: 7,  Action: 'Edit/Delete', tamplateName: 'MacAfee', category: 'Anti Virus', IsActive: 'Yes' , DateModified: '28 June 20' },
-//   {id: 8,  Action: 'Edit/Delete', tamplateName: 'AvG', category: 'Anti Virus', IsActive: 'Yes' , DateModified: '25 Jan 20' },
-//   {id: 9,  Action: 'Edit/Delete', tamplateName: 'Norton', category: 'Anti Virus', IsActive: 'Yes' , DateModified: '22 March 20' },
-//   {id: 10,  Action: 'Edit/Delete', tamplateName: 'MacAfee', category: 'Anti Virus', IsActive: 'Yes' , DateModified: '15 Feb 20' },
-// ];
-
-
-
 @Component({
   selector: 'app-email-template',
   templateUrl: './email-template.component.html',
   styleUrls: ['./email-template.component.scss']
 })
 export class EmailTemplateComponent implements OnInit, AfterViewInit {
-
-
 
   displayedColumns: string[] = ['name', 'category', 'IsActive', 'createdAt', 'Action'];
 
@@ -143,7 +114,6 @@ export class EmailTemplateComponent implements OnInit, AfterViewInit {
   newemailtemplate(data: any) {
 
     const bodydata = {
-      productId: data.productId,
       name: data.name,
       emailHtml: data.emailTemplate,
       status: data.status,

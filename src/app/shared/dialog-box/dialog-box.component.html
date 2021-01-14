@@ -342,7 +342,7 @@
       <label> Role </label>
       <mat-form-field appearance="fill">
         <mat-label *ngIf="!localdata.roleId "> Role </mat-label>
-        <mat-select [(ngModel)]="localdata.roleId" name="Role1" #Role1="ngModel">
+        <mat-select [(ngModel)]="localdata.roleId" name="Role1" #Role1="ngModel" required >
           <mat-option *ngFor="let role of roles" [value]="role.id">
             {{role.name}}
           </mat-option>
@@ -540,7 +540,7 @@
     <div (click)="closeDialog()" class="close">
       <mat-icon> close</mat-icon>
     </div>
-    <h2 mat-dialog-title *ngIf="action == 'Updatekey';">Update User</h2>
+    <h2 mat-dialog-title *ngIf="action == 'Upload Multiple Keys';">Upload Multiple Keys</h2>
   </div>
   <div mat-dialog-content class="model-body ">
 
@@ -602,13 +602,13 @@
 
     <div *ngIf="action == 'UploadEmail';">
       <!-- <label class="mt-4"> Product </label> -->
-      <mat-form-field class="d-block w-50" appearance="none">
+      <!-- <mat-form-field class="d-block w-50" appearance="none">
         <mat-label>Product</mat-label>
         <mat-select (selectionChange)="selectedProductValue($event)" name="productId2" #productId2="ngModel"
           [ngClass]="{ 'is-invalid': o.submitted && productId2.invalid }" [(ngModel)]="localdata.productId" required>
           <mat-option *ngFor="let prod of productsAll" [value]="prod.id">{{prod.name}} </mat-option>
         </mat-select>
-      </mat-form-field>
+      </mat-form-field> -->
       <!-- <mat-form-field appearance="none">
         <input placeholder="productId" name="productId2" #productId2="ngModel"
           [ngClass]="{ 'is-invalid': o.submitted && productId2.invalid }" required matInput
@@ -621,11 +621,11 @@
           [ngClass]="{ 'is-invalid': o.submitted && name5.invalid }" required matInput [(ngModel)]="localdata.name">
       </mat-form-field>
       <div class="mt-5">
-        <ckeditor [(ngModel)]= "localdata.emailTemplate" name="emailTemplate" #emailTemplate="ngModel" [config]="config" (change)="onChange($event)"
-          (editorChange)="onEditorChange($event)" (ready)="onReady($event)" (focus)="onFocus($event)"
-          (blur)="onBlur($event)" (contentDom)="onContentDom($event)" (fileUploadRequest)="onFileUploadRequest($event)"
-          (fileUploadResponse)="onFileUploadResponse($event)" (paste)="onPaste($event)" (drop)="onDrop($event)"
-          debounce="500">
+        <ckeditor [(ngModel)]="localdata.emailTemplate" name="emailTemplate" #emailTemplate="ngModel" [config]="config"
+          (change)="onChange($event)" (editorChange)="onEditorChange($event)" (ready)="onReady($event)"
+          (focus)="onFocus($event)" (blur)="onBlur($event)" (contentDom)="onContentDom($event)"
+          (fileUploadRequest)="onFileUploadRequest($event)" (fileUploadResponse)="onFileUploadResponse($event)"
+          (paste)="onPaste($event)" (drop)="onDrop($event)" debounce="500">
         </ckeditor>
       </div>
       <!-- <div class="form-group">
@@ -654,6 +654,31 @@
     <div class="d-flex justify-content-end">
       <button class="d-flex btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
       <button class="d-flex btn btn-custom" mat-button [disabled]="!o.valid" (click)="doAction()" mat-flat-button>Add
+        Email Template</button>
+    </div>
+  </div>
+</form>
+
+<form *ngIf="action ==  'AsignEmailToProduct'" #asign="ngForm">
+  <div class="model-header">
+    <div (click)="closeDialog()" class="close">
+      <mat-icon> close</mat-icon>
+    </div>
+    <h2 mat-dialog-title>Asign Email To Product</h2>
+  </div>
+  <div mat-dialog-content class="model-body ">
+      <mat-form-field class="d-block w-50" appearance="none">
+        <mat-label>Email</mat-label>
+        <mat-select (selectionChange)="selectedEmailValue($event)" name="emailId" #emailId="ngModel"
+          [ngClass]="{ 'is-invalid': asign.submitted && emailId.invalid }" [(ngModel)]="localdata.emailId" required>
+          <mat-option *ngFor="let email of localdata.emailTemplateList" [value]="email.id">{{email.name}} </mat-option>
+        </mat-select>
+      </mat-form-field>
+  </div>
+  <div mat-dialog-actions class="model-footer mt-4 " align="end">
+    <div class="d-flex justify-content-end">
+      <button class="d-flex btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
+      <button class="d-flex btn btn-custom" mat-button [disabled]="!asign.valid" (click)="doAction()" mat-flat-button>Add
         Email Template</button>
     </div>
   </div>
@@ -702,8 +727,8 @@
 </div>
 
 <div
-  *ngIf="action == 'AddProductkey' || action === 'AddProduct' || action === 'AddVendor' || action === 'revokeorder' || action === 'updatestatus' || action === 'productdeleted'  || action === 'deleteemailtemplate' || action === 'deleteemailtemplate' || action === 'addemailtemplate'
-    || action === 'mailSent' || action === 'mailSenterror' || action === 'Loginback' || action === 'adduser' || action === 'addVendor' || action === 'addsetting' || action === 'updatesetting' || action === 'loaded' || action === 'mailsent' || action === 'mailsenterror'|| action === 'updatestatus'">
+  *ngIf="  action === 'mailsenterror'||  action == 'AddProductkey' || action === 'AddProduct' || action === 'AddVendor' || action === 'revokeorder' || action === 'updatestatus' || action === 'productdeleted'  || action === 'deleteemailtemplate' || action === 'deleteemailtemplate' || action === 'addemailtemplate'
+    || action === 'mailSent' || action === 'Loginback' || action === 'adduser' || action === 'addVendor' || action === 'addsetting' || action === 'updatesetting' || action === 'loaded' || action === 'mailsent' || action === 'updatestatus'">
   <!-- <div class="model-header">
       <div (click)="closeDialog()"  class="close"> <mat-icon> close</mat-icon></div>
     </div> -->

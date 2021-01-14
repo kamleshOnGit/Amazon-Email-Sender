@@ -21,66 +21,6 @@ import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component
 import { MatSelectChange } from '@angular/material/select';
 import { Title } from '@angular/platform-browser';
 
-
-
-export interface PeriodicElement {
-  id: number;
-  Action: string;
-  Username: string;
-  Emailaddress: string;
-  IsActive: string;
-  Phonenumber: string;
-  Role: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    id: 1,
-    Action: 'Edit',
-    Username: 'ABC',
-    Emailaddress: 'abc@test.com',
-    IsActive: 'Yes',
-    Phonenumber: '987654321',
-    Role: 'Admin'
-  },
-  {
-    id: 1,
-    Action: 'Edit',
-    Username: 'Vendor2',
-    Emailaddress: 'abc@test.com',
-    IsActive: 'Yes',
-    Phonenumber: '987654321',
-    Role: 'Admin'
-  },
-  {
-    id: 1,
-    Action: 'Edit',
-    Username: 'Vendor3',
-    Emailaddress: 'abc@test.com',
-    IsActive: 'Yes',
-    Phonenumber: '987654321',
-    Role: 'Admin'
-  },
-  {
-    id: 1,
-    Action: 'Edit',
-    Username: 'Vendor4',
-    Emailaddress: 'abc@test.com',
-    IsActive: 'Yes',
-    Phonenumber: '987654321',
-    Role: 'Admin'
-  },
-  {
-    id: 1,
-    Action: 'Edit',
-    Username: 'Vendor5',
-    Emailaddress: 'abc@test.com',
-    IsActive: 'Yes',
-    Phonenumber: '987654321',
-    Role: 'Admin'
-  },
-];
-
 @Component({
   selector: 'app-allow-users',
   templateUrl: './allow-users.component.html',

@@ -5,52 +5,6 @@ import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import { Title } from '@angular/platform-browser';
 
-export interface PeriodicElement {
-  id: number;
-  orderTime: string;
-  shipedAt: string;
-  customerName: string;
-  emailAddress: string;
-  mobileNumber: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    id: 1,
-    orderTime: '11 Nov 2020 12:00 PM',
-    shipedAt: '11 Nov 2020 12:00 PM',
-    customerName: 'Viren Shah',
-    emailAddress: 'abc@gmail.com',
-    mobileNumber: '987654321' ,
-  },
-  {
-    id: 2,
-    orderTime: '11 Nov 2020 12:00 PM',
-    shipedAt: '11 Nov 2020 12:00 PM',
-    customerName: 'Viren Shah',
-    emailAddress: 'abc@gmail.com',
-    mobileNumber: '987654321' ,
-  },
-  {
-    id: 3,
-    orderTime: '11 Nov 2020 12:00 PM',
-    shipedAt: '11 Nov 2020 12:00 PM',
-    customerName: 'Viren Shah',
-    emailAddress: 'abc@gmail.com',
-    mobileNumber: '987654321' ,
-  },
-  {
-    id: 4,
-    orderTime: '11 Nov 2020 12:00 PM',
-    shipedAt: '11 Nov 2020 12:00 PM',
-    customerName: 'Viren Shah',
-    emailAddress: 'abc@gmail.com',
-    mobileNumber: '987654321' ,
-  },
-
-];
-
-
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.component.html',
@@ -63,7 +17,7 @@ export class SettingComponent implements OnInit , AfterViewInit {
 
 
   displayedColumns: string[] = ['orderTime' , 'shipedAt', 'customerName', 'emailAddress', 'mobileNumber' ];
-  dataSource = new MatTableDataSource(ELEMENT_DATA) ;
+  dataSource = new MatTableDataSource([]) ;
 
   constructor( private title:Title) { }
 

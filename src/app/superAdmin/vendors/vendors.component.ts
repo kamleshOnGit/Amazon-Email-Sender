@@ -20,15 +20,6 @@ import { MatTable } from '@angular/material/table';
 import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-export interface PeriodicElement {
-  id: number;
-  Vendorname: string;
-  IsActive: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { id: 1, Vendorname: '',  IsActive: '' },
-];
 
 @Component({
   selector: 'app-vendors',
@@ -39,7 +30,7 @@ export class VendorsComponent implements OnInit, AfterViewInit {
   bodydata = {};
   displayedColumns: string[] = ['Vendorname', 'IsActive', 'Action'];
   popupmsg = { message: '' };
-  dataSourceNew = ELEMENT_DATA;
+  dataSourceNew = [];
   dataSource = new MatTableDataSource(this.dataSourceNew);
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;

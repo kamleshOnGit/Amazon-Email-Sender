@@ -26,109 +26,6 @@ import { DecriptionService } from '../../shared/decription.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Title } from '@angular/platform-browser';
 
-export interface PeriodicElement {
-  buyerEmail: string;
-  buyerName: string;
-  buyerPhoneNumber: number;
-  createdAt: string;
-  id: number;
-  lastUpdateDate: string;
-  orderId: string;
-  orderItemId: number;
-  orderStatus: string;
-  orderType: string;
-  paymentMethod: string;
-  productName: string;
-  quantityPurchased: number;
-  shipPhoneNumber: number;
-  sku: string;
-  tenantId: number;
-  updatedAt: string;
-  Action: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    id: 1,
-    tenantId: 1,
-    orderId: '114-1704415-5635410',
-    orderItemId: null,
-    buyerEmail: 's7r9v7qjl3vxyxh@marketplace.am',
-    buyerName: 'Viren',
-    buyerPhoneNumber: null,
-    sku: 'NvD9p-SD_Regular_Black',
-    productName: null,
-    quantityPurchased: 1,
-    shipPhoneNumber: null,
-    orderType: 'StandardOrder',
-    orderStatus: 'Pending',
-    paymentMethod: 'Other',
-    lastUpdateDate: '2019-12-30T13:27:53.654Z',
-    createdAt: '2020-12-09T09:58:48.000Z',
-    updatedAt: '2020-12-09T09:58:48.000Z',
-    Action: 'Revoke',
-  },
-  {
-    id: 2,
-    tenantId: 1,
-    orderId: '114-1704415-5635410',
-    orderItemId: null,
-    buyerEmail: 's7r9v7qjl3vxyxh@marketplace.am',
-    buyerName: 'Viren',
-    buyerPhoneNumber: null,
-    sku: 'NvD9p-SD_Regular_Black',
-    productName: null,
-    quantityPurchased: 1,
-    shipPhoneNumber: null,
-    orderType: 'StandardOrder',
-    orderStatus: 'Pending',
-    paymentMethod: 'Other',
-    lastUpdateDate: '2019-12-30T13:27:53.654Z',
-    createdAt: '2020-12-09T09:58:48.000Z',
-    updatedAt: '2020-12-09T09:58:48.000Z',
-    Action: 'Revoke',
-  },
-  {
-    id: 3,
-    tenantId: 1,
-    orderId: '114-1704415-5635410',
-    orderItemId: null,
-    buyerEmail: 's7r9v7qjl3vxyxh@marketplace.am',
-    buyerName: 'Viren',
-    buyerPhoneNumber: null,
-    sku: 'NvD9p-SD_Regular_Black',
-    productName: null,
-    quantityPurchased: 1,
-    shipPhoneNumber: null,
-    orderType: 'StandardOrder',
-    orderStatus: 'Pending',
-    paymentMethod: 'Other',
-    lastUpdateDate: '2019-12-30T13:27:53.654Z',
-    createdAt: '2020-12-09T09:58:48.000Z',
-    updatedAt: '2020-12-09T09:58:48.000Z',
-    Action: 'Revoke',
-  },
-  {
-    id: 4,
-    tenantId: 1,
-    orderId: '114-1704415-5635410',
-    orderItemId: null,
-    buyerEmail: 's7r9v7qjl3vxyxh@marketplace.am',
-    buyerName: 'Viren',
-    buyerPhoneNumber: null,
-    sku: 'NvD9p-SD_Regular_Black',
-    productName: null,
-    quantityPurchased: 1,
-    shipPhoneNumber: null,
-    orderType: 'StandardOrder',
-    orderStatus: 'Pending',
-    paymentMethod: 'Other',
-    lastUpdateDate: '2019-12-30T13:27:53.654Z',
-    createdAt: '2020-12-09T09:58:48.000Z',
-    updatedAt: '2020-12-09T09:58:48.000Z',
-    Action: 'Revoke',
-  },
-];
 
 @Component({
   selector: 'app-orders',
@@ -152,7 +49,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   public pagesize = 50;
   public orderIds = [];
   popupmsg = { message: '' };
-  selection = new SelectionModel<PeriodicElement>(true, []);
+  selection = new SelectionModel<any>(true, []);
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
@@ -246,7 +143,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: PeriodicElement): string {
+  checkboxLabel(row?: any): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }

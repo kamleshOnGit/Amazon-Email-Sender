@@ -8,22 +8,8 @@ import { RepositoryService } from '../../shared/servercomunication.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { DialogBoxComponent } from '../../shared/dialog-box/dialog-box.component';
-import {DecriptionService} from '../../shared/decription.service';
+import { DecriptionService } from '../../shared/decription.service';
 import { MatSelectChange } from '@angular/material/select';
-
-
-export interface PeriodicElement {
-  orderId: string;
-  buyerName: string;
-  buyerEmail: string;
-  buyerPhoneNumber: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { orderId : '2IGUG64' , buyerName: 'ABC', buyerEmail: 'abc@test.com', buyerPhoneNumber: '9875456454'} ,
-  { orderId : '2IGUG64' , buyerName: 'ABC', buyerEmail: 'abc@test.com', buyerPhoneNumber: '9875456454'} ,
-  { orderId : '2IGUG64' , buyerName: 'ABC', buyerEmail: 'abc@test.com', buyerPhoneNumber: '9875456454'} ,
-];
 
 @Component({
   selector: 'app-customer-info',
@@ -48,11 +34,11 @@ export class CustomerInfoComponent implements OnInit {
   public pagesize = 50;
 
   constructor(private repoService: RepositoryService,
-              public dialog: MatDialog,
-              private Decription: DecriptionService) { }
+    public dialog: MatDialog,
+    private Decription: DecriptionService) { }
 
   ngOnInit() {
-    this.dataSource = ELEMENT_DATA;
+    this.dataSource = [];
     this.getAllOwners();
   }
 
@@ -64,17 +50,17 @@ export class CustomerInfoComponent implements OnInit {
   }
   public selectedValue(event: MatSelectChange) {
     this.orderId = event.value.orderId;
-    console.log(  String(this.orderId));
+    console.log(String(this.orderId));
     this.getCustomerInfo();
   }
 
   public getCustomerInfo() {
-    this.repoService.create('order/customer/info/', {orderId : String(this.orderId)}).subscribe((res: any) => {
+    this.repoService.create('order/customer/info/', { orderId: String(this.orderId) }).subscribe((res: any) => {
       this.data.push(res.data);
       this.dataSource = new MatTableDataSource(this.data);
       console.log(res.data);
     }
     );
-   }
+  }
 
 }

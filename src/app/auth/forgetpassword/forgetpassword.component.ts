@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RepositoryService } from '../..//shared/servercomunication.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '../../shared/auth.services';
 import { Title } from '@angular/platform-browser';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-forgetpassword',
@@ -20,12 +21,15 @@ export class ForgetpasswordComponent implements OnInit {
     public authService: AuthService, public service: RepositoryService) {
     this.forgetPassword = this.fb.group({
       email: [''],
-      password: ['']
+      password: ['']     
     });
   }
 
   ngOnInit() {
     this.title.setTitle("Change Password");
+  }
+  get F() {
+    return this.forgetPassword.controls;
   }
   createPassword($event) {
     
