@@ -34,20 +34,17 @@ export class TextEditorComponent implements OnInit {
   ngOnInit() {
     // this.id = +this.route.snapshot.params[0].id;
     this.id = this.repoService.id;
-    console.log(this.repoService.id);
     this.getAllOwners();
   }
 
   public getAllOwners = () => {
     this.repoService.getData('emailTemplate/' + this.id).subscribe((res: any) => {
       const template: string = res.data.data.emailHtml ;
-      // console.log(res.data.data , template);
       this.name = res.data.data.name;
       this.productid = res.data.data.productId;
       this.model.content =  template ;
 
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message =  error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });
@@ -71,7 +68,6 @@ export class TextEditorComponent implements OnInit {
   onChange($event) {
     const data = $event;
 
-    console.log( data );
   }
 
   onEditorChange($event) {
@@ -119,11 +115,9 @@ export class TextEditorComponent implements OnInit {
       comments : 'text'
     };
     this.repoService.update('emailTemplate/' + this.id , bodytext ).subscribe((res: any) => {
-    console.log( res);
     this.popupmsg.message = res.message;
     this.openDialogSmall('updateemailtemplate', this.popupmsg);
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message =  error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });

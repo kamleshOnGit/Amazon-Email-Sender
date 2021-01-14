@@ -78,9 +78,9 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-
     this.title.setTitle("Orders");
-    this.dataSource.sort = this.sort;
+    if (this.dataSource)
+      this.dataSource.sort = this.sort;
     // this.dataSource.paginator = this.paginator;
   }
   public doFilter = (value: string) => {
@@ -93,17 +93,12 @@ export class OrdersComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getAllOwners();
-    // this.repoService.getData('orders').subscribe((res: any) =>
-    // this.dataSource = new MatTableDataSource(res.data)
-    //      );
-    // this.dataSource = new MatTableDataSource(this.dataSourceNew);
-
   }
   public getAllOwners = () => {
     this.pagenumber += 1;
-    console.log(this.pagenumber,);
     this.repoService.getData('orders/' + this.pagenumber + '/' + this.pagesize).subscribe((res: any) => {
-      if (res && res.data && res.data.length > 0) {
+      debugger
+      if (res && res.data && res.data.rows.length > 0) {
         res.data.rows.forEach(element => {
           let Email = '';
           if (element.buyerEmail.length > 0) {
@@ -119,9 +114,8 @@ export class OrdersComponent implements OnInit, AfterViewInit {
         this.popupmsg.message = res.message;
         this.openDialogSmall('loaded', this.popupmsg);
       }
-      console.log(res);
     }, error => {
-      console.log(error.error.message);
+      this.dataSource = new MatTableDataSource([]);
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });
@@ -129,9 +123,8 @@ export class OrdersComponent implements OnInit, AfterViewInit {
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numRows = this.dataSource && this.dataSource.data ? this.dataSource.data.length : null;
     this.orderIds = this.selection.selected;
-    console.log(this.orderIds.map(v => v.orderId),);
     return numSelected === numRows;
   }
 
@@ -237,15 +230,12 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     // this.paginator._changePageSize(this.paginator.pageSize);
   }
   public updateOrders(data: any) {
-    console.log(data);
     this.repoService.create('import/orders/', { 'orders': data }).subscribe((res: any) => {
-      console.log(res);
       this.popupmsg.message = res.message;
       this.openDialogSmall('updatestatus', this.popupmsg);
       this.pagenumber = this.pagenumber - 1;
       this.getAllOwners();
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });
@@ -254,13 +244,11 @@ export class OrdersComponent implements OnInit, AfterViewInit {
 
     const orderIdarray = this.orderIds.map(v => v.orderId);
     this.repoService.update('order/updateOrderStatus', { orderIdArray: orderIdarray }).subscribe((res: any) => {
-      console.log(res);
       this.popupmsg.message = res.message;
       this.openDialogSmall('updatestatus', this.popupmsg);
       this.pagenumber = this.pagenumber - 1;
       this.getAllOwners();
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });

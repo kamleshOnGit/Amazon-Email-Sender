@@ -41,7 +41,6 @@ export class ViewproductsComponent implements OnInit {
   public getAllOwners = () => {
     this.repoService.getData('products')
     .subscribe( (res: any) => {
-      console.log(res.data.data);
       this.dataSource = new MatTableDataSource(res.data.data);
 
     });

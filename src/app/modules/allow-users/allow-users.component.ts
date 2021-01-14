@@ -57,9 +57,7 @@ export class AllowUsersComponent implements OnInit {
         this.dataSource = new MatTableDataSource(res.data);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-        console.log(res.data);
       }, error => {
-        console.log(error.error.message);
         this.popupmsg.message = error.error.message;
         this.openDialogSmall('mailsenterror', this.popupmsg);
       });
@@ -68,7 +66,6 @@ export class AllowUsersComponent implements OnInit {
   public selectedValue(event: MatSelectChange) {
     this.selectedSelectBox = event.value;
     this.getAllOwners();
-    console.log(event.value);
   }
 
   public redirectToDetails = (id: string) => {
@@ -178,11 +175,9 @@ export class AllowUsersComponent implements OnInit {
     };
     this.repoService.create('user', bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
-      this.openDialogSmall('adduser', this.popupmsg);
-      console.log(res.data);      
+      this.openDialogSmall('adduser', this.popupmsg);    
     this.getAllOwners();
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });

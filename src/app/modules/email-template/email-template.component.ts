@@ -32,7 +32,7 @@ export class EmailTemplateComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['name', 'category', 'IsActive', 'createdAt', 'Action'];
 
-  public dataSource;
+  public dataSource=new MatTableDataSource([]);
   popupmsg = { message: '' };
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -62,9 +62,7 @@ export class EmailTemplateComponent implements OnInit, AfterViewInit {
         this.dataSource = new MatTableDataSource(res.data);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-        console.log(res.data);
       }, error => {
-        console.log(error.error.message);
         this.popupmsg.message = error.error.message;
         this.openDialogSmall('mailsenterror', this.popupmsg);
       });
@@ -119,14 +117,12 @@ export class EmailTemplateComponent implements OnInit, AfterViewInit {
       status: data.status,
       comments: data.comments
     };
-    console.log(data, bodydata);
     this.repoService.create('emailTemplate', bodydata).subscribe((res: any) => {
-      console.log(res);
+
       this.popupmsg.message = res.message;
       this.openDialogSmall('addemailtemplate', this.popupmsg);
       this.getAllOwners();
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });
@@ -134,12 +130,10 @@ export class EmailTemplateComponent implements OnInit, AfterViewInit {
 
   deleteTemplate(id: number) {
     this.repoService.delete1('emailTemplate/' + id).subscribe((res: any) => {
-      console.log(res);
       this.popupmsg.message = res.message;
       this.openDialogSmall('deleteemailtemplate', this.popupmsg);
       this.getAllOwners();
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });

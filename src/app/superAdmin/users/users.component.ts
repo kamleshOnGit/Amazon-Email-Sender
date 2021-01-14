@@ -40,7 +40,6 @@ export class UsersComponent implements AfterViewInit, OnInit {
     this.title.setTitle("Users");
     this.getAllvendors();
     this.selectedSelectBox = this.repoService.vendorId !== '' ? +this.repoService.vendorId : 1;
-    console.log(this.selectedSelectBox);
     this.getAllOwners();
   }
 
@@ -58,9 +57,7 @@ export class UsersComponent implements AfterViewInit, OnInit {
         this.dataSource = new MatTableDataSource(res.data);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-        console.log(res.data);
       }, error => {
-        console.log(error.error.message);
         this.popupmsg.message = error.error.message;
         this.openDialogSmall('mailsenterror', this.popupmsg);
       });
@@ -70,7 +67,6 @@ export class UsersComponent implements AfterViewInit, OnInit {
       .subscribe((res: any) => {
         this.vendors = res.data.data;
       }, error => {
-        console.log(error.error.message);
         this.popupmsg.message = error.error.message;
         this.openDialogSmall('mailsenterror', this.popupmsg);
       });
@@ -79,7 +75,6 @@ export class UsersComponent implements AfterViewInit, OnInit {
   public selectedValue(event: MatSelectChange) {
     this.selectedSelectBox = event.value;
     this.getAllOwners();
-    console.log(event.value);
   }
 
   public redirectToDetails = () => {
@@ -176,7 +171,6 @@ export class UsersComponent implements AfterViewInit, OnInit {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
   public addNewUser(data) {
-    console.log(data);
     const bodydata = {
       tenantId: data.tenentId,
       roleId: 2,
@@ -190,9 +184,7 @@ export class UsersComponent implements AfterViewInit, OnInit {
       this.popupmsg.message = res.message;
       this.openDialogSmall('adduser', this.popupmsg);
       this.getAllOwners();
-      console.log(res.data);
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });
@@ -200,7 +192,6 @@ export class UsersComponent implements AfterViewInit, OnInit {
   }
 
   public updateNewUser(data) {
-    console.log(data);
     const bodydata = {
       id: data.id,
       // roleId: data.roleId,
@@ -212,9 +203,7 @@ export class UsersComponent implements AfterViewInit, OnInit {
       this.popupmsg.message = res.message;
       this.openDialogSmall('adduser', this.popupmsg);
       this.getAllOwners();
-      console.log(res.data);
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });

@@ -31,7 +31,6 @@ export class SettingComponent implements OnInit , AfterViewInit {
   }
 
   onChangeHour(event) {
-    console.log('event', event);
   }
 
   ngAfterViewInit() {

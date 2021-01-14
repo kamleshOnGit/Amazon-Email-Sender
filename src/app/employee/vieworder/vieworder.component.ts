@@ -62,7 +62,7 @@ export class VieworderComponent implements OnInit {
         });
     }
       this.dataSource = new MatTableDataSource(res.data.rows);
-      console.log(res.data);
+    
     });
   }
 

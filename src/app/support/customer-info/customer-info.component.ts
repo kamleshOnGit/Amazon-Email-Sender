@@ -45,12 +45,10 @@ export class CustomerInfoComponent implements OnInit {
   public getAllOwners = () => {
     this.repoService.getData('orders/' + this.pagenumber + '/' + this.pagesize).subscribe((res: any) => {
       this.allorder = res.data.rows;
-      console.log(res.data);
     });
   }
   public selectedValue(event: MatSelectChange) {
     this.orderId = event.value.orderId;
-    console.log(String(this.orderId));
     this.getCustomerInfo();
   }
 
@@ -58,7 +56,6 @@ export class CustomerInfoComponent implements OnInit {
     this.repoService.create('order/customer/info/', { orderId: String(this.orderId) }).subscribe((res: any) => {
       this.data.push(res.data);
       this.dataSource = new MatTableDataSource(this.data);
-      console.log(res.data);
     }
     );
   }

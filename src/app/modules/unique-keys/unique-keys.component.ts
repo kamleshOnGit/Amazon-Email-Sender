@@ -35,11 +35,12 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
   dataSource;
   codeUsed = 0;
   productData;
-  selectedSelectBox;
+  selectedProductSellerSku = null;
   popupmsg = { message: '' };
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
+  selectedMarketPlaceId = null;
 
   constructor(private repoService: RepositoryService, public dialog: MatDialog, private title: Title) { }
 
@@ -61,20 +62,18 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
   public getAllOwners = () => {
     this.repoService.getData('products')
       .subscribe((res: any) => {
-        console.log(res.data.data);
         this.productData = res.data.data;
 
       });
   }
   public selectedValue(event: MatSelectChange) {
-    this.selectedSelectBox = event.value;
+    this.selectedMarketPlaceId = event.value.marketPlaceProductId;
+    this.selectedProductSellerSku = event.value.sellerSku;
     this.getAllkeys();
-    console.log(event.value);
   }
   public getAllkeys = () => {
-    this.repoService.create('productkeys/sku', { sku: this.selectedSelectBox, pageNumber: 1, pageSize: 50 })
+    this.repoService.create('productkeys/sku', { sku: this.selectedProductSellerSku, pageNumber: 1, pageSize: 50 })
       .subscribe((res: any) => {
-        console.log(res.data);
         // if (res && res.data && res.data.data && res.data.data.length > 0) {
         //     res.data.data.forEach(element => {
         //         let activeCount = 0;
@@ -91,7 +90,6 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       }, error => {
-        console.log(error.error.message);
         this.popupmsg.message = error.error.message;
         this.openDialogSmall('mailsenterror', this.popupmsg);
       });
@@ -147,18 +145,16 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
   }
 
   public addRowData(data) {
-    console.log(data);
     const bodydata = {
       key: data.key,
       status: data.status,
       batch: data.batch,
       priority: data.priority,
-      sku: data.sku,
+      sku: this.selectedMarketPlaceId,
     };
 
     this.repoService.create('product/productkey', bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
-      // console.log(res)
       this.openDialogSmall('AddProductkey', this.popupmsg);
     }, error => {
       this.popupmsg.message = error.error.message;
@@ -168,7 +164,6 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
   public updateRowData(data) {
-    console.log(data);
     const bodydata = {
       key: data.key,
       status: data.status,
@@ -176,7 +171,7 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
       priority: data.priority,
       // sku : data.marketPlaceProductId,
     };
-    this.repoService.update('product/productKey/' + data.id, bodydata).subscribe((res: any) => console.log(res));
+    this.repoService.update('product/productKey/' + data.id, bodydata).subscribe();
     this.paginator._changePageSize(this.paginator.pageSize);
   }
   public updateAll(rowobj) {
@@ -201,15 +196,12 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
 
   public updateproductKeys(data: any) {
     // const bodydata = JSON.parse(JSON.stringify(data));
-    console.log(data);
     this.openDialogSmall('product not found', data.productnotfound);
     this.repoService.create('import/productskeys', { 'productskey': data }).subscribe((res: any) => {
-      console.log(res);
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
       this.getAllOwners();
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });
@@ -222,21 +214,17 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
       this.getAllkeys();
 
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });
   }
 
   public revokeOrder(element) {
-    console.log(element.orderId);
     this.repoService.create('productkey/revoke', { 'orderId': '' + element.orderId }).subscribe((res: any) => {
-      console.log(res);
       this.popupmsg.message = res.message;
       this.openDialogSmall('updatestatus', this.popupmsg);
       this.getAllOwners();
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });

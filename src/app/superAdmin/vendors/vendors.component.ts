@@ -59,9 +59,7 @@ export class VendorsComponent implements OnInit, AfterViewInit {
     this.repoService.getData('tenants')
       .subscribe((res: any) => {
         this.dataSource = new MatTableDataSource(res.data.data);
-        console.log(res.data.data);
       }, error => {
-        console.log(error.error.message);
         this.popupmsg.message = error.error.message;
         this.openDialogSmall('mailsenterror', this.popupmsg);
       });
@@ -165,7 +163,6 @@ export class VendorsComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/superadmin/users']);
   }
   public addNewVendor(data) {
-    console.log(data);
     this.getAllOwners();
     if (data.logo) {
       this.bodydata = {
@@ -182,15 +179,12 @@ export class VendorsComponent implements OnInit, AfterViewInit {
       this.popupmsg.message = res.message;
       this.openDialogSmall('AddVendor', this.popupmsg);
       this.getAllOwners();
-      console.log(res.data);
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });
   }
   public settingVender(data) {
-    console.log(data);
     const bodydata = {
       tenantId: data.tenantId,
       sellerId: data.sellerId,
@@ -202,15 +196,12 @@ export class VendorsComponent implements OnInit, AfterViewInit {
       this.popupmsg.message = res.message;
       this.openDialogSmall('addsetting', this.popupmsg);
       this.getAllOwners();
-      console.log(res.data);
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });
   }
   public settingVenderUpdate(data) {
-    console.log(data);
     const bodydata = {
       tenantId: data.tenantId,
       sellerId: data.setting.sellerId,
@@ -222,9 +213,7 @@ export class VendorsComponent implements OnInit, AfterViewInit {
       this.popupmsg.message = res.message;
       this.openDialogSmall('updatesetting', this.popupmsg);
       this.getAllOwners();
-      console.log(res.data);
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });

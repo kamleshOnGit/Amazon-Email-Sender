@@ -22,15 +22,14 @@ export class SystemSettingComponent implements OnInit {
   public getconfig = () => {
     this.repoService.getData('globalSettings')
             .subscribe((res: any) => {this.formdata = res.data[0];
-                                      console.log(res.data , this.formdata);
             } , error => {
-              console.log(error.error.message);
               this.popupmsg.message =  error.error.message;
               this.openDialogSmall('mailsenterror', this.popupmsg);
             } );
 
 }
 public openDialogSmall(action, obj) {
+  debugger
   obj.action = action;
   const dialogRef = this.dialog.open( DialogBoxComponent, {
     width: '500px',
@@ -53,11 +52,10 @@ public setconfig() {
     emailPort : this.formdata.emailPort,
   };
   this.repoService.update('globalSettings/' + this.formdata.id , bodydata ).subscribe((res: any) => {
+    debugger
     this.popupmsg.message = res.message;
     this.openDialogSmall('adduser', this.popupmsg);
-    console.log(res.data);
   } , error => {
-    console.log(error.error.message);
     this.popupmsg.message =  error.error.message;
     this.openDialogSmall('mailsenterror', this.popupmsg);
   } );

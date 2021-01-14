@@ -51,7 +51,6 @@ export class ProductsComponent implements OnInit {
   public getAllOwners = () => {
     this.repoService.getData('products')
       .subscribe((res: any) => {
-        console.log(res.data.data);
         this.dataSource = new MatTableDataSource(res.data.data);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
@@ -63,7 +62,8 @@ export class ProductsComponent implements OnInit {
         // this.dataSource = new MatTableDataSource(res.data);
         this.EmailTemplateList = res.data;
       }, error => {
-        console.log(error.error.message);
+
+        this.dataSource = new MatTableDataSource([]);
         this.popupmsg.message = error.error.message;
         this.openDialogSmall('mailsenterror', this.popupmsg);
       });
@@ -135,7 +135,6 @@ export class ProductsComponent implements OnInit {
   }
   public addRowData(data: any) {
 
-    console.log(data);
     const bodydata = {
       itemName: data.itemName,
       sellerSku: data.sellerSku,
@@ -158,7 +157,6 @@ export class ProductsComponent implements OnInit {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
   public updateRowData(data) {
-    console.log(data);
     const bodydata = {
       itemName: data.itemName,
       sellerSku: data.sellerSku,
@@ -171,10 +169,8 @@ export class ProductsComponent implements OnInit {
     this.repoService.update('product/product/' + data.id, bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
-      console.log(res.data);
       this.getAllOwners();
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });
@@ -205,14 +201,11 @@ export class ProductsComponent implements OnInit {
 
   public updateproduct(data: any) {
     // const bodydata = JSON.parse(JSON.stringify(data));
-    console.log(data);
     this.repoService.create('import/products', { 'products': data }).subscribe((res: any) => {
-      console.log(res);
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
       this.getAllOwners();
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     }
@@ -220,14 +213,11 @@ export class ProductsComponent implements OnInit {
   }
 
   public delepredouct(element: any) {
-    console.log(element.id);
     this.repoService.delete2('product/delete', { id: element.id }).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
-      console.log(res.data);
       this.getAllOwners();
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });

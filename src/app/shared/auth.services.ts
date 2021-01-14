@@ -14,12 +14,20 @@ export class AuthService {
   // endpoint = 'http://sp.vancotech.com/api/';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = '';
+  popupmsg: { message: '' };
 
   constructor(
     private http: HttpClient,
-    public router: Router
+    public router: Router,
   ) {
   }
+  // public openDialogSmall(action, obj) {
+  //   obj.action = action;
+  //   const dialogRef = this.dialog.open( DialogBoxComponent, {
+  //     width: '500px',
+  //     data: obj
+  //   });
+  // }
 
   // Sign-up
   signUp(user: User): Observable<any> {
@@ -29,6 +37,7 @@ export class AuthService {
         catchError(this.handleError)
       );
   }
+
 
   // Sign-in
   signIn(user: User) {
@@ -46,13 +55,7 @@ export class AuthService {
         } else if (res.data.roleName === 'support') {
           this.router.navigate(['support/']);
         }
-
-
-        // this.getUserProfile(res.id).subscribe((res: any) => {
-        //   this.currentUser = res;
-        //   this.router.navigate(['admin/' + res.msg.id]);
-        // });
-      });
+      })
   }
 
   getToken() {
@@ -72,7 +75,7 @@ export class AuthService {
     const removeToken = localStorage.removeItem('access_token');
     if (removeToken == null) {
       this.router.navigate(['log-in']);
-      
+
     }
   }
 

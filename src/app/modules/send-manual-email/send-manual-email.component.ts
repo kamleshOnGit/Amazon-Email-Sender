@@ -29,10 +29,8 @@ export class SendManualEmailComponent implements OnInit {
   public getAllProduct = () => {
     this.repoService.getData('products')
     .subscribe( (res: any) => {
-      console.log(res.data.data);
       this.productsku = res.data.data;
     }, error => {
-      console.log(error.error.message);
       this.popupmsg.message =  error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });
@@ -40,12 +38,10 @@ export class SendManualEmailComponent implements OnInit {
 
   public selectedValue(event: MatSelectChange) {
     this.manualsenddata.sku = event.value;
-    console.log( event.value);
   }
 
   public selectedValue2(event: MatSelectChange) {
     this.manualsenddata.marketplace = event.value;
-    console.log( event.value);
   }
 
   public openDialogSmall(action, obj) {
@@ -65,15 +61,12 @@ export class SendManualEmailComponent implements OnInit {
 
   public sendManualEmail() {
     // const bodydata = JSON.parse(JSON.stringify(data));
-    console.log(this.manualsenddata);
     this.repoService.create('order/manually/processorder',
      {marketplace : this.manualsenddata.marketplace, sku : this.manualsenddata.sku
        , email : this.manualsenddata.email, qty: +this.manualsenddata.quantity }).subscribe((res: any) =>  {
         this.popupmsg.message = res.message ;
         this.openDialogSmall('mailsent', this.popupmsg);
-        console.log(res);
       }, error => {
-        console.log(error.error.message);
         this.popupmsg.message =  error.error.message;
         this.openDialogSmall('mailsenterror', this.popupmsg);
       } );

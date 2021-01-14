@@ -8,6 +8,8 @@ import { MatSelectChange } from '@angular/material/select';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { PasswordStrengthValidator } from '../password-strength.validator';
+import { Validators } from '@angular/forms';
 export interface UsersData {
   itemName: string;
   ProductId: string;
@@ -35,12 +37,13 @@ export class DialogBoxComponent {
   selectcheck = false;
   selectcheckemail = false;
   selecttext = 'InActive';
+  password ="password";
   productsAll = [];
   productnotfound = [];
   errortext = 'Unknow Error';
-
   @ViewChild('csvReader', { static: true }) csvReader: any;
   logoImage: any;
+  err: boolean;
 
   constructor(private repoService: RepositoryService,
     public dialogRef: MatDialogRef<DialogBoxComponent>,
@@ -48,7 +51,6 @@ export class DialogBoxComponent {
     @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData) {
     this.localdata = { ...data };
     this.localdata.message = this.localdata.message !== undefined ? this.localdata.message : this.errortext;
-    console.log(this.localdata);
     this.action = this.localdata.action;
     this.selectcheck = this.localdata.IsActive;
     this.check();
@@ -57,6 +59,24 @@ export class DialogBoxComponent {
         this.productsAll = res.data.data;
       });
     }
+  }
+  // Validators.compose([PasswordStrengthValidator, Validators.required, Validators.minLength(8), Validators.maxLength(50)])]
+  passwordTest(data) {
+    let test = data.target.value.match(/(?=.*\d)(?=.*[a-z])(?=.*[!@#\$%\^&\*])(?=.*[A-Z]).{8,}/g);
+    if (test == '' || test == null) {
+      this.err = true;
+    }    
+    else{
+      this.err = false;
+    }
+  }
+  showPassword(data){   
+   if(data =="password") {
+      this.password = "text";
+    }
+    else{
+      this.password = "password";
+    }    
   }
   public selectedProductValue(event: MatSelectChange) {
     this.localdata.productId = event.value;
@@ -111,11 +131,9 @@ export class DialogBoxComponent {
         const headersRow = this.getHeaderArray(csvRecordsArray);
         this.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
         this.localdata = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
-        console.log(this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length));
       };
 
       reader.onerror = () => {
-        console.log('error is occured while reading file!');
       };
 
     } else {
@@ -141,11 +159,9 @@ export class DialogBoxComponent {
         const headersRow = this.getHeaderArray(csvRecordsArray);
         // this.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
         this.localdata = this.getDataRecordsArrayOrdersFromCSVFile(csvRecordsArray, headersRow.length);
-        console.log(this.getDataRecordsArrayOrdersFromCSVFile(csvRecordsArray, headersRow.length));
       };
 
       reader.onerror = () => {
-        console.log('error is occured while reading file!');
       };
 
     } else {
@@ -178,11 +194,9 @@ export class DialogBoxComponent {
         // this.records = this.getDataRecordsKeysArrayFromCSVFile(csvRecordsArray, headersRow.length);
         this.localdata = this.getDataRecordsKeysArrayFromCSVFile(csvRecordsArray, headersRow.length);
         this.localdata.productnotfound = [this.productnotfound];
-        console.log(this.getDataRecordsKeysArrayFromCSVFile(csvRecordsArray, headersRow.length));
       };
 
       reader.onerror = () => {
-        console.log('error is occured while reading file!');
       };
 
     } else {
@@ -202,7 +216,6 @@ export class DialogBoxComponent {
       csv = csvRecordsArray[i]
       var curruntRecord = (csv as string).split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
       // for (var j = 0; j < arr.length; j++){
-      //   console.log('arr['+i+'] =',arr[i]);
       // } 
       // const curruntRecord = (csv as string).split(',');
       if (curruntRecord.length === headerLength) {
@@ -216,7 +229,6 @@ export class DialogBoxComponent {
         csvArr.push(csvRecord);
       }
       else {
-        console.log(curruntRecord)
       }
     }
     return csvArr;
@@ -307,7 +319,6 @@ export class DialogBoxComponent {
         this.localdata.emailTemplate = htmlData;
       };
       reader.onerror = () => {
-        console.log('error is occured while reading file!');
       };
     } else {
       alert('Please import valid .csv file.');
@@ -331,7 +342,6 @@ export class DialogBoxComponent {
     this.updateIsActiveEmail();
     this.localdata.id = event.value.id;
     this.localdata.priority = event.value.priority;
-    console.log(event.value);
   }
   selectLogo(event) {
     if (event && event.target.files && event.target.files.length > 0) {
@@ -348,7 +358,6 @@ export class DialogBoxComponent {
       // });
     }, (err) => {
       this.logoImage = 'logo';
-      console.log(err)
     }
     );
   }

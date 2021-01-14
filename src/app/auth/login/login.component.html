@@ -6,13 +6,25 @@
                 <form class="form-signin" [formGroup]="signinForm" (ngSubmit)="loginUser()">
                 <div class="form-group mb-3 text-center">
                     <input type="text" class="form-control mb-4" formControlName="email" placeholder="Email/Username"  name="Email" />
-                    <input type="password" class="form-control" formControlName="password"  placeholder="Password"  name="Password" />
+                    <input type="password" placeholder="Password" formControlName="password"
+                            class="form-control mt-3" [ngClass]="{'is-invalid': f.password.invalid && f.password.touched, 
+                                'is-valid': f.password.valid, '': f.password.untouched}" />
+                        <div *ngIf="f.password.errors" class="invalid-feedback d-block">
+                            <div *ngIf="f.password.errors.required">Password is required</div>
+                            <div *ngIf="f.password.hasError('passwordStrength')">
+                                {{f.password.errors['passwordStrength']}}
+                            </div>
+                            <div *ngIf="f.password.errors.minlength">Password must be grater than 8 characters
+                                <div *ngIf="f.password.errors.maxlength">Password must be less than 50 characters.
+                                </div>
+                            </div>
+                        </div>
                 </div>
                 <div class="form-group mb-2 text-center">
                     <input type="checkbox" name="remeberme"  > Remeber Me
                 </div>
                 <div class="form-group mb-2 text-center">
-                    <button type="submit" class="btn w-75 m-auto btn-primary mb-4 d-block">Login</button>
+                    <button type="submit" [disabled]="!signinForm.valid" class="btn w-75 m-auto btn-primary mb-4 d-block">Login</button>
                     <!-- <a routerLink="forgetpassword"  class="text-dark d-block">
                        <strong> Forgot Password </strong> 
                     </a> -->

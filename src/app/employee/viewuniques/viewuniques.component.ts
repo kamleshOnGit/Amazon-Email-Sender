@@ -46,7 +46,6 @@ export class ViewuniquesComponent implements OnInit {
   public getAllOwners = () => {
     this.repoService.create('productkeys/sku', {sku : 'K7_EM_IS_1U_1Y1' , pageNumber: 1, pageSize: 50})
             .subscribe((res: any) => {
-                console.log(res.data);
                 this.dataSource = new MatTableDataSource(res.data.data.rows);
                 this.dataSource.sort = this.sort;
                 this.dataSource.paginator = this.paginator;
