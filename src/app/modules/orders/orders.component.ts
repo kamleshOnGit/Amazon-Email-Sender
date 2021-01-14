@@ -97,7 +97,6 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   public getAllOwners = () => {
     this.pagenumber += 1;
     this.repoService.getData('orders/' + this.pagenumber + '/' + this.pagesize).subscribe((res: any) => {
-      debugger
       if (res && res.data && res.data.rows.length > 0) {
         res.data.rows.forEach(element => {
           let Email = '';

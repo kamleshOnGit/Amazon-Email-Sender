@@ -10,8 +10,7 @@ import { Router } from '@angular/router';
 })
 
 export class AuthService {
-  endpoint = 'http://localhost:8080/api/';
-  // endpoint = 'http://sp.vancotech.com/api/';
+  endpoint = 'http://sp.vancotech.com/api/';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = '';
   popupmsg: { message: '' };

@@ -50,7 +50,6 @@ export class AuthInterceptor implements HttpInterceptor {
     });
   }
   private handleAuthError(err: any) {
-    debugger
     this.popupmsg.message = err.error.message
     this.openDialogSmall('Loginback', this.popupmsg);
     this.authService.doLogout();

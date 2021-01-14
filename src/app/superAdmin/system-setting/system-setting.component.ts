@@ -29,7 +29,6 @@ export class SystemSettingComponent implements OnInit {
 
 }
 public openDialogSmall(action, obj) {
-  debugger
   obj.action = action;
   const dialogRef = this.dialog.open( DialogBoxComponent, {
     width: '500px',
@@ -52,7 +51,6 @@ public setconfig() {
     emailPort : this.formdata.emailPort,
   };
   this.repoService.update('globalSettings/' + this.formdata.id , bodydata ).subscribe((res: any) => {
-    debugger
     this.popupmsg.message = res.message;
     this.openDialogSmall('adduser', this.popupmsg);
   } , error => {
