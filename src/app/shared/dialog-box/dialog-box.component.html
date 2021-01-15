@@ -267,31 +267,97 @@
           [ngClass]="{ 'is-invalid': f.submitted && tenant1.invalid }" required matInput
           [(ngModel)]="localdata.tenantId">
       </mat-form-field> -->
-      <label class="mt-4"> Seller Id </label>
-      <mat-form-field appearance="none">
-        <input placeholder="Seller Id" name="seller1" #seller1="ngModel"
-          [ngClass]="{ 'is-invalid': f.submitted && seller1.invalid }" required matInput
-          [(ngModel)]="localdata.setting.sellerId">
-      </mat-form-field>
-      <label class="mt-4"> Marketplace Id</label>
-      <mat-form-field appearance="none">
-        <input placeholder="Marketplace Id" name="marketplace1" #marketplace1="ngModel"
-          [ngClass]="{ 'is-invalid': f.submitted && marketplace1.invalid }" required matInput
-          [(ngModel)]="localdata.setting.marketplaceId">
-      </mat-form-field>
-      <label class="mt-4">Refresh Token</label>
-      <mat-form-field appearance="none">
-        <input placeholder="RefreshToken" name="refreshToken1" #refreshToken1="ngModel"
-          [ngClass]="{ 'is-invalid': f.submitted && refreshToken1.invalid }" required matInput
-          [(ngModel)]="localdata.setting.refreshToken">
-      </mat-form-field>
-      <label class="mt-4">Default Values</label>
-      <mat-form-field appearance="none">
-        <textarea placeholder="DefaultValues" name="defaultValues1" #defaultValues1="ngModel"
-          [ngClass]="{ 'is-invalid': f.submitted && defaultValues1.invalid }" required matInput
-          [(ngModel)]="localdata.setting.defaultValues"></textarea>
-      </mat-form-field>
+      <div class="row">
+        <div class="col-md-6">
+          <label class="mt-2"> Seller Id </label>
+          <mat-form-field appearance="none">
+            <input placeholder="Seller Id" name="seller1" #seller1="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && seller1.invalid }" required matInput
+              [(ngModel)]="localdata.setting.sellerId">
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <label class="mt-2"> Marketplace Id</label>
+          <mat-form-field appearance="none">
+            <input placeholder="Marketplace Id" name="marketplace1" #marketplace1="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && marketplace1.invalid }" required matInput
+              [(ngModel)]="localdata.setting.marketplaceId">
+          </mat-form-field>
+        </div>
+        <div class="col-md-12">
+          <label class="mt-2">Refresh Token</label>
+          <mat-form-field appearance="none">
+            <input placeholder="RefreshToken" name="refreshToken1" #refreshToken1="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && refreshToken1.invalid }" required matInput
+              [(ngModel)]="localdata.setting.refreshToken">
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- <div class="col-md-12"> -->
+      <label class="mt-2">Default Values</label>
+      <div class="row  ml-3">
+        <div class="col-md-6">
+          <mat-checkbox class="example-margin" [(ngModel)]="checked">Recieve Sucess Login Email</mat-checkbox>
+        </div>
+        <div class="col-md-6">
+          <mat-checkbox class="example-margin" [(ngModel)]="checked">Recievw Failed Login Email</mat-checkbox>
+        </div>
+        <div class="col-md-6">
+          <mat-checkbox class="example-margin" [(ngModel)]="checked">Recieve Email When User Lock</mat-checkbox>
+        </div>
+        <div class="col-md-6">
+          <mat-checkbox class="example-margin" [(ngModel)]="checked">Inventory Update</mat-checkbox>
+        </div>
+
+        <div class="col-md-6">
+          <mat-checkbox class="example-margin" [(ngModel)]="checked">Apply Restriction On Threshold</mat-checkbox>
+        </div>        
+        <label style="font-family: sans-serif;     padding-top: 6px;" class="col-md-3">Threshold Value</label>
+        <mat-form-field appearance="none" class="col-md-3 ">
+          <input placeholder="Threshold Value" name="ThresholdValue" #ThresholdValue="ngModel" required matInput
+            [(ngModel)]="sdd">
+        </mat-form-field>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label style="font-family: sans-serif; " class="col-md-3">Api Request Hourly</label>
+          <mat-form-field appearance="none" class="col-md-3 ">
+            <input placeholder="Api Request Hourly" name="ApiRequestHourly" #ApiRequestHourly="ngModel" required
+              matInput [(ngModel)]="sdd">
+          </mat-form-field>
+        </div>
+
+
+        <div class="col-md-6">
+          <label style="font-family: sans-serif;" class="col-md-3">Api Request Daily</label>
+          <mat-form-field appearance="none" class="col-md-3 ">
+            <input placeholder="Api Request Daily" name="ApiRequestDaily" #ApiRequestDaily="ngModel" required matInput
+              [(ngModel)]="sdd">
+          </mat-form-field>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <mat-checkbox class="example-margin" [(ngModel)]="checked">Restrict Order Quantity </mat-checkbox>
+        </div>
+        <div class="col-md-6">
+          <mat-checkbox class="example-margin" [(ngModel)]="checked">Man order Quantity</mat-checkbox>
+        </div>
+      </div>
     </div>
+
+
+
+
+    <!-- <mat-form-field appearance="none">
+            <textarea placeholder="DefaultValues" name="defaultValues1" #defaultValues1="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && defaultValues1.invalid }" required matInput
+              [(ngModel)]="localdata.setting.defaultValues"></textarea>
+          </mat-form-field> -->
+    <!-- </div> -->
+  </div>
   </div>
   <div mat-dialog-actions class="model-footer mt-4 " align="end">
     <div class="d-flex justify-content-end">
@@ -346,7 +412,8 @@
 
       </mat-form-field>
       <div class="invalid-feedback d-block" style="color: red;" *ngIf="err">
-        <p> Password Must Contain <span style=" text-decoration: underline;"> Alphanumeric</span> With <span style=" text-decoration: underline;">One Special
+        <p> Password Must Contain <span style=" text-decoration: underline;"> Alphanumeric</span> With <span
+            style=" text-decoration: underline;">One Special
             Characters</span> Aa1@ </p> <br>
 
       </div>
@@ -429,8 +496,9 @@
           Password</span>
       </mat-form-field>
       <div class="invalid-feedback d-block" style="color: red;" *ngIf="err">
-        <p> Password Must Contain <span style=" text-decoration: underline;"> Alphanumeric</span> With <span style=" text-decoration: underline;">One Special
-          Characters</span> Aa1@ </p> <br>
+        <p> Password Must Contain <span style=" text-decoration: underline;"> Alphanumeric</span> With <span
+            style=" text-decoration: underline;">One Special
+            Characters</span> Aa1@ </p> <br>
 
       </div>
 
@@ -649,11 +717,12 @@
           [ngClass]="{ 'is-invalid': o.submitted && name5.invalid }" required matInput [(ngModel)]="localdata.name">
       </mat-form-field>
       <div class="mt-5">
-        <ckeditor [(ngModel)]="localdata.emailTemplate" name="emailTemplate" #emailTemplate="ngModel" required [config]="config"
-          (change)="onChange($event)" (editorChange)="onEditorChange($event)" (ready)="onReady($event)"
-          (focus)="onFocus($event)" (blur)="onBlur($event)" (contentDom)="onContentDom($event)"
-          (fileUploadRequest)="onFileUploadRequest($event)" (fileUploadResponse)="onFileUploadResponse($event)"
-          (paste)="onPaste($event)" (drop)="onDrop($event)" debounce="500">
+        <ckeditor [(ngModel)]="localdata.emailTemplate" name="emailTemplate" #emailTemplate="ngModel" required
+          [config]="config" (change)="onChange($event)" (editorChange)="onEditorChange($event)"
+          (ready)="onReady($event)" (focus)="onFocus($event)" (blur)="onBlur($event)"
+          (contentDom)="onContentDom($event)" (fileUploadRequest)="onFileUploadRequest($event)"
+          (fileUploadResponse)="onFileUploadResponse($event)" (paste)="onPaste($event)" (drop)="onDrop($event)"
+          debounce="500">
         </ckeditor>
       </div>
       <!-- <div class="form-group">
