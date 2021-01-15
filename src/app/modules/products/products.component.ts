@@ -45,10 +45,10 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle("Products");
-    this.getAllOwners();
-    this.getEmailTemplate();
+    this.getAllProducts();
+    this.getEmailTemplateList();
   }
-  public getAllOwners = () => {
+  public getAllProducts = () => {
     this.repoService.getData('products')
       .subscribe((res: any) => {
         this.dataSource = new MatTableDataSource(res.data.data);
@@ -56,7 +56,7 @@ export class ProductsComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
       });
   }
-  public getEmailTemplate = () => {
+  public getEmailTemplateList = () => {
     this.repoService.getData('emailTemplate')
       .subscribe((res: any) => {
         // this.dataSource = new MatTableDataSource(res.data);
@@ -147,7 +147,7 @@ export class ProductsComponent implements OnInit {
     this.repoService.create('product/product', bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('AddProduct', this.popupmsg);
-      this.getAllOwners();
+      this.getAllProducts();
 
     }, error => {
       this.popupmsg.message = error.error.message;
@@ -169,7 +169,7 @@ export class ProductsComponent implements OnInit {
     this.repoService.update('product/product/' + data.id, bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
-      this.getAllOwners();
+      this.getAllProducts();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
@@ -204,7 +204,7 @@ export class ProductsComponent implements OnInit {
     this.repoService.create('import/products', { 'products': data }).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
-      this.getAllOwners();
+      this.getAllProducts();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
@@ -216,7 +216,7 @@ export class ProductsComponent implements OnInit {
     this.repoService.delete2('product/delete', { id: element.id }).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
-      this.getAllOwners();
+      this.getAllProducts();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);

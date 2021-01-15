@@ -40,7 +40,7 @@ export class UsersComponent implements AfterViewInit, OnInit {
     this.title.setTitle("Users");
     this.getAllvendors();
     this.selectedSelectBox = this.repoService.vendorId !== '' ? +this.repoService.vendorId : 1;
-    this.getAllOwners();
+    this.getAllSuperAdminUser();
   }
 
   ngAfterViewInit() {
@@ -51,7 +51,7 @@ export class UsersComponent implements AfterViewInit, OnInit {
   }
 
 
-  public getAllOwners = () => {
+  public getAllSuperAdminUser = () => {
     this.repoService.create('superadmin/users', { tenantId: this.selectedSelectBox })
       .subscribe((res: any) => {
         this.dataSource = new MatTableDataSource(res.data);
@@ -74,7 +74,7 @@ export class UsersComponent implements AfterViewInit, OnInit {
 
   public selectedValue(event: MatSelectChange) {
     this.selectedSelectBox = event.value;
-    this.getAllOwners();
+    this.getAllSuperAdminUser();
   }
 
   public redirectToDetails = () => {
@@ -183,7 +183,7 @@ export class UsersComponent implements AfterViewInit, OnInit {
     this.repoService.create('adminUser', bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('adduser', this.popupmsg);
-      this.getAllOwners();
+      this.getAllSuperAdminUser();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
@@ -202,7 +202,7 @@ export class UsersComponent implements AfterViewInit, OnInit {
     this.repoService.update('updateUser', bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('adduser', this.popupmsg);
-      this.getAllOwners();
+      this.getAllSuperAdminUser();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);

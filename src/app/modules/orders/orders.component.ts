@@ -69,19 +69,12 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     private Decription: DecriptionService,
     private title: Title
   ) {
-    // this.dataSource.filterPredicate = (data, filter) => {
-    //   if (this.fromDate && this.toDate) {
-    //     return data.createdAt >= this.fromDate && data.createdAt <= this.toDate;
-    //   }
-    //   return true;
-    // };
   }
 
   ngAfterViewInit() {
     this.title.setTitle("Orders");
     if (this.dataSource)
       this.dataSource.sort = this.sort;
-    // this.dataSource.paginator = this.paginator;
   }
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
@@ -92,9 +85,9 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.getAllOwners();
+    this.getAllOrders();
   }
-  public getAllOwners = () => {
+  public getAllOrders = () => {
     this.pagenumber += 1;
     this.repoService.getData('orders/' + this.pagenumber + '/' + this.pagesize).subscribe((res: any) => {
       if (res && res.data && res.data.rows.length > 0) {
@@ -233,7 +226,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
       this.popupmsg.message = res.message;
       this.openDialogSmall('updatestatus', this.popupmsg);
       this.pagenumber = this.pagenumber - 1;
-      this.getAllOwners();
+      this.getAllOrders();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
@@ -246,7 +239,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
       this.popupmsg.message = res.message;
       this.openDialogSmall('updatestatus', this.popupmsg);
       this.pagenumber = this.pagenumber - 1;
-      this.getAllOwners();
+      this.getAllOrders();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);

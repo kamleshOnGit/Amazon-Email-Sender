@@ -35,10 +35,10 @@ export class ViewproductsComponent implements OnInit {
   constructor(private repoService: RepositoryService , public dialog: MatDialog ,public authService: AuthService) { }
 
   ngOnInit() {
-    this.getAllOwners();
+    this.getAllProducts();
 
   }
-  public getAllOwners = () => {
+  public getAllProducts = () => {
     this.repoService.getData('products')
     .subscribe( (res: any) => {
       this.dataSource = new MatTableDataSource(res.data.data);

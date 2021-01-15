@@ -44,14 +44,14 @@ export class AllowUsersComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle("Allow Users");
-    this.getAllOwners();
+    this.getAllUsers();
   }
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
 
-  public getAllOwners = () => {
+  public getAllUsers = () => {
     this.repoService.getData('admin/users')
       .subscribe((res: any) => {
         this.dataSource = new MatTableDataSource(res.data);
@@ -65,16 +65,8 @@ export class AllowUsersComponent implements OnInit {
 
   public selectedValue(event: MatSelectChange) {
     this.selectedSelectBox = event.value;
-    this.getAllOwners();
+    this.getAllUsers();
   }
-
-  public redirectToDetails = (id: string) => {
-  }
-  public redirectToUpdate = (id: string) => {
-  }
-  public redirectToDelete = (id: string) => {
-  }
-
   public openDialog(action, obj) {
     obj.action = action;
     if (action == "AddUser") {
@@ -176,7 +168,7 @@ export class AllowUsersComponent implements OnInit {
     this.repoService.create('user', bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('adduser', this.popupmsg);    
-    this.getAllOwners();
+    this.getAllUsers();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);

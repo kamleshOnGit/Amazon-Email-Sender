@@ -53,13 +53,12 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-
     this.title.setTitle("Unique keys");
-    this.getAllOwners();
+    this.getAllProducts();
     this.dataSource = new MatTableDataSource(this.dataSource);
   }
 
-  public getAllOwners = () => {
+  public getAllProducts = () => {
     this.repoService.getData('products')
       .subscribe((res: any) => {
         this.productData = res.data.data;
@@ -200,14 +199,14 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
     this.repoService.create('import/productskeys', { 'productskey': data }).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
-      this.getAllOwners();
+      this.getAllProducts();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });
 
   }
-  public delepredouct(element: any) {
+  public deleteProductKey(element: any) {
     this.repoService.delete2('productkey/delete', { id: element.id }).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
@@ -219,11 +218,11 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public revokeOrder(element) {
+  public revokeProductKey(element) {
     this.repoService.create('productkey/revoke', { 'orderId': '' + element.orderId }).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('updatestatus', this.popupmsg);
-      this.getAllOwners();
+      this.getAllProducts();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
