@@ -76,12 +76,6 @@ export class VendorsComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result.event === 'AddNewVendor') {
         this.addNewVendor(result.data);
-      } else if (result.event === 'Update') {
-        this.updateRowData(result.data);
-      } else if (result.event === 'Delete') {
-        this.deleteRowData(result.data);
-      } else if (result.event === 'AddAll') {
-        this.updateAll(result.data);
       } else if (result.event === 'AddVendorSetting') {
         this.settingVender(result.data);
       } else if (result.event === 'EditVendorSetting') {
@@ -97,11 +91,6 @@ export class VendorsComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result && result.event === 'product not found') {
-        // this.addRowData(result.data);
-      } else if (result && result.event === 'Updatekey') {
-        // this.updateRowData(result.data);
-      }
     });
   }
 

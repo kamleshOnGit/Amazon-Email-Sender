@@ -32,7 +32,7 @@ export class EmailTemplateComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['name', 'category', 'IsActive', 'createdAt', 'Action'];
 
-  public dataSource=new MatTableDataSource([]);
+  public dataSource = new MatTableDataSource([]);
   popupmsg = { message: '' };
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -81,7 +81,6 @@ export class EmailTemplateComponent implements OnInit, AfterViewInit {
       width: '1000px',
       data: obj,
     });
-
     dialogRef.afterClosed().subscribe((result) => {
       if (result.event === 'UploadEmail') {
         this.newemailtemplate(result.data);
@@ -94,13 +93,7 @@ export class EmailTemplateComponent implements OnInit, AfterViewInit {
       width: '500px',
       data: obj
     });
-
     dialogRef.afterClosed().subscribe((result) => {
-      if (result && result.event === 'product not found') {
-        // this.addRowData(result.data);
-      } else if (result && result.event === 'Updatekey') {
-        // this.updateRowData(result.data);
-      }
     });
   }
   newemailtemplate(data: any) {

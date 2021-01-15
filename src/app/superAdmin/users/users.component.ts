@@ -77,13 +77,6 @@ export class UsersComponent implements AfterViewInit, OnInit {
     this.getAllSuperAdminUser();
   }
 
-  public redirectToDetails = () => {
-  }
-  public redirectToUpdate = () => {
-  }
-  public redirectToDelete = () => {
-  }
-
   public openDialog(action, obj) {
     obj.action = action;
     obj.IsActive = true;
@@ -93,13 +86,7 @@ export class UsersComponent implements AfterViewInit, OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result.event === 'Update') {
-        this.updateRowData(result.data);
-      } else if (result.event === 'Delete') {
-        this.deleteRowData(result.data);
-      } else if (result.event === 'AddAll') {
-        this.updateAll(result.data);
-      } else if (result.event === 'AddNewUser') {
+      if (result.event === 'AddNewUser') {
         this.addNewUser(result.data);
       } else if (result.event === 'updatenewUser') {
         this.updateNewUser(result.data);
@@ -112,13 +99,7 @@ export class UsersComponent implements AfterViewInit, OnInit {
       width: '500px',
       data: obj
     });
-
     dialogRef.afterClosed().subscribe((result) => {
-      if (result && result.event === 'product not found') {
-        this.addRowData(result.data);
-      } else if (result && result.event === 'Updatekey') {
-        this.updateRowData(result.data);
-      }
     });
   }
   public addRowData(rowobj: any) {

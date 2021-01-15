@@ -68,13 +68,6 @@ export class ProductsComponent implements OnInit {
         this.openDialogSmall('mailsenterror', this.popupmsg);
       });
   }
-  public redirectToDetails = (id: string) => {
-  }
-  public redirectToUpdate = (id: string) => {
-  }
-  public redirectToDelete = (id: string) => {
-  }
-
   public openDialog(action, obj) {
     obj.action = action;
     if (this.EmailTemplateList.length == 0) {
@@ -95,12 +88,6 @@ export class ProductsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result.event === 'Add') {
         this.addRowData(result.data);
-      } else if (result.event === 'Update') {
-        this.updateRowData(result.data);
-      } else if (result.event === 'Delete') {
-        this.deleteRowData(result.data);
-      } else if (result.event === 'AddAll') {
-        this.updateAll(result.data);
       } else if (result.event === 'Upload Product File') {
         this.updateproduct(result.data);
       } else if (result.event === 'AsignEmailToProduct') {
@@ -117,11 +104,6 @@ export class ProductsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result && result.event === 'product not found') {
-        this.addRowData(result.data);
-      } else if (result && result.event === 'Updatekey') {
-        this.updateRowData(result.data);
-      }
     });
   }
   public asignEmailToproduct(emailId, productId) {

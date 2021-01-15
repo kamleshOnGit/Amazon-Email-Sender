@@ -7,9 +7,6 @@
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
     </div>
-    <button class="ml-5 mr-5 " (click)="openDialog('filteruniquekey',{})" mat-icon-button>
-      <mat-icon>filter_alt</mat-icon>
-    </button>
   </div>
   <div class="d-flex buttonsgroup ">
     <mat-form-field appearance="none">
@@ -57,7 +54,6 @@
       <ng-container matColumnDef="Action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Action</th>
         <td mat-cell *matCellDef="let element">
-          <!-- <mat-icon (click)="openDialog('Updatekey',element)">edit</mat-icon>  -->
           <button (click)="revokeProductKey(element)" class="badge py-1 border-0 badge-primary">Revoke Key</button>
           <mat-icon (click)="deleteProductKey(element)">delete</mat-icon>
         </td>

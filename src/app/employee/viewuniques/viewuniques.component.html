@@ -20,8 +20,10 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <button class="d-flex btn btn-custom ml-3" mat-raised-button>Add Single Key</button>
-    <button class="d-flex btn btn-custom ml-3" mat-raised-button>Upload Keys</button>
+    <button class="d-flex btn btn-custom ml-3" (click)="openDialog('Upload Multiple Keys',{})" mat-raised-button>Upload
+      Multiple Keys</button>
+    <button class="d-flex btn btn-custom ml-3" *ngIf="selectedMarketPlaceId" (click)="openDialog('AddSinglekey',{})"
+      mat-raised-button>Add Single Key</button>
   </div>
 </div>
 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">

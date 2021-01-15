@@ -72,20 +72,13 @@ export class AllowUsersComponent implements OnInit {
     if (action == "AddUser") {
       obj.IsActive = true;
     }
-    
     const dialogRef = this.dialog.open(DialogBoxComponent, {
       width: '1000px',
       data: obj
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result.event === 'Update') {
-        this.updateRowData(result.data);
-      } else if (result.event === 'Delete') {
-        this.deleteRowData(result.data);
-      } else if (result.event === 'AddAll') {
-        this.updateAll(result.data);
-      } else if (result.event === 'AddUser') {
+      if (result.event === 'AddUser') {
         this.addNewUser(result.data);
       }
     });
@@ -98,11 +91,6 @@ export class AllowUsersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result && result.event === 'product not found') {
-        this.addRowData(result.data);
-      } else if (result && result.event === 'Updatekey') {
-        this.updateRowData(result.data);
-      }
     });
   }
   public addRowData(rowobj: any) {
@@ -167,8 +155,8 @@ export class AllowUsersComponent implements OnInit {
     };
     this.repoService.create('user', bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
-      this.openDialogSmall('adduser', this.popupmsg);    
-    this.getAllUsers();
+      this.openDialogSmall('adduser', this.popupmsg);
+      this.getAllUsers();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
