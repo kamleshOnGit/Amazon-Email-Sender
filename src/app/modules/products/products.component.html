@@ -45,7 +45,7 @@
 
     <ng-container matColumnDef="productkey">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Unique Keys </th>
-        <td mat-cell *matCellDef="let element" (click)="openDialog('ViewAll',element)"> {{ element.activeKeyCount + element.usedKeyCount }} </td>
+        <td mat-cell *matCellDef="let element"> {{ element.activeKeyCount + element.usedKeyCount }} </td>
       </ng-container>
       
        <!-- Position Column -->

@@ -34,20 +34,6 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.title.setTitle("login");
   }
-  // onSubmit($event: any) {
-  //   $event.preventDefault();
-  //   if (this.username === this.userverify && this.password === this.passverify) {
-  //     this.router.navigate(['admin'] ,  {relativeTo: this.route});
-  //     this.wrongpass = false;
-  //     this.services.role = 'admin';
-  //   } else if (this.username === this.superadmin && this.password === this.superpass){ 
-  //     this.router.navigate(['admin'] ,  {relativeTo: this.route});
-  //     this.wrongpass = false;
-  //     this.services.role = 'superadmin';
-  //   } else {
-  //     this.wrongpass = true;
-  //   }
-  // }
 
   get f() {
     return this.signinForm.controls;

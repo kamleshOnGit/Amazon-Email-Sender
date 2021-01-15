@@ -45,10 +45,10 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle("Products");
-    this.getAllOwners();
-    this.getEmailTemplate();
+    this.getAllProducts();
+    this.getEmailTemplateList();
   }
-  public getAllOwners = () => {
+  public getAllProducts = () => {
     this.repoService.getData('products')
       .subscribe((res: any) => {
         this.dataSource = new MatTableDataSource(res.data.data);
@@ -56,7 +56,7 @@ export class ProductsComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
       });
   }
-  public getEmailTemplate = () => {
+  public getEmailTemplateList = () => {
     this.repoService.getData('emailTemplate')
       .subscribe((res: any) => {
         // this.dataSource = new MatTableDataSource(res.data);
@@ -68,13 +68,6 @@ export class ProductsComponent implements OnInit {
         this.openDialogSmall('mailsenterror', this.popupmsg);
       });
   }
-  public redirectToDetails = (id: string) => {
-  }
-  public redirectToUpdate = (id: string) => {
-  }
-  public redirectToDelete = (id: string) => {
-  }
-
   public openDialog(action, obj) {
     obj.action = action;
     if (this.EmailTemplateList.length == 0) {
@@ -95,12 +88,6 @@ export class ProductsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result.event === 'Add') {
         this.addRowData(result.data);
-      } else if (result.event === 'Update') {
-        this.updateRowData(result.data);
-      } else if (result.event === 'Delete') {
-        this.deleteRowData(result.data);
-      } else if (result.event === 'AddAll') {
-        this.updateAll(result.data);
       } else if (result.event === 'Upload Product File') {
         this.updateproduct(result.data);
       } else if (result.event === 'AsignEmailToProduct') {
@@ -117,11 +104,6 @@ export class ProductsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result && result.event === 'product not found') {
-        this.addRowData(result.data);
-      } else if (result && result.event === 'Updatekey') {
-        this.updateRowData(result.data);
-      }
     });
   }
   public asignEmailToproduct(emailId, productId) {
@@ -147,7 +129,7 @@ export class ProductsComponent implements OnInit {
     this.repoService.create('product/product', bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('AddProduct', this.popupmsg);
-      this.getAllOwners();
+      this.getAllProducts();
 
     }, error => {
       this.popupmsg.message = error.error.message;
@@ -169,7 +151,7 @@ export class ProductsComponent implements OnInit {
     this.repoService.update('product/product/' + data.id, bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
-      this.getAllOwners();
+      this.getAllProducts();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
@@ -204,7 +186,7 @@ export class ProductsComponent implements OnInit {
     this.repoService.create('import/products', { 'products': data }).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
-      this.getAllOwners();
+      this.getAllProducts();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
@@ -216,7 +198,7 @@ export class ProductsComponent implements OnInit {
     this.repoService.delete2('product/delete', { id: element.id }).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
-      this.getAllOwners();
+      this.getAllProducts();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);

@@ -51,11 +51,11 @@ export class VendorsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
 
     this.title.setTitle("Vendors");
-    this.getAllOwners();
+    this.getAllTenants();
 
   }
 
-  public getAllOwners = () => {
+  public getAllTenants = () => {
     this.repoService.getData('tenants')
       .subscribe((res: any) => {
         this.dataSource = new MatTableDataSource(res.data.data);
@@ -64,13 +64,6 @@ export class VendorsComponent implements OnInit, AfterViewInit {
         this.openDialogSmall('mailsenterror', this.popupmsg);
       });
   }
-  public redirectToDetails = (id: string) => {
-  }
-  public redirectToUpdate = (id: string) => {
-  }
-  public redirectToDelete = (id: string) => {
-  }
-
   public openDialog(action, obj, setting = null) {
     obj.action = action;
     obj.setting = setting;
@@ -83,12 +76,6 @@ export class VendorsComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result.event === 'AddNewVendor') {
         this.addNewVendor(result.data);
-      } else if (result.event === 'Update') {
-        this.updateRowData(result.data);
-      } else if (result.event === 'Delete') {
-        this.deleteRowData(result.data);
-      } else if (result.event === 'AddAll') {
-        this.updateAll(result.data);
       } else if (result.event === 'AddVendorSetting') {
         this.settingVender(result.data);
       } else if (result.event === 'EditVendorSetting') {
@@ -104,11 +91,6 @@ export class VendorsComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result && result.event === 'product not found') {
-        // this.addRowData(result.data);
-      } else if (result && result.event === 'Updatekey') {
-        // this.updateRowData(result.data);
-      }
     });
   }
 
@@ -163,7 +145,7 @@ export class VendorsComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/superadmin/users']);
   }
   public addNewVendor(data) {
-    this.getAllOwners();
+    this.getAllTenants();
     if (data.logo) {
       this.bodydata = {
         name: data.name,
@@ -178,7 +160,7 @@ export class VendorsComponent implements OnInit, AfterViewInit {
     this.repoService.create('addTenant', this.bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('AddVendor', this.popupmsg);
-      this.getAllOwners();
+      this.getAllTenants();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
@@ -195,7 +177,7 @@ export class VendorsComponent implements OnInit, AfterViewInit {
     this.repoService.create('setting', bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('addsetting', this.popupmsg);
-      this.getAllOwners();
+      this.getAllTenants();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
@@ -212,7 +194,7 @@ export class VendorsComponent implements OnInit, AfterViewInit {
     this.repoService.update('updateSetting', bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('updatesetting', this.popupmsg);
-      this.getAllOwners();
+      this.getAllTenants();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);

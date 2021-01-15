@@ -53,13 +53,12 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-
     this.title.setTitle("Unique keys");
-    this.getAllOwners();
+    this.getAllProducts();
     this.dataSource = new MatTableDataSource(this.dataSource);
   }
 
-  public getAllOwners = () => {
+  public getAllProducts = () => {
     this.repoService.getData('products')
       .subscribe((res: any) => {
         this.productData = res.data.data;
@@ -74,18 +73,6 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
   public getAllkeys = () => {
     this.repoService.create('productkeys/sku', { sku: this.selectedProductSellerSku, pageNumber: 1, pageSize: 50 })
       .subscribe((res: any) => {
-        // if (res && res.data && res.data.data && res.data.data.length > 0) {
-        //     res.data.data.forEach(element => {
-        //         let activeCount = 0;
-        //         let usedCount = 0;
-        //         if (element.productKeys.length > 0) {
-        //             activeCount = element.productKeys.filter(x => x.status === 'active').length;
-        //             usedCount = element.productKeys.filter(x => x.status === 'used').length;
-        //         }
-        //         element.activeCount = activeCount;
-        //         element.usedCount = usedCount;
-        //     });
-        // }
         this.dataSource = new MatTableDataSource(res.data.data.rows);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
@@ -93,13 +80,6 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
         this.popupmsg.message = error.error.message;
         this.openDialogSmall('mailsenterror', this.popupmsg);
       });
-  }
-
-  public redirectToDetails = (id: string) => {
-  }
-  public redirectToUpdate = (id: string) => {
-  }
-  public redirectToDelete = (id: string) => {
   }
 
   public openDialog(action, obj) {
@@ -116,12 +96,6 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result.event === 'AddSinglekey') {
         this.addRowData(result.data);
-      } else if (result.event === 'Updatekey') {
-        this.updateRowData(result.data);
-      } else if (result.event === 'Delete') {
-        this.deleteRowData(result.data);
-      } else if (result.event === 'AddAll') {
-        this.updateAll(result.data);
       } else if (result.event === 'Upload Multiple Keys') {
         this.updateproductKeys(result.data);
       }
@@ -134,13 +108,7 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
       width: '500px',
       data: obj
     });
-
     dialogRef.afterClosed().subscribe((result) => {
-      if (result && result.event === 'product not found') {
-        // this.addRowData(result.data);
-      } else if (result && result.event === 'Updatekey') {
-        // this.updateRowData(result.data);
-      }
     });
   }
 
@@ -196,18 +164,18 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
 
   public updateproductKeys(data: any) {
     // const bodydata = JSON.parse(JSON.stringify(data));
-    this.openDialogSmall('product not found', data.productnotfound);
+    // this.openDialogSmall('product not found', data.productnotfound);
     this.repoService.create('import/productskeys', { 'productskey': data }).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
-      this.getAllOwners();
+      this.getAllProducts();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
     });
 
   }
-  public delepredouct(element: any) {
+  public deleteProductKey(element: any) {
     this.repoService.delete2('productkey/delete', { id: element.id }).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('productdeleted', this.popupmsg);
@@ -219,11 +187,11 @@ export class UniqueKeysComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public revokeOrder(element) {
+  public revokeProductKey(element) {
     this.repoService.create('productkey/revoke', { 'orderId': '' + element.orderId }).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('updatestatus', this.popupmsg);
-      this.getAllOwners();
+      this.getAllProducts();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);

@@ -32,7 +32,7 @@ export class EmailTemplateComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['name', 'category', 'IsActive', 'createdAt', 'Action'];
 
-  public dataSource=new MatTableDataSource([]);
+  public dataSource = new MatTableDataSource([]);
   popupmsg = { message: '' };
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -53,10 +53,10 @@ export class EmailTemplateComponent implements OnInit, AfterViewInit {
   ngOnInit() {
 
     this.title.setTitle("Email Template");
-    this.getAllOwners();
+    this.getAllEmailTemplateList();
 
   }
-  public getAllOwners = () => {
+  public getAllEmailTemplateList = () => {
     this.repoService.getData('emailTemplate')
       .subscribe((res: any) => {
         this.dataSource = new MatTableDataSource(res.data);
@@ -66,12 +66,6 @@ export class EmailTemplateComponent implements OnInit, AfterViewInit {
         this.popupmsg.message = error.error.message;
         this.openDialogSmall('mailsenterror', this.popupmsg);
       });
-  }
-  public redirectToDetails = (id: string) => {
-  }
-  public redirectToUpdate = (id: string) => {
-  }
-  public redirectToDelete = (id: string) => {
   }
   redirectTemplate(id: number) {
     this.repoService.id = id;
@@ -87,7 +81,6 @@ export class EmailTemplateComponent implements OnInit, AfterViewInit {
       width: '1000px',
       data: obj,
     });
-
     dialogRef.afterClosed().subscribe((result) => {
       if (result.event === 'UploadEmail') {
         this.newemailtemplate(result.data);
@@ -100,13 +93,7 @@ export class EmailTemplateComponent implements OnInit, AfterViewInit {
       width: '500px',
       data: obj
     });
-
     dialogRef.afterClosed().subscribe((result) => {
-      if (result && result.event === 'product not found') {
-        // this.addRowData(result.data);
-      } else if (result && result.event === 'Updatekey') {
-        // this.updateRowData(result.data);
-      }
     });
   }
   newemailtemplate(data: any) {
@@ -121,7 +108,7 @@ export class EmailTemplateComponent implements OnInit, AfterViewInit {
 
       this.popupmsg.message = res.message;
       this.openDialogSmall('addemailtemplate', this.popupmsg);
-      this.getAllOwners();
+      this.getAllEmailTemplateList();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
@@ -132,7 +119,7 @@ export class EmailTemplateComponent implements OnInit, AfterViewInit {
     this.repoService.delete1('emailTemplate/' + id).subscribe((res: any) => {
       this.popupmsg.message = res.message;
       this.openDialogSmall('deleteemailtemplate', this.popupmsg);
-      this.getAllOwners();
+      this.getAllEmailTemplateList();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);

@@ -69,19 +69,12 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     private Decription: DecriptionService,
     private title: Title
   ) {
-    // this.dataSource.filterPredicate = (data, filter) => {
-    //   if (this.fromDate && this.toDate) {
-    //     return data.createdAt >= this.fromDate && data.createdAt <= this.toDate;
-    //   }
-    //   return true;
-    // };
   }
 
   ngAfterViewInit() {
     this.title.setTitle("Orders");
     if (this.dataSource)
       this.dataSource.sort = this.sort;
-    // this.dataSource.paginator = this.paginator;
   }
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
@@ -92,9 +85,9 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.getAllOwners();
+    this.getAllOrders();
   }
-  public getAllOwners = () => {
+  public getAllOrders = () => {
     this.pagenumber += 1;
     this.repoService.getData('orders/' + this.pagenumber + '/' + this.pagesize).subscribe((res: any) => {
       if (res && res.data && res.data.rows.length > 0) {
@@ -141,11 +134,6 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
-
-  public redirectToDetails = (id: string) => { };
-  public redirectToUpdate = (id: string) => { };
-  public redirectToDelete = (id: string) => { };
-
   public openDialog(action, obj) {
     obj.action = action;
     const dialogRef = this.dialog.open(DialogBoxComponent, {
@@ -154,15 +142,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result.event === 'Add') {
-        this.addRowData(result.data);
-      } else if (result.event === 'Update') {
-        this.updateRowData(result.data);
-      } else if (result.event === 'Delete') {
-        this.deleteRowData(result.data);
-      } else if (result.event === 'AddAll') {
-        this.updateAll(result.data);
-      } else if (result.event === 'Upload Order File') {
+      if (result.event === 'Upload Order File') {
         this.updateOrders(result.data);
       }
     });
@@ -173,25 +153,8 @@ export class OrdersComponent implements OnInit, AfterViewInit {
       width: '500px',
       data: obj
     });
-
     dialogRef.afterClosed().subscribe((result) => {
-      if (result && result.event === 'product not found') {
-        // this.addRowData(result.data);
-      } else if (result && result.event === 'Updatekey') {
-        // this.updateRowData(result.data);
-      }
     });
-  }
-  public addRowData(rowobj: any) {
-    const d = new Date();
-    // this.dataSourceNew .push( {
-    //   id: d.getTime(),
-    //   SKU: rowobj.SKU,
-    //   Action: 'Add New',
-    //   BatchCode: rowobj.BatchCode,
-    //   CodeAvailable: rowobj.CodeAvailable,
-    //   CodeUsed: rowobj.CodeUsed,
-    // });
   }
   public updateRowData(rowobj) {
     this.dataSource = this.dataSource.filter((value, key) => {
@@ -233,7 +196,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
       this.popupmsg.message = res.message;
       this.openDialogSmall('updatestatus', this.popupmsg);
       this.pagenumber = this.pagenumber - 1;
-      this.getAllOwners();
+      this.getAllOrders();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);
@@ -246,7 +209,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
       this.popupmsg.message = res.message;
       this.openDialogSmall('updatestatus', this.popupmsg);
       this.pagenumber = this.pagenumber - 1;
-      this.getAllOwners();
+      this.getAllOrders();
     }, error => {
       this.popupmsg.message = error.error.message;
       this.openDialogSmall('mailsenterror', this.popupmsg);

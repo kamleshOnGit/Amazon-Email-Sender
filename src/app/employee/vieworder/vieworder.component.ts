@@ -47,10 +47,10 @@ export class VieworderComponent implements OnInit {
               private Decription: DecriptionService) { }
 
   ngOnInit() {
-    this.getAllOwners();
+    this.getAllOrders();
   }
 
-  public getAllOwners = () => {
+  public getAllOrders = () => {
     this.repoService.getData('orders/' + this.pagenumber + '/' + this.pagesize).subscribe((res: any) => {
       if (res && res.data  && res.data.length > 0) {
         res.data.rows.forEach(element => {
