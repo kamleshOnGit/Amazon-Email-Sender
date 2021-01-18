@@ -4,6 +4,8 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { promise } from 'protractor';
+import { resolve } from 'url';
 
 @Injectable({
   providedIn: 'root'
@@ -20,13 +22,7 @@ export class AuthService {
     public router: Router,
   ) {
   }
-  // public openDialogSmall(action, obj) {
-  //   obj.action = action;
-  //   const dialogRef = this.dialog.open( DialogBoxComponent, {
-  //     width: '500px',
-  //     data: obj
-  //   });
-  // }
+
 
   // Sign-up
   signUp(user: User): Observable<any> {
@@ -40,21 +36,29 @@ export class AuthService {
 
   // Sign-in
   signIn(user: User) {
-    return this.http.post<any>(`${this.endpoint}login`, user)
-      .subscribe((res: any) => {
-        localStorage.setItem('access_token', res.data.token);
-        localStorage.setItem('rolename', res.data.roleName);
-        this.currentUser = res.data.roleName;
-        if (res.data.roleName === 'admin') {
-          this.router.navigate(['admin/']);
-        } else if (res.data.roleName === 'superAdmin') {
-          this.router.navigate(['superadmin/']);
-        } else if (res.data.roleName === 'employee') {
-          this.router.navigate(['employee/']);
-        } else if (res.data.roleName === 'support') {
-          this.router.navigate(['support/']);
-        }
-      })
+    return new Promise((resolve, reject) => {
+      this.http.post<any>(`${this.endpoint}login`, user)
+        .subscribe((res: any) => {
+          localStorage.setItem('access_token', res.data.token);
+          localStorage.setItem('rolename', res.data.roleName);
+          this.currentUser = res.data.roleName;
+          resolve == res.data.roleName;
+          if (res.data.roleName === 'admin') {
+            this.router.navigate(['admin/']);
+          } else if (res.data.roleName === 'superAdmin') {
+            this.router.navigate(['superadmin/']);
+          } else if (res.data.roleName === 'employee') {
+            this.router.navigate(['employee/']);
+          } else if (res.data.roleName === 'support') {
+            this.router.navigate(['support/']);
+          }
+        }, error => {
+          reject(error)
+          // alert(error.error.message)
+        })
+
+    })
+
   }
 
   getToken() {

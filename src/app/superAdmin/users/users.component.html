@@ -33,7 +33,7 @@
     <!-- Name Column -->
     <ng-container matColumnDef="Vendorname">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Vendor Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.firstName}}  {{element.lastName}}</td>
+      <td mat-cell *matCellDef="let element"> {{element.firstName | titlecase}}  {{element.lastName}}  </td>
     </ng-container>
   
     <!-- Weight Column

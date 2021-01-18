@@ -1,4 +1,4 @@
-import { Component, Inject, Optional, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, Optional, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Products } from '../products.model';
 import { ProductKeys } from '../uniqueKeys.model';
@@ -9,7 +9,8 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { PasswordStrengthValidator } from '../password-strength.validator';
-import { Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { invalid } from '@angular/compiler/src/render3/view/util';
 export interface UsersData {
   itemName: string;
   ProductId: string;
@@ -25,8 +26,9 @@ export interface UsersData {
   templateUrl: './dialog-box.component.html',
   styleUrls: ['./dialog-box.component.scss']
 })
-export class DialogBoxComponent {
+export class DialogBoxComponent implements OnInit {
   roles = [{ id: 3, name: "Employee" }, { id: 4, name: "Support" }];
+  dataArray = [];
   public Editor = ClassicEditor;
   products;
   orders;
@@ -37,18 +39,22 @@ export class DialogBoxComponent {
   selectcheck = false;
   selectcheckemail = false;
   selecttext = 'InActive';
-  password ="password";
+  password = "password";
   productsAll = [];
   productnotfound = [];
   errortext = 'Unknow Error';
   @ViewChild('csvReader', { static: true }) csvReader: any;
   logoImage: any;
   err: boolean;
+  EditVendorSettingForm: FormGroup;
+  order_qty_sku: FormArray;
+  issue = false;
 
   constructor(private repoService: RepositoryService,
     public dialogRef: MatDialogRef<DialogBoxComponent>,
     private http: HttpClient,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData) {
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData,
+    private fb: FormBuilder) {
     this.localdata = { ...data };
     this.localdata.message = this.localdata.message !== undefined ? this.localdata.message : this.errortext;
     this.action = this.localdata.action;
@@ -59,24 +65,88 @@ export class DialogBoxComponent {
         this.productsAll = res.data.data;
       });
     }
+
   }
+  ngOnInit() {
+
+    if (this.localdata.action == 'EditVendorSetting') {
+      this.EditVenderSetting();
+    }
+
+  }
+
+  EditVenderSetting() {
+
+    // it make reactive form for  EditVendorSetting
+    this.EditVendorSettingForm = this.fb.group({
+      sellerId: [''],
+      marketplaceId: [''],
+      refreshToken: [''],
+      RecieveSucessLoginEmail: [false],
+      RecieveFailedLoginEmail: [false],
+      RecieveEmailWhenUserLock: [false],
+      InventoryUpdate: [false],
+      ApplyRestrictionOnThreshold: [false],
+      ThresholdValue: [0],
+      ApiRequestHourly: [0],
+      ApiRequestDaily: [0],
+      RestrictOrderQuantity: [false],
+      MaxOrderQuantity: [0],
+      order_qty_sku: this.fb.array([this.createItem()])
+
+    })
+    this.EditVendorSettingForm.patchValue({
+      sellerId: this.localdata.setting.sellerId,
+      marketplaceId: this.localdata.setting.marketplaceId,
+      refreshToken: this.localdata.setting.refreshToken
+    });
+  }
+
+
+
+  createItem() {
+    return this.fb.group({
+      sku: ['', Validators.required],
+      qty: [0, Validators.required]
+    })
+  }
+  addItem() {
+    this.order_qty_sku = this.EditVendorSettingForm.get('order_qty_sku') as FormArray;
+    let l = this.order_qty_sku.controls.length - 1;
+    // if (this.order_qty_sku.value[l]['sku'] == "" || (this.order_qty_sku.value[l]['qty'] == null || this.order_qty_sku.value[l]['qty'] == '' )) {
+    if (this.order_qty_sku.status == "INVALID") {
+      return this.issue = true
+    }
+    this.order_qty_sku.push(this.createItem());
+    this.issue = false;
+  }
+  removeitem(i) {
+    this.order_qty_sku.removeAt(i);
+  }
+
+
+  get formControl() {
+    return this.EditVendorSettingForm.controls;
+  }
+
+
   // Validators.compose([PasswordStrengthValidator, Validators.required, Validators.minLength(8), Validators.maxLength(50)])]
   passwordTest(data) {
     let test = data.target.value.match(/(?=.*\d)(?=.*[a-z])(?=.*[!@#\$%\^&\*])(?=.*[A-Z]).{8,}/g);
     if (test == '' || test == null) {
       this.err = true;
-    }    
-    else{
+    }
+    else {
       this.err = false;
     }
   }
-  showPassword(data){   
-   if(data =="password") {
+  showPassword(data) {
+    if (data == "password") {
       this.password = "text";
     }
-    else{
+    else {
       this.password = "password";
-    }    
+    }
   }
   public selectedProductValue(event: MatSelectChange) {
     this.localdata.productId = event.value;
@@ -98,7 +168,10 @@ export class DialogBoxComponent {
     if (this.logoImage !== null && this.logoImage !== undefined) {
       this.localdata['logo'] = this.logoImage
     }
+    if (this.localdata.action == 'EditVendorSetting')
+      this.localdata['setting'] = this.EditVendorSettingForm.value;
     this.dialogRef.close({ event: this.action, data: this.localdata });
+
   }
 
   // public getadminsettings(id: string) {
