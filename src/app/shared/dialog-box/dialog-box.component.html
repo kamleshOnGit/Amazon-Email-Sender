@@ -200,7 +200,7 @@
   </div>
 </form>
 
-<form *ngIf="action ==  'AddVendorSetting'" #e="ngForm">
+<!-- <form *ngIf="action ==  'AddVendorSetting'" #e="ngForm">
   <div class="model-header">
     <div (click)="closeDialog()" class="close">
       <mat-icon> close</mat-icon>
@@ -210,12 +210,6 @@
   <div mat-dialog-content class="model-body ">
 
     <div *ngIf="action == 'AddVendorSetting'">
-      <!-- <label class="mt-4"> Tenant Id</label> -->
-      <!-- <mat-form-field appearance="none">
-        <input placeholder="tenant Id" name="tenent" #tenent="ngModel"
-          [ngClass]="{ 'is-invalid': e.submitted && tenent.invalid }" required matInput
-          [(ngModel)]="localdata.tenantId">
-      </mat-form-field> -->
       <label class="mt-4"> Seller Id </label>
       <mat-form-field appearance="none">
         <input placeholder="Seller Id" name="sellerid" #sellerid="ngModel"
@@ -248,20 +242,19 @@
       <button class="d-flex  btn btn-custom" mat-button [disabled]="!e.valid" (click)="doAction()">Save Changes</button>
     </div>
   </div>
-</form>
+</form> -->
 
 
-<form *ngIf="action ==  'EditVendorSetting'" [formGroup]="EditVendorSettingForm">
+<form *ngIf="action ==  'EditVendorSetting' || action=='AddVendorSetting'" [formGroup]="EditVendorSettingForm">
   <div class="model-header">
     <div (click)="closeDialog()" class="close">
       <mat-icon> close</mat-icon>
     </div>
-    <h2 mat-dialog-title *ngIf="action == 'EditVendorSetting';"> Edit Settings For Vendor</h2>
+    <h2 mat-dialog-title *ngIf="action == 'EditVendorSetting' "> Edit Settings For Vendor</h2>
+    <h2 mat-dialog-title *ngIf="action=='AddVendorSetting'"> Add Settings For Vendor</h2>
   </div>
   <div mat-dialog-content class="model-body  p-10">
-
-    <div *ngIf="action == 'EditVendorSetting'">
-
+    <div *ngIf="action == 'EditVendorSetting' || action=='AddVendorSetting'">
       <div class="row ">
         <div class="col-md-6">
           <label class="mt-2"> Seller Id </label>
@@ -283,7 +276,7 @@
         </div>
       </div>
       <label class="mt-2">Default Values</label>
-      <div style="border: 1px solid black; padding: 10px;" class="row  ml-3 ">
+      <div class="row default-row">
         <div class="col-md-6 mt-2">
           <mat-checkbox formControlName="RecieveSucessLoginEmail" class="example-margin" matInput>Recieve Sucess Login
             Email
@@ -314,26 +307,25 @@
         </div>
         <div class="col-md-6 mt-2">
           <div *ngIf="EditVendorSettingForm.get('ApplyRestrictionOnThreshold').value == true">
-            <label class="col-md-4">Threshold Value</label>
-            <mat-form-field appearance="none" class="col-md-4 ">
-              <input type="number" formControlName="ThresholdValue" matInput>
-
+            <label>Threshold Value</label>
+            <mat-form-field appearance="none">
+              <input type="number" formControlName="ThresholdValue" matInput placeholder="Threshold Value">
             </mat-form-field>
 
           </div>
         </div>
 
         <div class="col-md-6 mt-2">
-          <label style="font-family: sans-serif; " class="col-md-4">Api Request Hourly</label>
-          <mat-form-field appearance="none" class="col-md-4 ">
-            <input type="number" formControlName="ApiRequestHourly" matInput>
+          <label>Api Request Hourly</label>
+          <mat-form-field appearance="none">
+            <input type="number" formControlName="ApiRequestHourly" placeholder="Api Request Hourly" matInput>
           </mat-form-field>
         </div>
 
         <div class="col-md-6 mt-2">
-          <label style="font-family: sans-serif;" class="col-md-4">Api Request Daily</label>
-          <mat-form-field appearance="none" class="col-md-4 ">
-            <input type="number" formControlName="ApiRequestDaily" matInput>
+          <label>Api Request Daily</label>
+          <mat-form-field appearance="none">
+            <input type="number" formControlName="ApiRequestDaily" placeholder="Api Request Daily" matInput>
           </mat-form-field>
 
         </div>
@@ -343,37 +335,33 @@
         </div>
         <div class="col-md-6 mt-2">
           <div *ngIf="EditVendorSettingForm.get('RestrictOrderQuantity').value == true  ">
-
-            <label style="font-family: sans-serif;" class="col-md-4">Max Order Quantity</label>
-            <mat-form-field appearance="none" class="col-md-4 ">
-              <input type="number" formControlName="MaxOrderQuantity" matInput>
+            <label>Max Order Quantity</label>
+            <mat-form-field appearance="none">
+              <input type="number" formControlName="MaxOrderQuantity" placeholder="Max Order Quantity" matInput>
             </mat-form-field>
           </div>
         </div>
-      </div>
-
-
-      <label>Order Quantity SKU</label>
+      </div><label>Order Quantity SKU</label>
       <div formArrayName="order_qty_sku"
         *ngFor="let data of EditVendorSettingForm.get('order_qty_sku').controls;let i = index">
-        <div [formGroupName]="i" class="row  ml-3 ">
+        <div [formGroupName]="i" class="row order_qty_main position-relative align-items-center">
           <div class="col-md-5 mt-2">
             <mat-label>Product</mat-label>
             <mat-form-field appearance="none">
-              <input name="Product" formControlName="sku" matInput [ngClass]="{'is-invalid': data.controls.sku.invalid && data.controls.sku.touched ,
+              <input name="Product" placeholder="Product" formControlName="sku" matInput [ngClass]="{'is-invalid': data.controls.sku.invalid && data.controls.sku.touched ,
               'is-valid': data.controls.sku.valid, '': data.controls.sku.untouched}">
             </mat-form-field>
             <div *ngIf="data.controls.sku.errors" class="invalid-feedback d-block">
-              <div *ngIf="data.controls.sku.errors.required">
+              <div *ngIf="data.controls.sku.touched">
                 Product Is Required
               </div>
             </div>
           </div>
           <div class="col-md-5">
-            <label style="font-family: sans-serif;">Quantity</label>
+            <label>Quantity</label>
             <mat-form-field appearance="none">
-              <input type="number"  name="Quantity" formControlName="qty" matInput [ngClass]=" {'is-invalid':data.controls.qty.invalid && data.controls.qty.touched,
-              'is-valid': data.controls.qty.valid, '': data.controls.qty.untouched}" >
+              <input type="number" placeholder="Quantity" name="Quantity" formControlName="qty" matInput [ngClass]=" {'is-invalid':data.controls.qty.invalid && data.controls.qty.touched,
+              'is-valid': data.controls.qty.valid, '': data.controls.qty.untouched}">
             </mat-form-field>
             <div *ngIf=" data.controls.qty.errors" class="invalid-feedback d-block">
               <div *ngIf="data.controls.qty.errors.required">
@@ -385,39 +373,38 @@
             </div>
 
           </div>
-          <!-- <button mat-raised-button color=" Basic" (click)="removeitem(i)">-</button> -->
-              <!-- <div  class="col-md-2  ">    -->
-              <a *ngIf=" i > 0" style="margin: 36px  ;cursor: pointer " class="col-mb-2" (click)="removeitem(i)">
+          <div class="col-md-2">
+            <div class="remove-item">
+              <a *ngIf=" i > 0" (click)="removeitem(i)">
                 <span class="material-icons"> clear </span></a>
-
+            </div>
           </div>
-
-          <!-- </div> -->
         </div>
-        <div class="col-md-12" *ngIf="issue" class="col md 12">
-          <div class="invalid-feedback d-block">
-
-            Product and Quantity Field Must Not Empty
+        <!-- </div> -->
+      </div>
+      <div class="row">
+        <div class="col-md-12" *ngIf="EditVendorSettingForm.invalid && issue">
+          <div class="invalid-feedback d-block"> Product and Quantity Field Must Not Empty
           </div>
         </div>
         <div class="col-md-12 mt-2">
-          <button mat-mini-fab color="black" (click)="addItem()">
-            <span class="material-icons">
-              add_circle_outline
-            </span>
+          <button (click)="addItem()" class="btn btn-primary">
+            AddMore
           </button>
         </div>
       </div>
+    </div>
 
+  </div>
+  <!-- </div> -->
+  <div mat-dialog-actions class="model-footer mt-4 " align="end">
+    <div class="d-flex justify-content-end">
+      <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
+      <!-- <button class="d-flex  btn btn-custom" mat-button [disabled]="!f.valid" (click)="doAction()">Save Changes</button> -->
+      <button class="d-flex  btn btn-custom" mat-button [disabled]="EditVendorSettingForm.invalid"
+        (click)="doAction()">Save Changes</button>
     </div>
-    <!-- </div> -->
-    <div mat-dialog-actions class="model-footer mt-4 " align="end">
-      <div class="d-flex justify-content-end">
-        <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
-        <!-- <button class="d-flex  btn btn-custom" mat-button [disabled]="!f.valid" (click)="doAction()">Save Changes</button> -->
-        <button class="d-flex  btn btn-custom" mat-button [disabled]="EditVendorSettingForm.invalid" (click)="doAction()">Save Changes</button>
-      </div>
-    </div>
+  </div>
 </form>
 
 

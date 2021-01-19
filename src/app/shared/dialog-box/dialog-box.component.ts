@@ -69,7 +69,7 @@ export class DialogBoxComponent implements OnInit {
   }
   ngOnInit() {
 
-    if (this.localdata.action == 'EditVendorSetting') {
+    if (this.localdata.action == 'EditVendorSetting' || this.localdata.action=='AddVendorSetting') {
       this.EditVenderSetting();
     }
 
@@ -95,11 +95,13 @@ export class DialogBoxComponent implements OnInit {
       order_qty_sku: this.fb.array([this.createItem()])
 
     })
-    this.EditVendorSettingForm.patchValue({
-      sellerId: this.localdata.setting.sellerId,
-      marketplaceId: this.localdata.setting.marketplaceId,
-      refreshToken: this.localdata.setting.refreshToken
-    });
+    if (this.localdata.action == 'EditVendorSetting') {
+      this.EditVendorSettingForm.patchValue({
+        sellerId: this.localdata.setting.sellerId,
+        marketplaceId: this.localdata.setting.marketplaceId,
+        refreshToken: this.localdata.setting.refreshToken
+      });
+    }
   }
 
 
@@ -168,7 +170,7 @@ export class DialogBoxComponent implements OnInit {
     if (this.logoImage !== null && this.logoImage !== undefined) {
       this.localdata['logo'] = this.logoImage
     }
-    if (this.localdata.action == 'EditVendorSetting')
+    if (this.localdata.action == 'EditVendorSetting' ||this.localdata.action == 'AddVendorSetting')
       this.localdata['setting'] = this.EditVendorSettingForm.value;
     this.dialogRef.close({ event: this.action, data: this.localdata });
 
