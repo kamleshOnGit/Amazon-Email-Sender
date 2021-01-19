@@ -49,6 +49,7 @@ export class DialogBoxComponent implements OnInit {
   EditVendorSettingForm: FormGroup;
   order_qty_sku: FormArray;
   issue = false;
+  defaultValues: any;
 
   constructor(private repoService: RepositoryService,
     public dialogRef: MatDialogRef<DialogBoxComponent>,
@@ -69,7 +70,7 @@ export class DialogBoxComponent implements OnInit {
   }
   ngOnInit() {
 
-    if (this.localdata.action == 'EditVendorSetting' || this.localdata.action=='AddVendorSetting') {
+    if (this.localdata.action == 'EditVendorSetting' || this.localdata.action == 'AddVendorSetting') {
       this.EditVenderSetting();
     }
 
@@ -96,21 +97,44 @@ export class DialogBoxComponent implements OnInit {
 
     })
     if (this.localdata.action == 'EditVendorSetting') {
+      this.defaultValues = JSON.parse(this.localdata.setting.defaultValues);
       this.EditVendorSettingForm.patchValue({
         sellerId: this.localdata.setting.sellerId,
         marketplaceId: this.localdata.setting.marketplaceId,
-        refreshToken: this.localdata.setting.refreshToken
+        refreshToken: this.localdata.setting.refreshToken,
+        RecieveSucessLoginEmail: this.defaultValues.recieve_success_login_email,
+        RecieveFailedLoginEmail: this.defaultValues.recieve_failed_login_email,
+        RecieveEmailWhenUserLock: this.defaultValues.recieve_lock_login_email,
+        InventoryUpdate: this.defaultValues.inventory_update,
+        ApplyRestrictionOnThreshold: this.defaultValues.apply_restriction_on_threshold,
+        ThresholdValue: this.defaultValues.threshold,
+        ApiRequestHourly: this.defaultValues.api_request_hourly,
+        ApiRequestDaily: this.defaultValues.api_request_daily,
+        RestrictOrderQuantity: this.defaultValues.restrict_order_qty,
+        MaxOrderQuantity: this.defaultValues.max_order_qty,
+
       });
+      let controle = <FormArray>(this.EditVendorSettingForm.get("order_qty_sku"));
+      this.defaultValues.order_qty_sku.forEach(element => {
+        controle.push(this.createItem(element));
+      });
+      controle.removeAt(0)
     }
   }
+  createItem(data = null) {
+    if (data != null) {
+      return this.fb.group({
+        sku: data.sku,
+        qty: data.qty
+      })
+    }
+    else {
+      return this.fb.group({
+        sku: ['', Validators.required],
+        qty: [0, Validators.required]
+      })
+    }
 
-
-
-  createItem() {
-    return this.fb.group({
-      sku: ['', Validators.required],
-      qty: [0, Validators.required]
-    })
   }
   addItem() {
     this.order_qty_sku = this.EditVendorSettingForm.get('order_qty_sku') as FormArray;
@@ -122,8 +146,9 @@ export class DialogBoxComponent implements OnInit {
     this.order_qty_sku.push(this.createItem());
     this.issue = false;
   }
-  removeitem(i) {
-    this.order_qty_sku.removeAt(i);
+  removeItem(i) {
+    this.order_qty_sku = this.EditVendorSettingForm.get('order_qty_sku') as FormArray;
+    this.order_qty_sku.removeAt(i)
   }
 
 
@@ -132,7 +157,6 @@ export class DialogBoxComponent implements OnInit {
   }
 
 
-  // Validators.compose([PasswordStrengthValidator, Validators.required, Validators.minLength(8), Validators.maxLength(50)])]
   passwordTest(data) {
     let test = data.target.value.match(/(?=.*\d)(?=.*[a-z])(?=.*[!@#\$%\^&\*])(?=.*[A-Z]).{8,}/g);
     if (test == '' || test == null) {
@@ -170,7 +194,7 @@ export class DialogBoxComponent implements OnInit {
     if (this.logoImage !== null && this.logoImage !== undefined) {
       this.localdata['logo'] = this.logoImage
     }
-    if (this.localdata.action == 'EditVendorSetting' ||this.localdata.action == 'AddVendorSetting')
+    if (this.localdata.action == 'EditVendorSetting' || this.localdata.action == 'AddVendorSetting')
       this.localdata['setting'] = this.EditVendorSettingForm.value;
     this.dialogRef.close({ event: this.action, data: this.localdata });
 

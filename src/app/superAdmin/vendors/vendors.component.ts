@@ -167,12 +167,25 @@ export class VendorsComponent implements OnInit, AfterViewInit {
     });
   }
   public settingVender(data) {
+    const defaultValues = {
+      recieve_success_login_email: data.setting.RecieveSucessLoginEmail,
+      recieve_failed_login_email: data.setting.RecieveFailedLoginEmail,
+      recieve_lock_login_email: data.setting.RecieveEmailWhenUserLock,
+      restrict_order_qty: data.setting.RestrictOrderQuantity,
+      apply_restriction_on_threshold: data.setting.ApplyRestrictionOnThreshold,
+      max_order_qty: data.setting.MaxOrderQuantity,
+      threshold: data.setting.ThresholdValue,
+      api_request_hourly: data.setting.ApiRequestHourly,
+      api_request_daily: data.setting.ApiRequestDaily,
+      inventory_update: data.setting.InventoryUpdate,
+      order_qty_sku: data.setting.order_qty_sku,
+    }
     const bodydata = {
       tenantId: data.tenantId,
-      sellerId: data.sellerId,
-      marketplaceId: data.marketplaceId,
-      refreshToken: data.refreshToken,
-      defaultValues: data.defaultValues
+      sellerId: data.setting.sellerId,
+      marketplaceId: data.setting.marketplaceId,
+      refreshToken: data.setting.refreshToken,
+      defaultValues: JSON.stringify(defaultValues)
     };
     this.repoService.create('setting', bodydata).subscribe((res: any) => {
       this.popupmsg.message = res.message;
