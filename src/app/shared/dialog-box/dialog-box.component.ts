@@ -124,8 +124,8 @@ export class DialogBoxComponent implements OnInit {
   createItem(data = null) {
     if (data != null) {
       return this.fb.group({
-        sku: data.sku,
-        qty: data.qty
+        sku: [data.sku,Validators.required],
+        qty: [data.qty,Validators.required]
       })
     }
     else {
@@ -134,13 +134,12 @@ export class DialogBoxComponent implements OnInit {
         qty: [0, Validators.required]
       })
     }
-
   }
   addItem() {
     this.order_qty_sku = this.EditVendorSettingForm.get('order_qty_sku') as FormArray;
     let l = this.order_qty_sku.controls.length - 1;
     // if (this.order_qty_sku.value[l]['sku'] == "" || (this.order_qty_sku.value[l]['qty'] == null || this.order_qty_sku.value[l]['qty'] == '' )) {
-    if (this.order_qty_sku.status == "INVALID") {
+    if (this.order_qty_sku.status == "INVALID")  {
       return this.issue = true
     }
     this.order_qty_sku.push(this.createItem());
