@@ -13,6 +13,7 @@ import { resolve } from 'url';
 
 export class AuthService {
   endpoint = 'http://sp.vancotech.com/api/';
+  // endpoint = 'http://localhost:8080/api/';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = '';
   popupmsg: { message: '' };

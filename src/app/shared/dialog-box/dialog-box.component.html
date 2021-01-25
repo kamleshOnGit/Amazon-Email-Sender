@@ -278,18 +278,18 @@
       <label class="mt-2">Default Values</label>
       <div class="row default-row">
         <div class="col-md-6 mt-2">
-          <mat-checkbox formControlName="RecieveSucessLoginEmail" class="example-margin" matInput>Recieve Sucess Login
+          <mat-checkbox formControlName="RecieveSucessLoginEmail" class="example-margin" matInput>Receive Success Login
             Email
           </mat-checkbox>
         </div>
         <div class="col-md-6 mt-2">
-          <mat-checkbox class="example-margin" formControlName="RecieveFailedLoginEmail" matInput>Recievw
+          <mat-checkbox class="example-margin" formControlName="RecieveFailedLoginEmail" matInput>Receive
             Failed Login
             Email
           </mat-checkbox>
         </div>
         <div class="col-md-6 mt-2">
-          <mat-checkbox class="example-margin" formControlName="RecieveEmailWhenUserLock" matInput>Recieve
+          <mat-checkbox class="example-margin" formControlName="RecieveEmailWhenUserLock" matInput>Receive
             Email When
             User Lock
           </mat-checkbox>
@@ -323,7 +323,7 @@
         </div>
 
         <div class="col-md-6 mt-2">
-          <label>Api Request Daily</label>
+          <label>Api Request Daily Limit</label>
           <mat-form-field appearance="none">
             <input type="number" formControlName="ApiRequestDaily" placeholder="Api Request Daily" matInput>
           </mat-form-field>
@@ -452,9 +452,7 @@
 
       </mat-form-field>
       <div class="invalid-feedback d-block" style="color: red;" *ngIf="err">
-        <p> Password Must Contain <span style=" text-decoration: underline;"> Alphanumeric</span> With <span
-            style=" text-decoration: underline;">One Special
-            Characters</span> Aa1@ </p> <br>
+        <p>{{message}}</p> <br>
 
       </div>
       <!-- 

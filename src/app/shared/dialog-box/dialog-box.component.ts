@@ -50,6 +50,7 @@ export class DialogBoxComponent implements OnInit {
   order_qty_sku: FormArray;
   issue = false;
   defaultValues: any;
+  message =  '';
 
   constructor(private repoService: RepositoryService,
     public dialogRef: MatDialogRef<DialogBoxComponent>,
@@ -157,9 +158,40 @@ export class DialogBoxComponent implements OnInit {
 
 
   passwordTest(data) {
-    let test = data.target.value.match(/(?=.*\d)(?=.*[a-z])(?=.*[!@#\$%\^&\*])(?=.*[A-Z]).{8,}/g);
-    if (test == '' || test == null) {
+    if( data.target.value &&!data.target.value.match(/[a-z]+/g)){
+      this.message ='';
       this.err = true;
+      this.message ="Password must contain a lower case character";
+      return
+    }
+    if( data.target.value && !data.target.value.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/)){
+      this.message ='';
+      this.err = true;
+      this.message ="Password must contain a special character";
+      return
+    }
+    if( data.target.value && !data.target.value.match(/[A-Z]+/g)){
+      this.message ='';
+      this.err = true;
+      this.message ="Password must contain a  Upper case character";
+      return
+    }
+    if ( data.target.value && !data.target.value.match(/[0-9]+/g)) {
+      this.message ='';
+      this.err = true;      
+      this.message ="Password must contain a number character";
+      return
+    }
+    if( data.target.value && !data.target.value.match(/(?=^.{8,}$)/g)){
+      this.message ='';
+      this.err = true;
+      this.message ="Password must contain are at least 8 characters";
+      return
+    }
+    if( ! data.target.value || data.target.value ==  null){
+      this.err = true;
+      this.message ="Password Must Contain Alphanumeric With One Special Characters  One Uppercase Character ,One Lowercase Character and atleast 8 character long password ";
+      return
     }
     else {
       this.err = false;

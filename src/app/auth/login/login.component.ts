@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   popupmsg = { message: '' };
   constructor(private title: Title, private router: Router, private route: ActivatedRoute, public fb: FormBuilder, public authService: AuthService, public dialog: MatDialog,) {
     this.signinForm = this.fb.group({
-      email: [''],
+      email: ['',Validators.email],
       password: ['', Validators.compose([PasswordStrengthValidator, Validators.required, Validators.minLength(8), Validators.maxLength(50)])]
     });
 

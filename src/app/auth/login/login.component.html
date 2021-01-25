@@ -5,7 +5,10 @@
                 <h1 class="text-center mb-4 text-center"> Login</h1>
                 <form class="form-signin" [formGroup]="signinForm" (ngSubmit)="loginUser()">
                 <div class="form-group mb-3 text-center">
-                    <input type="text" class="form-control mb-4" formControlName="email" placeholder="Email/Username"  name="Email" />
+                    <input type="email" class="form-control mb-4" formControlName="email" placeholder="Email/Username"  name="Email" />
+                    <div *ngIf="f.email.errors"class="invalid-feedback d-block">
+                        Wrong Email Address
+                    </div>
                     <input type="password" placeholder="Password" formControlName="password"
                             class="form-control mt-3" [ngClass]="{'is-invalid': f.password.invalid && f.password.touched, 
                                 'is-valid': f.password.valid, '': f.password.untouched}" />

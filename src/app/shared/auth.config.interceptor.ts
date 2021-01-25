@@ -27,7 +27,15 @@ export class AuthInterceptor implements HttpInterceptor {
             this.handleAuthError(err);
             return of(err);
           }
-          throw err;
+          else if (err.status == 400 && err.error.Data && err.error.Data.length >= 0) {
+            alert(err.error.message);
+          }
+          else if (err.status == 0 ) {
+            alert(err.name)
+          }
+          else {
+            throw err;
+          }
         }
       )
     );
