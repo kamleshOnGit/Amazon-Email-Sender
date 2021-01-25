@@ -12,7 +12,7 @@
                     {{time}}
                   </mat-option>
                 </mat-select> -->
-                <input type="tel" matInput  placeholder="time" name="schedulerMinutes" #schedulerMinutes="ngModel" [(ngModel)]="formdata.schedulerMinutes" [ngClass]="{ 'is-invalid': systemsettingform.submitted && schedulerMinutes.invalid }"  required >
+                <input type="tel" matInput  placeholder="Scheduler Time" name="schedulerMinutes" #schedulerMinutes="ngModel" [(ngModel)]="formdata.schedulerMinutes" [ngClass]="{ 'is-invalid': systemsettingform.submitted && schedulerMinutes.invalid }"  required >
               </mat-form-field>
         </div>
     </div>
@@ -22,7 +22,7 @@
         </div>
         <div class="col-12 text-left py-0">
             <mat-form-field  appearance="none"  class="w-50">
-                <input  matInput placeholder="gateways"  >
+                <input  matInput placeholder="SMS Gateway Keys"  >
               </mat-form-field>
         </div>
     </div>
@@ -32,17 +32,17 @@
         </div>
         <div class="col-12 text-left py-0">
             <mat-form-field  appearance="none" class="w-50">
-                <input  matInput placeholder="emailHost" name="emailHost" #emailHost="ngModel" [ngClass]="{ 'is-invalid': systemsettingform.submitted && emailHost.invalid }" required [(ngModel)]="formdata.emailHost">
+                <input  matInput placeholder="Email Host" name="emailHost" #emailHost="ngModel" [ngClass]="{ 'is-invalid': systemsettingform.submitted && emailHost.invalid }" required [(ngModel)]="formdata.emailHost">
               </mat-form-field>
         </div>
     </div>
     <div class="row mt-4 mb-5">
         <div class="col-12 py-0">
-           <label> Email User name </label> 
+           <label> Email User Name </label> 
         </div>
         <div class="col-12 text-left py-0">
             <mat-form-field  appearance="none" class="w-50">
-                <input  matInput placeholder="emailUsername" name="emailUsername" #emailUsername="ngModel" [ngClass]="{ 'is-invalid': systemsettingform.submitted && emailUsername.invalid }" required [(ngModel)]="formdata.emailUsername">
+                <input  matInput placeholder="Email User Name" name="emailUsername" #emailUsername="ngModel" [ngClass]="{ 'is-invalid': systemsettingform.submitted && emailUsername.invalid }" required [(ngModel)]="formdata.emailUsername">
               </mat-form-field>
         </div>
     </div>
@@ -52,7 +52,7 @@
         </div>
         <div class="col-12 text-left py-0">
             <mat-form-field  appearance="none" class="w-50">
-                <input type="password"  matInput placeholder="emailPassword" name="emailPassword" #emailPassword [ngClass]="{ 'is-invalid': systemsettingform.submitted && emailPassword.invalid }" required  [(ngModel)]="formdata.emailPassword">
+                <input type="password"  matInput placeholder="Email Password" name="emailPassword" #emailPassword [ngClass]="{ 'is-invalid': systemsettingform.submitted && emailPassword.invalid }" required  [(ngModel)]="formdata.emailPassword">
               </mat-form-field>
         </div>
     </div>
@@ -62,16 +62,16 @@
         </div>
         <div class="col-12 text-left py-0">
             <mat-form-field  appearance="none" class="w-50">
-                <input type="tel"  matInput required name="emailPort" #emailPort="ngModel" [ngClass]="{ 'is-invalid': systemsettingform.submitted && emailPort.invalid }"  placeholder="emailPort" [(ngModel)]="formdata.emailPort">
+                <input type="tel"  matInput required name="emailPort" #emailPort="ngModel" [ngClass]="{ 'is-invalid': systemsettingform.submitted && emailPort.invalid }"  placeholder="Email Port" [(ngModel)]="formdata.emailPort">
               </mat-form-field>
         </div>
     </div>
     <div class="row">
         <div class="col-2 ">
-            <button class="btn btn-custom mt-3" [disabled]="!systemsettingform.valid" > Save</button>
+            <button class="btn btn-custom " [disabled]="!systemsettingform.valid" > Save</button>
         </div>
-        <div class="col-4 text-left">
-            <button class="btn btn-custom mt-3"> Run the Schduler now</button>
+        <div class="col-4 ">
+            <button class="btn btn-custom "> Run the Schduler now</button>
         </div>
     </div>
 </form>

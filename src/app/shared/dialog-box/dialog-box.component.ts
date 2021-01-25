@@ -81,19 +81,19 @@ export class DialogBoxComponent implements OnInit {
 
     // it make reactive form for  EditVendorSetting
     this.EditVendorSettingForm = this.fb.group({
-      sellerId: [''],
-      marketplaceId: [''],
-      refreshToken: [''],
-      RecieveSucessLoginEmail: [false],
-      RecieveFailedLoginEmail: [false],
-      RecieveEmailWhenUserLock: [false],
-      InventoryUpdate: [false],
-      ApplyRestrictionOnThreshold: [false],
-      ThresholdValue: [0],
-      ApiRequestHourly: [0],
-      ApiRequestDaily: [0],
-      RestrictOrderQuantity: [false],
-      MaxOrderQuantity: [0],
+      sellerId: ['',Validators.required],
+      marketplaceId: ['',Validators.required],
+      refreshToken: ['',Validators.required],
+      RecieveSucessLoginEmail: [false,Validators.required],
+      RecieveFailedLoginEmail: [false,Validators.required],
+      RecieveEmailWhenUserLock: [false,Validators.required],
+      InventoryUpdate: [false,Validators.required],
+      ApplyRestrictionOnThreshold: [false,Validators.required],
+      ThresholdValue: [0,Validators.required],
+      ApiRequestHourly: [0,Validators.required],
+      ApiRequestDaily: [0,Validators.required],
+      RestrictOrderQuantity: [false,Validators.required],
+      MaxOrderQuantity: [0,Validators.required],
       order_qty_sku: this.fb.array([this.createItem()])
 
     })
@@ -125,22 +125,23 @@ export class DialogBoxComponent implements OnInit {
   createItem(data = null) {
     if (data != null) {
       return this.fb.group({
-        sku: [data.sku,Validators.required],
-        qty: [data.qty,Validators.required]
+        sku: [data.sku],
+        qty: [data.qty]
       })
     }
     else {
       return this.fb.group({
-        sku: ['', Validators.required],
-        qty: [0, Validators.required]
+        sku: [''],
+        qty: [0]
       })
     }
   }
-  addItem() {
+  addItem() {  
     this.order_qty_sku = this.EditVendorSettingForm.get('order_qty_sku') as FormArray;
     let l = this.order_qty_sku.controls.length - 1;
-    // if (this.order_qty_sku.value[l]['sku'] == "" || (this.order_qty_sku.value[l]['qty'] == null || this.order_qty_sku.value[l]['qty'] == '' )) {
-    if (this.order_qty_sku.status == "INVALID")  {
+    let a = typeof this.order_qty_sku.value[l]['qty'];
+    if (this.order_qty_sku.value[l]['sku'] == "" || a != 'number') {
+    // if (this.order_qty_sku.status == "INVALID")  {
       return this.issue = true
     }
     this.order_qty_sku.push(this.createItem());

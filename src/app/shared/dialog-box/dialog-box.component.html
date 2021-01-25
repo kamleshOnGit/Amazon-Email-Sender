@@ -259,86 +259,174 @@
         <div class="col-md-6">
           <label class="mt-2"> Seller Id </label>
           <mat-form-field appearance="none">
-            <input placeholder="Seller Id" formControlName="sellerId" matInput>
+            <input placeholder="Seller Id*" formControlName="sellerId" matInput [ngClass]="{'is-invalid': formControl.sellerId.invalid && formControl.sellerId.touched, 
+            'is-valid': formControl.sellerId.valid, '': formControl.sellerId.untouched}">
           </mat-form-field>
+          <div *ngIf="formControl.sellerId.errors" class="invalid-feedback d-block">
+            <div *ngIf="formControl.sellerId.touched">
+              Seller Id required
+            </div>
+          </div>
         </div>
         <div class="col-md-6">
           <label class="mt-2"> Marketplace Id</label>
           <mat-form-field appearance="none">
-            <input placeholder="Marketplace Id" formControlName="marketplaceId" matInput>
+            <input placeholder="Marketplace Id*" formControlName="marketplaceId" matInput [ngClass]="{'is-invalid': formControl.marketplaceId.invalid && formControl.marketplaceId.touched, 
+            'is-valid': formControl.marketplaceId.valid, '': formControl.marketplaceId.untouched}">
           </mat-form-field>
+          <div *ngIf="formControl.marketplaceId.errors" class="invalid-feedback d-block">
+            <div *ngIf="formControl.marketplaceId.touched">
+              Marketplace Id required
+            </div>
+          </div>
+
         </div>
         <div class="col-md-12">
           <label class="mt-2">Refresh Token</label>
           <mat-form-field appearance="none">
-            <input placeholder="RefreshToken" formControlName="refreshToken" matInput>
+            <input placeholder="RefreshToken*" formControlName="refreshToken" matInput [ngClass]="{'is-invalid': formControl.refreshToken.invalid && formControl.refreshToken.touched, 
+            'is-valid': formControl.refreshToken.valid, '': formControl.refreshToken.untouched}">
           </mat-form-field>
+          <div *ngIf="formControl.refreshToken.errors" class="invalid-feedback d-block">
+            <div *ngIf="formControl.refreshToken.touched">
+              Refresh Token required
+            </div>
+          </div>
         </div>
       </div>
       <label class="mt-2">Default Values</label>
       <div class="row default-row">
+        <h5 class="col-md-12 mt-2">Receive emails when:</h5>
         <div class="col-md-6 mt-2">
-          <mat-checkbox formControlName="RecieveSucessLoginEmail" class="example-margin" matInput>Receive Success Login
-            Email
+          <mat-checkbox formControlName="RecieveSucessLoginEmail" class="example-margin" matInput [ngClass]="{'is-invalid': formControl.RecieveSucessLoginEmail.invalid && formControl.RecieveSucessLoginEmail.touched, 
+          'is-valid': formControl.RecieveSucessLoginEmail.valid, '': formControl.RecieveSucessLoginEmail.untouched}">
+            User successfully logs in
           </mat-checkbox>
+          <div *ngIf="formControl.RecieveSucessLoginEmail.errors" class="invalid-feedback d-block">
+            <div *ngIf="formControl.RecieveSucessLoginEmail.touched">
+              User successfully logs in
+            </div>
+          </div>
         </div>
         <div class="col-md-6 mt-2">
-          <mat-checkbox class="example-margin" formControlName="RecieveFailedLoginEmail" matInput>Receive
-            Failed Login
-            Email
+          <mat-checkbox class="example-margin" formControlName="RecieveFailedLoginEmail" matInput [ngClass]="{'is-invalid': formControl.RecieveFailedLoginEmail.invalid && formControl.RecieveFailedLoginEmail.touched, 
+          'is-valid': formControl.RecieveFailedLoginEmail.valid, '': formControl.RecieveFailedLoginEmail.untouched}">
+            User fails in login into their account
           </mat-checkbox>
+          <div *ngIf="formControl.RecieveFailedLoginEmail.errors" class="invalid-feedback d-block">
+            <div *ngIf="formControl.RecieveFailedLoginEmail.touched">
+              User fails in login into their account
+            </div>
+          </div>
         </div>
         <div class="col-md-6 mt-2">
-          <mat-checkbox class="example-margin" formControlName="RecieveEmailWhenUserLock" matInput>Receive
-            Email When
-            User Lock
+          <mat-checkbox class="example-margin" formControlName="RecieveEmailWhenUserLock" matInput [ngClass]="{'is-invalid': formControl.RecieveEmailWhenUserLock.invalid && formControl.RecieveEmailWhenUserLock.touched, 
+          'is-valid': formControl.RecieveEmailWhenUserLock.valid, '': formControl.RecieveEmailWhenUserLock.untouched}">
+            User account is locked
           </mat-checkbox>
-        </div>
-        <div class="col-md-6 mt-2">
-          <mat-checkbox class="example-margin" formControlName="InventoryUpdate" matInput>Inventory Update required
-          </mat-checkbox>
+          <div *ngIf="formControl.RecieveEmailWhenUserLock.errors" class="invalid-feedback d-block">
+            <div *ngIf="formControl.RecieveEmailWhenUserLock.touched">
+              User account is locked
+            </div>
+          </div>
         </div>
 
-        <div class="col-md-6 mt-2">
-          <mat-checkbox class="example-margin" formControlName="ApplyRestrictionOnThreshold" matInput>Apply Restriction
-            On
-            Threshold
-          </mat-checkbox>
-        </div>
-        <div class="col-md-6 mt-2">
-          <div *ngIf="EditVendorSettingForm.get('ApplyRestrictionOnThreshold').value == true">
-            <label>Threshold Value</label>
-            <mat-form-field appearance="none">
-              <input type="number" formControlName="ThresholdValue" matInput placeholder="Threshold Value">
-            </mat-form-field>
 
+
+        <h5 class="col-md-12 mt-2">Support Person Restrictions</h5>
+        <div class="col-md-6 mt-2">
+          <label>Number of orders could be searched per hour</label>
+          <mat-form-field appearance="none">
+            <input type="number" formControlName="ApiRequestHourly"
+              placeholder="Number of orders could be searched per hour" matInput [ngClass]="{'is-invalid': formControl.ApiRequestHourly.invalid && formControl.ApiRequestHourly.touched, 
+            'is-valid': formControl.ApiRequestHourly.valid, '': formControl.ApiRequestHourly.untouched}">
+          </mat-form-field>
+          <div *ngIf="formControl.ApiRequestHourly.errors" class="invalid-feedback d-block">
+            <div *ngIf="formControl.ApiRequestHourly.touched">
+              Number of orders could be searched per hour
+            </div>
           </div>
         </div>
 
         <div class="col-md-6 mt-2">
-          <label>Api Request Hourly</label>
+          <label>Number of orders could be searched per day</label>
           <mat-form-field appearance="none">
-            <input type="number" formControlName="ApiRequestHourly" placeholder="Api Request Hourly" matInput>
+            <input type="number" formControlName="ApiRequestDaily"
+              placeholder="Number of orders could be searched per day" matInput [ngClass]="{'is-invalid': formControl.ApiRequestDaily.invalid && formControl.ApiRequestDaily.touched, 
+            'is-valid': formControl.ApiRequestDaily.valid, '': formControl.ApiRequestDaily.untouched}">
           </mat-form-field>
-        </div>
-
-        <div class="col-md-6 mt-2">
-          <label>Api Request Daily Limit</label>
-          <mat-form-field appearance="none">
-            <input type="number" formControlName="ApiRequestDaily" placeholder="Api Request Daily" matInput>
-          </mat-form-field>
+          <div *ngIf="formControl.ApiRequestDaily.errors" class="invalid-feedback d-block">
+            <div *ngIf="formControl.ApiRequestDaily.touched">
+              Number of orders could be searched per day
+            </div>
+          </div>
 
         </div>
-        <div class="col-md-6 mt-2">
-          <mat-checkbox class="example-margin" formControlName="RestrictOrderQuantity">Restrict Order Quantity
+        <h5 class="col-md-12 mt-2">Global restritions</h5>
+        <div class="col-md-12 mt-2">
+          <mat-checkbox class="example-margin" formControlName="InventoryUpdate" matInput [ngClass]="{'is-invalid': formControl.InventoryUpdate.invalid && formControl.InventoryUpdate.touched, 
+          'is-valid': formControl.InventoryUpdate.valid, '': formControl.InventoryUpdate.untouched}">Auto update system inventory to Amazon at 6 AM in morning each day
+            required
           </mat-checkbox>
+          <div *ngIf="formControl.InventoryUpdate.errors" class="invalid-feedback d-block">
+            <div *ngIf="formControl.InventoryUpdate.touched">
+              Auto update system inventory to Amazon at 6 AM in morning each day
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mt-2">
+          <mat-checkbox class="example-margin" formControlName="RestrictOrderQuantity" [ngClass]="{'is-invalid': formControl.RestrictOrderQuantity.invalid && formControl.RestrictOrderQuantity.touched, 
+          'is-valid': formControl.RestrictOrderQuantity.valid, '': formControl.RestrictOrderQuantity.untouched}">
+            Restrict Order Quantity
+          </mat-checkbox>
+          <div *ngIf="formControl.RestrictOrderQuantity.errors" class="invalid-feedback d-block">
+            <div *ngIf="formControl.RestrictOrderQuantity.touched">
+              Restrict OrderQuantity required
+            </div>
+          </div>
         </div>
         <div class="col-md-6 mt-2">
           <div *ngIf="EditVendorSettingForm.get('RestrictOrderQuantity').value == true  ">
             <label>Max Order Quantity</label>
             <mat-form-field appearance="none">
-              <input type="number" formControlName="MaxOrderQuantity" placeholder="Max Order Quantity" matInput>
+              <input type="number" formControlName="MaxOrderQuantity" placeholder="Max Order Quantity" matInput
+                [ngClass]="{'is-invalid': formControl.MaxOrderQuantity.invalid && formControl.MaxOrderQuantity.touched, 
+              'is-valid': formControl.MaxOrderQuantity.valid, '': formControl.MaxOrderQuantity.untouched}">
             </mat-form-field>
+            <div *ngIf="formControl.MaxOrderQuantity.errors" class="invalid-feedback d-block">
+              <div *ngIf="formControl.MaxOrderQuantity.touched">
+                Max Order Quantity required
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 mt-2">
+          <mat-checkbox class="example-margin " formControlName="ApplyRestrictionOnThreshold" matInput
+            [ngClass]="{'is-invalid': formControl.ApplyRestrictionOnThreshold.invalid && formControl.ApplyRestrictionOnThreshold.touched, 
+          'is-valid': formControl.ApplyRestrictionOnThreshold.valid, '': formControl.ApplyRestrictionOnThreshold.untouched}">Apply Restriction
+            On
+            Threshold
+          </mat-checkbox>
+          <div *ngIf="formControl.ApplyRestrictionOnThreshold.errors" class="invalid-feedback d-block">
+            <!-- <div *ngIf="formControl.ApplyRestrictionOnThreshold.touched"> -->
+            Apply RestrictionOnThreshold required
+            <!-- </div> -->
+          </div>
+        </div>
+        <div class="col-md-6 mt-2">
+          <div *ngIf="EditVendorSettingForm.get('ApplyRestrictionOnThreshold').value == true">
+            <label>Threshold Value</label>
+            <mat-form-field appearance="none">
+              <input type="number" formControlName="ThresholdValue" matInput placeholder="Threshold Value" [ngClass]="{'is-invalid': formControl.ThresholdValue.invalid && formControl.ThresholdValue.touched, 
+              'is-valid': formControl.ThresholdValue.valid, '': formControl.ThresholdValue.untouched}">
+            </mat-form-field>
+            <div *ngIf="formControl.ThresholdValue.errors" class="invalid-feedback d-block">
+              <div *ngIf="formControl.ThresholdValue.touched">
+                ThresholdValue required
+              </div>
+            </div>
+
           </div>
         </div>
       </div><label>Order Quantity SKU</label>
@@ -534,9 +622,7 @@
           Password</span>
       </mat-form-field>
       <div class="invalid-feedback d-block" style="color: red;" *ngIf="err">
-        <p> Password Must Contain <span style=" text-decoration: underline;"> Alphanumeric</span> With <span
-            style=" text-decoration: underline;">One Special
-            Characters</span> Aa1@ </p> <br>
+        <p>{{message}}</p> <br>
 
       </div>
 
@@ -569,15 +655,15 @@
           [(ngModel)]="localdata.tenentId">
       </mat-form-field> -->
 
-      <label class="mt-4"> FirstName</label>
+      <label class="mt-4"> First Name</label>
       <mat-form-field appearance="none">
-        <input placeholder="Vendor name" name="Vendor4" #Vendor4="ngModel"
+        <input placeholder="First Name" name="Vendor4" #Vendor4="ngModel"
           [ngClass]="{ 'is-invalid': i.submitted && Vendor4.invalid }" required matInput
           [(ngModel)]="localdata.firstName">
       </mat-form-field>
       <label class="mt-4"> Last Name</label>
       <mat-form-field appearance="none">
-        <input placeholder="Vendor name" name="VendorLast4" #VendorLast4="ngModel"
+        <input placeholder="Last Name" name="VendorLast4" #VendorLast4="ngModel"
           [ngClass]="{ 'is-invalid': i.submitted && VendorLast4.invalid }" required matInput
           [(ngModel)]="localdata.lastName">
       </mat-form-field>
@@ -799,7 +885,7 @@
     <div (click)="closeDialog()" class="close">
       <mat-icon> close</mat-icon>
     </div>
-    <h2 mat-dialog-title>Asign Email To Product</h2>
+    <h2 mat-dialog-title>Assign Email Template To Product</h2>
   </div>
   <div mat-dialog-content class="model-body ">
     <mat-form-field class="d-block w-50" appearance="none">
@@ -814,7 +900,7 @@
     <div class="d-flex justify-content-end">
       <button class="d-flex btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
       <button class="d-flex btn btn-custom" mat-button [disabled]="!asign.valid" (click)="doAction()"
-        mat-flat-button>Add
+        mat-flat-button>Assign
         Email Template</button>
     </div>
   </div>

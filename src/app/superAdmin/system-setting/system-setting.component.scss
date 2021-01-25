@@ -138,9 +138,9 @@
   :host ::ng-deep  tr.mat-footer-row, tr.mat-row { height: 34px;}
   :host ::ng-deep td.mat-cell { padding:3px!important}
   .ng-valid[required], .ng-valid.required  {
-    border-bottom: 2px solid #42A948; /* green */
+    border-bottom: 2px solid #f5f5f5; /* green */
   }
   
   .ng-invalid:not(form)  {
-    border-bottom: 2px solid #a94442; /* red */
+    border-bottom: 2px solid #fdfdfd; /* red */
   }

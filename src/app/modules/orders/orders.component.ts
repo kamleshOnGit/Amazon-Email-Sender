@@ -39,7 +39,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     'sku',
     'buyerEmail',
     'quantityPurchased',
-    'createdAt',
+    'lastUpdateDate',
     'orderStatus',
     'Action',
   ];
