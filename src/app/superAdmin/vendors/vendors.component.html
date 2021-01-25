@@ -35,7 +35,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Is Active </th>
         <td mat-cell *matCellDef="let element"> {{element.status}} </td>
       </ng-container>
-<!-- 
+      <!-- 
       <ng-container matColumnDef="Phonenumber">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone Number </th>
         <td mat-cell *matCellDef="let element"> {{element.Phonenumber}} </td>
@@ -43,15 +43,15 @@
 
       <ng-container matColumnDef="Action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Action</th>
-        <td mat-cell *matCellDef="let element" >
-           <mat-icon  matTooltip="View Users" (click)="giveVenderId(element.id)" ><span style="color: #7d7d7d;" class="material-icons">
-            person_search
-            </span></mat-icon> 
-           <span class="badge badge-primary m-2 btn" *ngIf="!element.setting" (click)="openDialog('AddVendorSetting',{tenantId: element.id})"> Add Setting</span>
-           <span class="badge badge-primary m-2 btn" *ngIf="element.setting" (click)="openDialog('EditVendorSetting',{tenantId: element.id},element.setting)"> Edit Setting</span>
-           </td>
+        <td mat-cell *matCellDef="let element">
+          <span class="badge badge-primary m-2 btn" (click)="giveVenderId(element.id)"> View Users</span>
+          <span class="badge badge-primary m-2 btn" *ngIf="!element.setting"
+            (click)="openDialog('AddVendorSetting',{tenantId: element.id})"> Add Setting</span>
+          <span class="badge badge-primary m-2 btn" *ngIf="element.setting"
+            (click)="openDialog('EditVendorSetting',{tenantId: element.id},element.setting)"> Edit Setting</span>
+        </td>
       </ng-container>
-      
+
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

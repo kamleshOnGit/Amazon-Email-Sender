@@ -24,7 +24,7 @@ import { Title } from '@angular/platform-browser';
 export class UsersComponent implements AfterViewInit, OnInit {
 
   displayedColumns: string[] = ['Vendorname', 'Emailaddress', 'IsActive', 'Role', 'Action'];
-  selectedSelectBox = 1;
+  selectedSelectBox :any;
   vendors = [
     'Vendor1', 'Vendor2', 'Vendor3', 'Vendor4'
   ];

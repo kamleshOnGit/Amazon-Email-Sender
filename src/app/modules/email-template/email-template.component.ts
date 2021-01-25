@@ -69,7 +69,7 @@ export class EmailTemplateComponent implements OnInit, AfterViewInit {
   }
   redirectTemplate(id: number) {
     this.repoService.id = id;
-    this.router.navigate(['./edit-email-template']);
+    // this.router.navigate(['./edit-email-template']);
   }
 
   public openDialog(action, obj) {
