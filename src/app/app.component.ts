@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { version } from 'process';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'dashboard';
   
+  constructor(){
+    console.log("version(0.1)");
+  }
 }
